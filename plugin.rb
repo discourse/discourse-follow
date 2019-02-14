@@ -103,4 +103,8 @@ after_initialize do
 
   add_to_serializer(:user, :following) { object.followers.include?(scope.current_user.id.to_s) }
   add_to_serializer(:user, :include_following?) { scope.current_user }
+  add_to_serializer(:user, :total_followers) { object.followers.length }
+  add_to_serializer(:user, :include_total_followers?) { SiteSetting.follow_show_statistics_on_profile }
+  add_to_serializer(:user, :total_following) { object.following.length }
+  add_to_serializer(:user, :include_total_following?) { SiteSetting.follow_show_statistics_on_profile }
 end

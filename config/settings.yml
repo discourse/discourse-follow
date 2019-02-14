@@ -1,0 +1,4 @@
+plugins:
+  follow_show_statistics_on_profile:
+    default: true
+    client: true

@@ -1,0 +1,6 @@
+{{#if user.total_following}}
+  {{follow-statistic label="user.following.label" total=user.total_following context="card"}}
+{{/if}}
+{{#if user.total_followers}}
+  {{follow-statistic label="user.followers.label" total=user.total_followers context="card"}}
+{{/if}}

@@ -1,7 +1,9 @@
-{{#if hasUsers}}
-  {{#each users as |user|}}
-    {{user-info user=user}}
-  {{/each}}
-{{else}}
-  <div class="follow-none">{{i18n noneMessage}}</div>
-{{/if}}
+<div class="follow-users">
+  {{#if hasUsers}}
+    {{#each users as |user|}}
+      {{user-info user=user}}
+    {{/each}}
+  {{else}}
+    <div class="follow-none">{{i18n noneMessage}}</div>
+  {{/if}}
+</div>
