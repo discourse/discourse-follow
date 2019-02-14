@@ -1,0 +1,14 @@
+{{#d-section pageClass="user-follow" class="user-navigation" scrollTop="false"}}
+  {{#mobile-nav class='activity-nav' desktopClass='action-list follow-list nav-stacked' currentPath=application.currentPath}}
+    <li>
+      {{#link-to 'following'}}{{i18n 'user.following.label'}}{{/link-to}}
+    </li>
+    <li>
+      {{#link-to 'followers'}}{{i18n 'user.followers.label'}}{{/link-to}}
+    </li>
+  {{/mobile-nav}}
+{{/d-section}}
+
+<section class='user-right'>
+  {{outlet}}
+</section>

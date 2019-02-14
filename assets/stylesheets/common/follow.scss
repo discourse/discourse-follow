@@ -1,0 +1,13 @@
+.follow-toggle-container {
+  float: right;
+
+  button {
+    width: 100%;
+    min-width: 150px;
+  }
+}
+
+.follow-none {
+  background-color: $primary-low;
+  padding: 20px 30px;
+}
