@@ -4,21 +4,16 @@ import { getOwner } from 'discourse-common/lib/get-owner';
 
 export default Ember.Component.extend({
   router: Ember.inject.service('-routing'),
-  classNames: 'follow-toggle',
+  elementId: 'follow-toggle',
 
   @computed('user.following')
   label(following) {
-    return following ? "user.unfollow" : "user.follow";
+    return following ? "user.following.label" : "user.follow";
   },
 
   @computed('user.following')
   icon(following) {
-    return following ? "user-minus" : "user-plus";
-  },
-
-  @computed('user.following')
-  classes(following) {
-    return following ? "btn-primary" : '';
+    return following ? "user" : "user-plus";
   },
 
   @computed('user', 'currentUser')

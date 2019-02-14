@@ -1,10 +1,19 @@
 .follow-toggle-container {
   min-width: 150px;
+  min-height: 30px;
   float: right;
   text-align: center;
+}
+
+#follow-toggle {
+
+  .spinner {
+    margin-top: 5px;
+  }
 
   button {
     width: 100%;
+    margin-bottom: 0;
   }
 }
 
@@ -20,10 +29,5 @@
 .follow-statistic {
   span:first-of-type {
     margin-right: 3px;
-  }
-}
-
-.user-main .secondary {
-  span.desc {
   }
 }

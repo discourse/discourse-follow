@@ -2,7 +2,6 @@ en:
   js:
     user:
       follow: "Follow"
-      unfollow: "Unfollow"
       following:
         label: "Following"
         none: "You're not following anyone yet."
