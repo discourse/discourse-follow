@@ -1,12 +1,28 @@
 .follow-toggle-container {
-  min-width: 150px;
-  min-height: 30px;
   float: right;
   text-align: center;
+  min-height: 30px;
+
+  &.user-profile-controls-outlet {
+    min-width: 140px;
+    margin-left: 4px;
+  }
+
+  &.user-card-additional-controls-outlet {
+    min-width: 150px;
+  }
+}
+
+.about.collapsed-info .follow-toggle-container.user-profile-controls-outlet #follow-toggle {
+  margin-top: 1px;
+
+  button {
+    padding: 5px 10px;
+    min-height: initial;
+  }
 }
 
 #follow-toggle {
-
   .spinner {
     margin-top: 5px;
   }

@@ -13,7 +13,8 @@ export default Discourse.Route.extend({
   setupController(controller, model) {
     this.controllerFor('follow-users').setProperties({
       users: model,
-      type: 'following'
+      type: 'following',
+      viewing: this.paramsFor('user').username
     });
   },
 

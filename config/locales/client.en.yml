@@ -5,6 +5,8 @@ en:
       following:
         label: "Following"
         none: "You're not following anyone yet."
+        none_other: "{{username}} is not following anyone yet."
       followers:
         label: "Followers"
         none: "No-one is following you yet."
+        none_other: "No-one is following {{username}} yet."

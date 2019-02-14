@@ -76,7 +76,9 @@ after_initialize do
     def list
       params.require(:type)
 
-      user = User.find_by(username: params[:username])
+      user = User.where('lower(username) = ?', params[:username].downcase).first
+
+      raise Discourse::InvalidParameters.new unless user.present?
 
       users = user.send(params[:type]).map do |user_id|
         User.find(user_id)
