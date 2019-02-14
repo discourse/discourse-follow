@@ -22,6 +22,10 @@
   }
 }
 
+.viewing-self .follow-toggle-container {
+  display: none !important;
+}
+
 #follow-toggle {
   .spinner {
     margin-top: 5px;
