@@ -5,6 +5,7 @@ import { getOwner } from 'discourse-common/lib/get-owner';
 export default Ember.Component.extend({
   router: Ember.inject.service('-routing'),
   elementId: 'follow-toggle',
+  tagName: 'li',
 
   @computed('user.following')
   label(following) {
