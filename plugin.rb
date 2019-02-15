@@ -10,6 +10,11 @@ if respond_to?(:register_svg_icon)
   register_svg_icon "user-minus"
 end
 
+Discourse.top_menu_items.push(:following)
+Discourse.anonymous_top_menu_items.push(:following)
+Discourse.filters.push(:following)
+Discourse.anonymous_filters.push(:following)
+
 after_initialize do
   module ::Follow
     class Engine < ::Rails::Engine
@@ -101,6 +106,30 @@ after_initialize do
 
   Follow::Engine.routes.draw do
     put ":username" => "follow#update", constraints: { username: RouteFormat.username, format: /(json|html)/ }, defaults: { format: :json }
+  end
+
+  require_dependency 'topic_query'
+  class ::TopicQuery
+    def list_following
+      create_list(:following) do |topics|
+        topics.joins(:posts)
+          .where("posts.user_id in (?)", @user.following)
+      end
+    end
+  end
+
+  module LocationsSiteSettingExtension
+    def type_hash(name)
+      if name == :top_menu
+        @choices[name].push("following") if @choices[name].exclude?("following")
+      end
+      super(name)
+    end
+  end
+
+  require_dependency 'site_settings/type_supervisor'
+  class SiteSettings::TypeSupervisor
+    prepend LocationsSiteSettingExtension
   end
 
   add_to_serializer(:user, :following) { object.followers.include?(scope.current_user.id.to_s) }

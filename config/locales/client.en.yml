@@ -1,5 +1,14 @@
 en:
   js:
+    filters:
+      following:
+        title: "Following"
+        help: "topics with posts from users you're following"
+    topics:
+      none:
+        following: "There are no topics from users you're following."
+      bottom:
+        following: "There are no more topics from users you're following."
     user:
       follow: "Follow"
       following:
