@@ -1,4 +1,4 @@
-#follow-toggle {
+.follow-toggle {
   text-align: center;
   min-height: 30px;
   float: right;
@@ -13,16 +13,16 @@
   }
 }
 
-.user-main .controls #follow-toggle {
+.user-main .controls .follow-toggle {
   width: 140px;
   margin-left: 4px;
 }
 
-.user-card-controls #follow-toggle {
+.user-card-controls .follow-toggle {
   width: 150px;
 }
 
-.about.collapsed-info #follow-toggle {
+.about.collapsed-info .follow-toggle {
   margin-top: 1px;
 
   button {
@@ -31,7 +31,7 @@
   }
 }
 
-.viewing-self #follow-toggle {
+.viewing-self .follow-toggle {
   display: none !important;
 }
 
