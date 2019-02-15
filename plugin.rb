@@ -118,19 +118,8 @@ after_initialize do
     end
   end
 
-  module LocationsSiteSettingExtension
-    def type_hash(name)
-      if name == :top_menu
-        @choices[name].push("following") if @choices[name].exclude?("following")
-      end
-      super(name)
-    end
-  end
 
-  require_dependency 'site_settings/type_supervisor'
-  class SiteSettings::TypeSupervisor
-    prepend LocationsSiteSettingExtension
-  end
+  add_to_serializer(:current_user, :total_following) { object.following.length }
 
   add_to_serializer(:user, :following) { object.followers.include?(scope.current_user.id.to_s) }
   add_to_serializer(:user, :include_following?) { scope.current_user }
