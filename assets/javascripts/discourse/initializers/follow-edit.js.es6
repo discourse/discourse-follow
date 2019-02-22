@@ -1,6 +1,7 @@
 import NavItem from 'discourse/models/nav-item';
 import { withPluginApi } from 'discourse/lib/plugin-api';
 import { default as computed } from 'ember-addons/ember-computed-decorators';
+import { replaceIcon } from 'discourse-common/lib/icon-library';
 
 export default {
   name: 'follow-edits',
@@ -13,7 +14,7 @@ export default {
 
         items = items.reject((item) => item.name === 'following' );
 
-        if (!category && currentUser.total_following > 0) {
+        if (!category && currentUser && currentUser.total_following > 0) {
           items.push(NavItem.fromText('following', args));
         }
 
@@ -28,7 +29,9 @@ export default {
             this.refresh();
           }
         }
-      })
-    })
+      });
+    });
+
+    replaceIcon('notification.following', 'user')
   }
 }

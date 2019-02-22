@@ -4,6 +4,8 @@ en:
       following:
         title: "Following"
         help: "topics with posts from users you're following"
+    notifications:
+      following: "<span>{{username}}</span> {{description}}"
     topics:
       none:
         following: "There are no topics from users you're following."
