@@ -1,1 +1,3 @@
-{{follow-toggle user=user}}
+{{#if siteSettings.discourse_follow_enabled}}
+  {{follow-toggle user=user}}
+{{/if}}

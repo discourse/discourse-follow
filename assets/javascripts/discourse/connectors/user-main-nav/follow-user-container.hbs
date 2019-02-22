@@ -1,1 +1,3 @@
-{{#link-to 'follow'}}{{d-icon "users"}}{{i18n 'user.follow'}}{{/link-to}}
+{{#if siteSettings.discourse_follow_enabled}}
+  {{#link-to 'follow'}}{{d-icon "users"}}{{i18n 'user.follow'}}{{/link-to}}
+{{/if}}

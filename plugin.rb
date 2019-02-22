@@ -4,6 +4,8 @@
 # authors: Angus McLeod
 # url: https://github.com/angusmcleod/discourse-follow
 
+enabled_site_setting :discourse_follow_enabled
+
 register_asset 'stylesheets/common/follow.scss'
 
 if respond_to?(:register_svg_icon)

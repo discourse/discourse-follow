@@ -7,6 +7,9 @@ export default {
   name: 'follow-edits',
   initialize(container) {
     const currentUser = container.lookup("current-user:main");
+    const siteSettings = container.lookup("site-settings:main");
+
+    if (!siteSettings.discourse_follow_enabled) return;
 
     NavItem.reopenClass({
       buildList(category, args) {
