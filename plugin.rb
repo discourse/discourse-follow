@@ -19,6 +19,7 @@ Discourse.anonymous_filters.push(:following)
 
 after_initialize do
   Notification.types[:following] = 800
+  PostAlerter::NOTIFIABLE_TYPES.push(Notification.types[:following])
 
   module ::Follow
     class Engine < ::Rails::Engine
