@@ -6,6 +6,9 @@ en:
         help: "topics with posts from users you're following"
     notifications:
       following: "<span>{{username}}</span> {{description}}"
+      popup:
+        following: '{{username}} posted in "{{topic}}" - {{site_title}}'
+
     topics:
       none:
         following: "There are no topics from users you're following."
