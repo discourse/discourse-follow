@@ -6,6 +6,8 @@ en:
         help: "topics with posts from users you're following"
     notifications:
       following: "<span>{{username}}</span> {{description}}"
+      following_description: "has started following you."
+      following_posted: "<span>{{username}}</span> {{description}}"
       popup:
         following: '{{username}} posted in "{{topic}}" - {{site_title}}'
 

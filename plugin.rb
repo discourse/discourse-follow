@@ -19,7 +19,9 @@ Discourse.anonymous_filters.push(:following)
 
 after_initialize do
   Notification.types[:following] = 800
+  Notification.types[:following_posted] = 801
   PostAlerter::NOTIFIABLE_TYPES.push(Notification.types[:following])
+  PostAlerter::NOTIFIABLE_TYPES.push(Notification.types[:following_posted])
 
   module ::Follow
     class Engine < ::Rails::Engine
@@ -64,33 +66,7 @@ after_initialize do
       raise Discourse::InvalidParameters.new if current_user.username == params[:username]
 
       if user = User.find_by(username: params[:username])
-        notification_level = Follow::Notification.levels[:watching]
-        followers = user.followers
-        following = current_user.following
-        following_ids = current_user.following_ids
-
-        if ActiveModel::Type::Boolean.new.cast(params[:follow])
-          followers.push(current_user.id) if followers.exclude?(current_user.id.to_s)
-
-          if following_ids.include?(user.id.to_s)
-            following.each do |f|
-              if f[0] == user.id.to_s
-                f[1] = notification_level
-              end
-            end
-          else
-            following.push([user.id, notification_level])
-          end
-        else
-          followers.delete(current_user.id.to_s)
-          following = following.select { |f| f[0] != user.id.to_s }
-        end
-
-        user.custom_fields['followers'] = followers.join(',')
-        current_user.custom_fields['following'] = following.map { |f| f.join(',') }
-
-        user.save_custom_fields(true)
-        current_user.save_custom_fields(true)
+        Follow::Helper.update(current_user, user, params[:follow])
 
         following = user.followers.include?(current_user.id.to_s)
 
@@ -150,18 +126,49 @@ after_initialize do
         watching: 0
       )
     end
-
-    def self.add_notified_users(users, post_id)
-      notified_users[post_id] = users
-    end
-
-    def self.notified_users
-      @notified_users || []
-    end
   end
 
-  DiscourseEvent.on(:before_create_notifications_for_users) do |users, post|
-    Follow::Notification.add_notified_users(users, post.id)
+  class Follow::Helper
+    def self.update(user, target, follow)
+      follow = ActiveModel::Type::Boolean.new.cast(follow)
+      notification_level = Follow::Notification.levels[:watching]
+      followers = target.followers
+      following = user.following
+      following_ids = user.following_ids
+
+      if follow
+        followers.push(user.id) if followers.exclude?(user.id.to_s)
+
+        if following_ids.include?(target.id.to_s)
+          following.each do |f|
+            if f[0] == target.id.to_s
+              f[1] = notification_level
+            end
+          end
+        else
+          following.push([target.id, notification_level])
+        end
+      else
+        followers.delete(user.id.to_s)
+        following = following.select { |f| f[0] != target.id.to_s }
+      end
+
+      target.custom_fields['followers'] = followers.join(',')
+      user.custom_fields['following'] = following.map { |f| f.join(',') }
+
+      target.save_custom_fields(true)
+      user.save_custom_fields(true)
+
+      if follow
+        target.notifications.create!(
+          notification_type: Notification.types[:following],
+          data: {
+            display_username: user.username,
+            following: true
+          }.to_json
+        )
+      end
+    end
   end
 
   module PostAlerterFollowExtension
@@ -170,9 +177,8 @@ after_initialize do
 
       if new_record
         followers = author_followers(post)
-        notified = [*Follow::Notification.notified_users[post.id]]
-
-        notify_users(followers - notified, :following, post)
+        notified = [*notified_users[post.id]]
+        notify_users(followers - notified, :following_posted, post)
       end
     end
 
@@ -180,6 +186,22 @@ after_initialize do
       User.find(post.user_id).followers.map do |user_id|
         User.find(user_id)
       end
+    end
+
+    def notify_users(users, type, post, opts = {})
+      users = super(users, type, post, opts = {})
+      add_notified_users(users, post.id)
+      users
+    end
+
+    def add_notified_users(users, post_id)
+      new_users = [*users]
+      current_users = notified_users[post_id] || []
+      notified_users[post_id] = (new_users + current_users).uniq
+    end
+
+    def notified_users
+      @notified_users ||= []
     end
   end
 
