@@ -17,7 +17,9 @@ en:
       bottom:
         following: "There are no more topics from users you're following."
     user:
-      follow: "Follow"
+      follow_nav: "Network"
+      follow:
+        label: "Follow"
       following:
         label: "Following"
         none: "You're not following anyone yet."

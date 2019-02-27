@@ -59,7 +59,7 @@ export default {
       });
     });
 
-    replaceIcon('notification.following', 'user-plus')
-    replaceIcon('notification.following_posted', 'user')
+    replaceIcon('notification.following', 'user-friends')
+    replaceIcon('notification.following_posted', 'user-friends')
   }
 }

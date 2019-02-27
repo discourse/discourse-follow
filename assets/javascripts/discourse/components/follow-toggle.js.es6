@@ -9,12 +9,12 @@ export default Ember.Component.extend({
 
   @computed('user.following')
   label(following) {
-    return following ? "user.following.label" : "user.follow";
+    return following ? "user.following.label" : "user.follow.label";
   },
 
   @computed('user.following')
   icon(following) {
-    return following ? "user" : "user-plus";
+    return "user-friends";
   },
 
   @computed('user', 'currentUser')
