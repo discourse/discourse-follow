@@ -20,8 +20,10 @@ Discourse.anonymous_filters.push(:following)
 after_initialize do
   Notification.types[:following] = 800
   Notification.types[:following_posted] = 801
+  Notification.types[:following_replied] = 802
   PostAlerter::NOTIFIABLE_TYPES.push(Notification.types[:following])
   PostAlerter::NOTIFIABLE_TYPES.push(Notification.types[:following_posted])
+  PostAlerter::NOTIFIABLE_TYPES.push(Notification.types[:following_replied])
 
   module ::Follow
     class Engine < ::Rails::Engine
@@ -123,7 +125,8 @@ after_initialize do
   class Follow::Notification
     def self.levels
       @levels ||= Enum.new(
-        watching: 0
+        watching: 0,
+        watching_first_post: 1
       )
     end
   end
@@ -176,15 +179,27 @@ after_initialize do
       super(post, new_record)
 
       if new_record
-        followers = author_followers(post)
         notified = [*notified_users[post.id]]
-        notify_users(followers - notified, :following_posted, post)
+        followers = post.is_first_post? ? author_posted_followers(post) : author_replied_followers(post)
+        puts "FOLLOWERS: #{followers.inspect}"
+        type = post.is_first_post? ? :following_posted : :following_replied
+        notify_users(followers - notified, type, post)
       end
     end
 
-    def author_followers(post)
+    def author_posted_followers(post)
       User.find(post.user_id).followers.map do |user_id|
         User.find(user_id)
+      end
+    end
+
+    def author_replied_followers(post)
+      User.find(post.user_id).followers.reduce([]) do |users, user_id|
+        user = User.find(user_id)
+        following = user.following.select { |data| data[0] == post.user_id }
+        if following && following.last.to_i == Follow::Notification.levels[:watching]
+          users.push(user)
+        end
       end
     end
 
@@ -203,7 +218,48 @@ after_initialize do
     def notified_users
       @notified_users ||= []
     end
+
+    def create_notification(user, type, post, opts = {})
+      @current_notification_type = type
+      super(user, type, post, opts = {})
+      @current_notification_type = nil
+    end
+
+    def unread_posts(user, topic)
+      if @current_notification_type == Notification.types[:following_replied]
+        posts = Post.secured(Guardian.new(user))
+          .where('post_number > COALESCE((
+                   SELECT last_read_post_number FROM topic_users tu
+                   WHERE tu.user_id = ? AND tu.topic_id = ? ),0)',
+                    user.id, topic.id)
+        puts "HERE IS THE INTERMEDIATE: #{posts.inspect}"
+
+        posts = posts
+          .where("exists(
+                SELECT 1 from user_custom_fields ucf
+                WHERE ucf.user_id = ? AND
+                  ucf.name = 'following' AND
+                  split_part(ucf.value,',', 1)::integer = posts.user_id AND
+                  split_part(ucf.value, ',', 2)::integer = ?
+                )", user.id, Follow::Notification.levels[:watching])
+          .where(topic_id: topic.id)
+      else
+        posts = super(user, topic)
+      end
+
+      posts
+    end
+
+    def first_unread_post(user, topic)
+      unread_posts(user, topic).order('post_number').first
+    end
+
+    def unread_count(user, topic)
+      unread_posts(user, topic).count
+    end
   end
+
+  PostAlerter::COLLAPSED_NOTIFICATION_TYPES.push(Notification.types[:following_replied])
 
   require_dependency 'post_alerter'
   class ::PostAlerter

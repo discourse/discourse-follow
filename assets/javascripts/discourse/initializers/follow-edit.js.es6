@@ -61,5 +61,6 @@ export default {
 
     replaceIcon('notification.following', 'user-friends')
     replaceIcon('notification.following_posted', 'user-friends')
+    replaceIcon('notification.following_replied', 'user-friends')
   }
 }
