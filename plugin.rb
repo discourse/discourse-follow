@@ -181,7 +181,6 @@ after_initialize do
       if new_record
         notified = [*notified_users[post.id]]
         followers = post.is_first_post? ? author_posted_followers(post) : author_replied_followers(post)
-        puts "FOLLOWERS: #{followers.inspect}"
         type = post.is_first_post? ? :following_posted : :following_replied
         notify_users(followers - notified, type, post)
       end
@@ -221,7 +220,7 @@ after_initialize do
 
     def create_notification(user, type, post, opts = {})
       @current_notification_type = type
-      super(user, type, post, opts = {})
+      super(user, type, post, opts)
       @current_notification_type = nil
     end
 
@@ -232,7 +231,6 @@ after_initialize do
                    SELECT last_read_post_number FROM topic_users tu
                    WHERE tu.user_id = ? AND tu.topic_id = ? ),0)',
                     user.id, topic.id)
-        puts "HERE IS THE INTERMEDIATE: #{posts.inspect}"
 
         posts = posts
           .where("exists(
