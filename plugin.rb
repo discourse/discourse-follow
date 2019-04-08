@@ -178,7 +178,7 @@ after_initialize do
     def after_save_post(post, new_record = false)
       super(post, new_record)
 
-      if new_record
+      if new_record && !post.topic.private_message?
         notified = [*notified_users[post.id]]
         followers = post.is_first_post? ? author_posted_followers(post) : author_replied_followers(post)
         type = post.is_first_post? ? :following_posted : :following_replied
