@@ -1,6 +1,5 @@
 import NavItem from 'discourse/models/nav-item';
 import { withPluginApi } from 'discourse/lib/plugin-api';
-import { default as computed } from 'ember-addons/ember-computed-decorators';
 import { replaceIcon } from 'discourse-common/lib/icon-library';
 import { userPath } from "discourse/lib/url";
 
@@ -59,8 +58,8 @@ export default {
       });
     });
 
-    replaceIcon('notification.following', 'user-friends')
-    replaceIcon('notification.following_posted', 'user-friends')
-    replaceIcon('notification.following_replied', 'user-friends')
+    replaceIcon('notification.following', 'user-friends');
+    replaceIcon('notification.following_posted', 'user-friends');
+    replaceIcon('notification.following_replied', 'user-friends');
   }
-}
+};
