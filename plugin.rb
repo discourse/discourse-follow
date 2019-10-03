@@ -109,7 +109,6 @@ after_initialize do
     put ":username" => "follow#update", constraints: { username: RouteFormat.username, format: /(json|html)/ }, defaults: { format: :json }
   end
 
-  require_dependency 'topic_query'
   class ::TopicQuery
     def list_following
       create_list(:following) do |topics|
@@ -259,7 +258,6 @@ after_initialize do
 
   PostAlerter::COLLAPSED_NOTIFICATION_TYPES.push(Notification.types[:following_replied])
 
-  require_dependency 'post_alerter'
   class ::PostAlerter
     prepend PostAlerterFollowExtension
   end
