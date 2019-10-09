@@ -31,7 +31,7 @@ after_initialize do
       isolate_namespace Follow
     end
   end
-
+  
   class ::User
     def following_ids
       following.map { |f| f.first }
@@ -54,6 +54,28 @@ after_initialize do
         []
       end
     end
+  end
+  
+  module UserDestroyerFollowerExtension
+    protected def prepare_for_destroy(user)
+      user.following_ids.each do |user_id|
+        if following = User.find(user_id)
+          Follow::Helper.update(user, following, false)
+        end
+      end
+      user.followers.each do |user_id|
+        if follower = User.find(user_id)
+          Follow::Helper.update(follower, user, false)
+        end
+      end
+      super(user)
+    end
+  end
+  
+  ## There is no DiscourseEvent that fires before UserCustomFields are destroyed
+  ## in the user destruction process, so we need to monkey patch.
+  class ::UserDestroyer
+    prepend UserDestroyerFollowerExtension
   end
 
   class Follow::FollowController < ApplicationController
@@ -138,6 +160,8 @@ after_initialize do
       followers = target.followers
       following = user.following
       following_ids = user.following_ids
+      
+      puts "UPDATING: #{user.id}; #{target.id}; #{follow}"
 
       if follow
         followers.push(user.id) if followers.exclude?(user.id.to_s)
