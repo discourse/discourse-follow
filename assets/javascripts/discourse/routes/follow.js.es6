@@ -1,6 +1,9 @@
 export default Discourse.Route.extend({
-  beforeModel() {
-    this.replaceWith('following');
+  afterModel(model) {
+    if (!model.can_see_follow)
+      this.transitionTo("user");
+    else if (model.can_see_following)
+      this.transitionTo("following");
   },
 
   actions:{

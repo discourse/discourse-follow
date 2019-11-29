@@ -1,4 +1,10 @@
 plugins:
+  follow_show_followers_on_profile:
+    default: true
+  follow_show_followers_to_self:
+    default: true
+  follow_show_following_on_profile:
+    default: true
   follow_show_statistics_on_profile:
     default: true
     client: true

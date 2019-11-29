@@ -107,6 +107,13 @@ after_initialize do
 
       raise Discourse::InvalidParameters.new unless user.present?
 
+      if params[:type] == 'following'
+        raise Discourse::InvalidAccess.new unless (SiteSetting.follow_show_following_on_profile || user == current_user)
+      else
+        raise Discourse::InvalidAccess.new unless (SiteSetting.follow_show_followers_on_profile ||
+          (user == current_user && SiteSetting.follow_show_followers_to_self))
+      end
+
       serializer = nil
 
       method = params[:type] == 'following' ? 'following_ids' : 'followers'
@@ -188,16 +195,16 @@ after_initialize do
 
       if follow && SiteSetting.follow_follower_notifications_enabled
         if !(user.custom_fields['follower_disable_send'] || target.custom_fields['follower_disable_receive'])
-        target.notifications.create!(
-          notification_type: Notification.types[:following],
-          data: {
-            display_username: user.username,
-            following: true
-          }.to_json
-        )
+          target.notifications.create!(
+            notification_type: Notification.types[:following],
+            data: {
+              display_username: user.username,
+              following: true
+            }.to_json
+          )
+        end
       end
     end
-  end
   end
 
   module PostAlerterFollowExtension
@@ -298,6 +305,25 @@ after_initialize do
   add_to_serializer(:user, :include_total_followers?) { SiteSetting.follow_show_statistics_on_profile }
   add_to_serializer(:user, :total_following) { object.following.length }
   add_to_serializer(:user, :include_total_following?) { SiteSetting.follow_show_statistics_on_profile }
+
+  add_to_serializer(:user, :can_see_following) {
+    SiteSetting.discourse_follow_enabled &&
+      (SiteSetting.follow_show_following_on_profile ||
+        object == scope.current_user)
+  }
+
+  add_to_serializer(:user, :can_see_followers) {
+    SiteSetting.discourse_follow_enabled &&
+      (SiteSetting.follow_show_followers_on_profile ||
+        (object == scope.current_user && SiteSetting.follow_show_followers_to_self))
+  }
+
+  add_to_serializer(:user, :can_see_follow) {
+    SiteSetting.discourse_follow_enabled && 
+      (object == scope.current_user ||
+        SiteSetting.follow_show_following_on_profile ||
+        SiteSetting.follow_show_followers_on_profile)
+  }
 
   User.register_custom_field_type("follower_disable_receive", :boolean)
 	DiscoursePluginRegistry.serialized_current_user_fields << "follower_disable_receive"
