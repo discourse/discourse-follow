@@ -1,4 +1,5 @@
 en:
   site_settings:
     follow_show_statistics_on_profile: "Show follow statistics on user profiles."
+    follow_follower_notifications_enabled: "Enable new follower notifications."
     discourse_follow_enabled: "Enable follow plugin."

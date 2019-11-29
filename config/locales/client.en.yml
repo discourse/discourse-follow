@@ -27,6 +27,8 @@ en:
         label: "Following"
         none: "You're not following anyone yet."
         none_other: "{{username}} is not following anyone yet."
+      follower_disable_receive: "Disable being notified of new followers"
+      follower_disable_send: "Disable notifying users when you follow them"
       followers:
         label: "Followers"
         none: "No-one is following you yet."

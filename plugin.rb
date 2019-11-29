@@ -186,7 +186,8 @@ after_initialize do
       target.save_custom_fields(true)
       user.save_custom_fields(true)
 
-      if follow
+      if follow && SiteSetting.follow_follower_notifications_enabled
+        if !(user.custom_fields['follower_disable_send'] || target.custom_fields['follower_disable_receive'])
         target.notifications.create!(
           notification_type: Notification.types[:following],
           data: {
@@ -196,6 +197,7 @@ after_initialize do
         )
       end
     end
+  end
   end
 
   module PostAlerterFollowExtension
@@ -296,4 +298,15 @@ after_initialize do
   add_to_serializer(:user, :include_total_followers?) { SiteSetting.follow_show_statistics_on_profile }
   add_to_serializer(:user, :total_following) { object.following.length }
   add_to_serializer(:user, :include_total_following?) { SiteSetting.follow_show_statistics_on_profile }
+
+  User.register_custom_field_type("follower_disable_receive", :boolean)
+	DiscoursePluginRegistry.serialized_current_user_fields << "follower_disable_receive"
+	add_to_serializer(:current_user, :follower_disable_receive) { object.custom_fields["follower_disable_receive"] }
+  register_editable_user_custom_field :follower_disable_receive
+
+  User.register_custom_field_type("follower_disable_send", :boolean)
+  DiscoursePluginRegistry.serialized_current_user_fields << "follower_disable_send"
+  add_to_serializer(:current_user, :follower_disable_send) { object.custom_fields["follower_disable_send"] }
+  register_editable_user_custom_field :follower_disable_send
+  
 end
