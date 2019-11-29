@@ -326,8 +326,8 @@ after_initialize do
   }
 
   User.register_custom_field_type("follower_disable_receive", :boolean)
-	DiscoursePluginRegistry.serialized_current_user_fields << "follower_disable_receive"
-	add_to_serializer(:current_user, :follower_disable_receive) { object.custom_fields["follower_disable_receive"] }
+  DiscoursePluginRegistry.serialized_current_user_fields << "follower_disable_receive"
+  add_to_serializer(:current_user, :follower_disable_receive) { object.custom_fields["follower_disable_receive"] }
   register_editable_user_custom_field :follower_disable_receive
 
   User.register_custom_field_type("follower_disable_send", :boolean)
