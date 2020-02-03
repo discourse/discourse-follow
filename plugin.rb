@@ -22,182 +22,91 @@ after_initialize do
   Notification.types[:following] = 800
   Notification.types[:following_posted] = 801
   Notification.types[:following_replied] = 802
+  
   PostAlerter::NOTIFIABLE_TYPES.push(Notification.types[:following])
   PostAlerter::NOTIFIABLE_TYPES.push(Notification.types[:following_posted])
   PostAlerter::NOTIFIABLE_TYPES.push(Notification.types[:following_replied])
-
-  module ::Follow
-    class Engine < ::Rails::Engine
-      engine_name "follow"
-      isolate_namespace Follow
+  PostAlerter::COLLAPSED_NOTIFICATION_TYPES.push(Notification.types[:following_replied])
+  
+  %w[
+    ../lib/follow/engine.rb
+    ../lib/follow/notification.rb
+    ../lib/follow/updater.rb
+    ../app/controllers/follow/follow_controller.rb
+    ../config/routes.rb
+  ].each do |path|
+    load File.expand_path(path, __FILE__)
+  end
+  
+  add_to_class(:user, :following_ids) do
+    following.map { |f| f.first }
+  end
+  
+  add_to_class(:user, :following) do
+    if custom_fields['following']
+      [*custom_fields['following']].map do |record|
+        record.split(',')
+      end
+    else
+      []
     end
   end
   
-  class ::User
-    def following_ids
-      following.map { |f| f.first }
-    end
-
-    def following
-      if custom_fields['following']
-        [*custom_fields['following']].map do |record|
-          record.split(',')
-        end
-      else
-        []
-      end
-    end
-
-    def followers
-      if custom_fields['followers']
-        custom_fields['followers'].split(',')
-      else
-        []
-      end
+  add_to_class(:user, :followers) do
+    if custom_fields['followers']
+      custom_fields['followers'].split(',')
+    else
+      []
     end
   end
+  
+  add_to_class(:topic_query, :list_following) do
+    create_list(:following) do |topics|
+      topics.where("
+        topics.id IN (
+          SELECT topic_id FROM posts
+          WHERE posts.user_id in (?)
+        )", @user.following_ids)
+    end
+  end
+  
+  add_to_serializer(:current_user, :total_following) { object.following.length }
+  add_to_serializer(:user, :following) { object.followers.include?(scope.current_user.id.to_s) }
+  add_to_serializer(:user, :include_following?) { scope.current_user }
+  add_to_serializer(:user, :total_followers) { object.followers.length }
+  add_to_serializer(:user, :include_total_followers?) { SiteSetting.follow_show_statistics_on_profile }
+  add_to_serializer(:user, :total_following) { object.following.length }
+  add_to_serializer(:user, :include_total_following?) { SiteSetting.follow_show_statistics_on_profile }
+  
+  #### Non-Api Monkey patches
+  
+  ## User Destroyer
+  ## There is no DiscourseEvent that fires before UserCustomFields are destroyed
   
   module UserDestroyerFollowerExtension
     protected def prepare_for_destroy(user)
       user.following_ids.each do |user_id|
         if following = User.find(user_id)
-          Follow::Helper.update(user, following, false)
+          updater = Follow::Updater.new(user, following)
+          updater.update(false)
         end
       end
       user.followers.each do |user_id|
         if follower = User.find(user_id)
-          Follow::Helper.update(follower, user, false)
+          updater = Follow::Updater.new(follower, user)
+          updater.update(false)
         end
       end
       super(user)
     end
   end
   
-  ## There is no DiscourseEvent that fires before UserCustomFields are destroyed
-  ## in the user destruction process, so we need to monkey patch.
   class ::UserDestroyer
     prepend UserDestroyerFollowerExtension
   end
-
-  class Follow::FollowController < ApplicationController
-    def index
-    end
-
-    def update
-      params.require(:username)
-      params.require(:follow)
-
-      raise Discourse::InvalidAccess.new unless current_user
-      raise Discourse::InvalidParameters.new if current_user.username == params[:username]
-
-      if user = User.find_by(username: params[:username])
-        Follow::Helper.update(current_user, user, params[:follow])
-
-        following = user.followers.include?(current_user.id.to_s)
-
-        render json: success_json.merge(following: following)
-      else
-        render json: failed_json
-      end
-    end
-
-    def list
-      params.require(:type)
-
-      user = User.where('lower(username) = ?', params[:username].downcase).first
-
-      raise Discourse::InvalidParameters.new unless user.present?
-
-      serializer = nil
-
-      method = params[:type] == 'following' ? 'following_ids' : 'followers'
-      users = user.send(method).map { |user_id| User.find(user_id) }
-
-      serializer = ActiveModel::ArraySerializer.new(users, each_serializer: BasicUserSerializer)
-
-      render json: MultiJson.dump(serializer)
-    end
-  end
-
-  Discourse::Application.routes.append do
-    mount ::Follow::Engine, at: "follow"
-    %w{users u}.each_with_index do |root_path, index|
-      get "#{root_path}/:username/follow" => "follow/follow#index", constraints: { username: RouteFormat.username }
-      get "#{root_path}/:username/follow/following" => "follow/follow#list", constraints: { username: RouteFormat.username }
-      get "#{root_path}/:username/follow/followers" => "follow/follow#list", constraints: { username: RouteFormat.username }
-    end
-  end
-
-  Follow::Engine.routes.draw do
-    put ":username" => "follow#update", constraints: { username: RouteFormat.username, format: /(json|html)/ }, defaults: { format: :json }
-  end
-
-  require_dependency 'topic_query'
-  class ::TopicQuery
-    def list_following
-      create_list(:following) do |topics|
-        topics.where("
-          topics.id IN (
-            SELECT topic_id FROM posts
-            WHERE posts.user_id in (?)
-          )", @user.following_ids)
-      end
-    end
-  end
-
-  class Follow::Notification
-    def self.levels
-      @levels ||= Enum.new(
-        watching: 0,
-        watching_first_post: 1
-      )
-    end
-  end
-
-  class Follow::Helper
-    def self.update(user, target, follow)
-      follow = ActiveModel::Type::Boolean.new.cast(follow)
-      notification_level = Follow::Notification.levels[:watching]
-      followers = target.followers
-      following = user.following
-      following_ids = user.following_ids
-      
-      puts "UPDATING: #{user.id}; #{target.id}; #{follow}"
-
-      if follow
-        followers.push(user.id) if followers.exclude?(user.id.to_s)
-
-        if following_ids.include?(target.id.to_s)
-          following.each do |f|
-            if f[0] == target.id.to_s
-              f[1] = notification_level
-            end
-          end
-        else
-          following.push([target.id, notification_level])
-        end
-      else
-        followers.delete(user.id.to_s)
-        following = following.select { |f| f[0] != target.id.to_s }
-      end
-
-      target.custom_fields['followers'] = followers.join(',')
-      user.custom_fields['following'] = following.map { |f| f.join(',') }
-
-      target.save_custom_fields(true)
-      user.save_custom_fields(true)
-
-      if follow
-        target.notifications.create!(
-          notification_type: Notification.types[:following],
-          data: {
-            display_username: user.username,
-            following: true
-          }.to_json
-        )
-      end
-    end
-  end
+  
+  ## PostAlerter
+  ## A number of overridden methods need to refer to the core method (i.e. super class)
 
   module PostAlerterFollowExtension
     def after_save_post(post, new_record = false)
@@ -282,19 +191,8 @@ after_initialize do
     end
   end
 
-  PostAlerter::COLLAPSED_NOTIFICATION_TYPES.push(Notification.types[:following_replied])
-
   require_dependency 'post_alerter'
   class ::PostAlerter
     prepend PostAlerterFollowExtension
   end
-
-  add_to_serializer(:current_user, :total_following) { object.following.length }
-
-  add_to_serializer(:user, :following) { object.followers.include?(scope.current_user.id.to_s) }
-  add_to_serializer(:user, :include_following?) { scope.current_user }
-  add_to_serializer(:user, :total_followers) { object.followers.length }
-  add_to_serializer(:user, :include_total_followers?) { SiteSetting.follow_show_statistics_on_profile }
-  add_to_serializer(:user, :total_following) { object.following.length }
-  add_to_serializer(:user, :include_total_following?) { SiteSetting.follow_show_statistics_on_profile }
 end
