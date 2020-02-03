@@ -1,8 +1,8 @@
 # name: discourse-follow
 # about: Discourse Follow
-# version: 0.1
+# version: 0.2
 # authors: Angus McLeod
-# url: https://github.com/angusmcleod/discourse-follow
+# url: https://github.com/paviliondev/discourse-follow
 
 enabled_site_setting :discourse_follow_enabled
 
