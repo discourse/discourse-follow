@@ -7,6 +7,7 @@
 enabled_site_setting :discourse_follow_enabled
 
 register_asset 'stylesheets/common/follow.scss'
+register_asset 'stylesheets/mobile/follow.scss', :mobile
 
 if respond_to?(:register_svg_icon)
   register_svg_icon "user-friends"
