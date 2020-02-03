@@ -38,13 +38,22 @@ class Follow::Updater
     @follower.save_custom_fields(true)
 
     if follow
-      @target.notifications.create!(
+      payload = {
         notification_type: Notification.types[:following],
         data: {
           display_username: @follower.username,
           following: true
         }.to_json
-      )
+      }
+      send_notification(payload) unless notification_sent_recently(payload)
     end
+  end
+  
+  def send_notification(payload)
+    @target.notifications.create!(payload)
+  end
+  
+  def notification_sent_recently(payload)
+    @target.notifications.where(payload).where('created_at >= ?', 1.day.ago).exists?
   end
 end
