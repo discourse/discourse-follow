@@ -1,16 +1,24 @@
 plugins:
-  follow_show_followers_on_profile:
-    default: true
-  follow_show_followers_to_self:
-    default: true
-  follow_show_following_on_profile:
-    default: true
-  follow_show_statistics_on_profile:
-    default: true
-    client: true
-  follow_follower_notifications_enabled:
-    default: true
-    client: true
   discourse_follow_enabled:
     default: true
     client: true
+  follow_show_statistics_on_profile:
+    default: true
+    client: true
+  follow_notifications_enabled:
+    default: true
+    client: true
+  follow_followers_visible:
+    type: enum
+    default: all
+    choices:
+      - self
+      - all
+      - none
+  follow_following_visible:
+    type: enum
+    default: all
+    choices:
+      - self
+      - all
+      - none

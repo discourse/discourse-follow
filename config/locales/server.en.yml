@@ -1,8 +1,7 @@
 en:
   site_settings:
-    follow_show_followers_on_profile: "Show a public list of followers on user profiles."
-    follow_show_followers_to_self: "Allow users to see their own list of followers."
-    follow_show_following_on_profile: "Show a public list of followed users on user profiles."
-    follow_show_statistics_on_profile: "Show follow statistics on user profiles."
-    follow_follower_notifications_enabled: "Enable new follower notifications."
     discourse_follow_enabled: "Enable follow plugin."
+    follow_show_statistics_on_profile: "Show follow statistics on user profiles."
+    follow_notifications_enabled: "Enable new follower notifications."
+    follow_followers_visible: "Followers visibility."
+    follow_following_visible: "Following visibility."

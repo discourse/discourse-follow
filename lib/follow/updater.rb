@@ -36,8 +36,8 @@ class Follow::Updater
 
     @target.save_custom_fields(true)
     @follower.save_custom_fields(true)
-
-    if follow
+    
+    if follow && should_notify?
       payload = {
         notification_type: Notification.types[:following],
         data: {
@@ -47,6 +47,12 @@ class Follow::Updater
       }
       send_notification(payload) unless notification_sent_recently(payload)
     end
+  end
+  
+  def should_notify?
+    SiteSetting.follow_notifications_enabled &&
+    !@follower.follower_disable_send &&
+    !@target.follower_disable_send
   end
   
   def send_notification(payload)
