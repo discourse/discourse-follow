@@ -1,5 +1,5 @@
-{{#d-section pageClass="user-follow" class="user-navigation" scrollTop="false"}}
-  {{#mobile-nav class='activity-nav' desktopClass='action-list follow-list nav-stacked' currentPath=application.currentPath}}
+{{#d-section pageClass="user-follow" class="user-secondary-navigation" scrollTop="false"}}
+  {{#mobile-nav class='activity-nav' desktopClass='action-list follow-list nav-stacked' currentPath=router._router.currentPath}}
     {{#if model.can_see_following}}
       <li>
         {{#link-to 'following'}}{{i18n 'user.following.label'}}{{/link-to}}
@@ -13,6 +13,6 @@
   {{/mobile-nav}}
 {{/d-section}}
 
-<section class='user-right'>
+<section class='user-content'>
   {{outlet}}
 </section>
