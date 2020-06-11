@@ -1,19 +1,13 @@
-{{#if siteSettings.discourse_follow_enabled}}
-    {{#if siteSettings.follow_follower_notifications_enabled}}
-        <div class="control-group follow-notifications">
-            <label class="control-label">{{i18n 'user.followers.label'}}</label>
+<div class="control-group follow-notifications">
+  <label class="control-label">{{i18n 'user.follow.label'}}</label>
+  
+  <div class="controls">
+    {{preference-checkbox
+      labelKey="user.follow_notifications.disable_receive"
+      checked=model.custom_fields.follower_disable_receive}}
 
-            <div class="controls">
-
-                {{preference-checkbox
-                    labelKey="user.follower_disable_receive"
-                    checked=model.custom_fields.follower_disable_receive}}
-
-                {{preference-checkbox
-                    labelKey="user.follower_disable_send"
-                    checked=model.custom_fields.follower_disable_send}}
-                    
-            </div>
-        </div>
-    {{/if}}
-{{/if}}
+    {{preference-checkbox
+      labelKey="user.follow_notifications.disable_send"
+      checked=model.custom_fields.follower_disable_send}}  
+  </div>
+</div>
