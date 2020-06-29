@@ -78,6 +78,28 @@ after_initialize do
   add_to_serializer(:user, :total_following) { object.following.length }
   add_to_serializer(:user, :include_total_following?) { SiteSetting.follow_show_statistics_on_profile }
   
+  add_to_serializer(:user, :can_see_following) { can_see_follow_type("following") }
+  add_to_serializer(:user, :can_see_followers) { can_see_follow_type("followers") }
+  add_to_serializer(:user, :can_see_follow) {
+    can_see_following || can_see_followers
+  }
+  
+  add_to_class(:user_serializer, :can_see_follow_type) do |type|
+    allowed = SiteSetting.try("follow_#{type}_visible") || nil
+    (allowed == 'self' && object.id == scope.current_user.id) || allowed == 'all'
+  end
+  
+  %w[
+    follower_disable_receive
+    follower_disable_send
+  ].each do |field|
+    User.register_custom_field_type(field, :boolean)
+    DiscoursePluginRegistry.serialized_current_user_fields << field
+    add_to_class(:user, field.to_sym) { custom_fields[field] }
+    add_to_serializer(:current_user, :follower_disable_receive) { object.send(field) }
+    register_editable_user_custom_field field.to_sym
+  end
+  
   #### Non-Api Monkey patches
   
   ## User Destroyer

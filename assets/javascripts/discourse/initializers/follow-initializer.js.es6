@@ -32,6 +32,15 @@ export default {
           }
         }
       });
+      
+      api.modifyClass("controller:preferences/notifications", {
+        actions: {
+          save() {
+            this.get("saveAttrNames").push("custom_fields")
+            this._super();
+          }
+        }
+      })
     });
 
     replaceIcon('notification.following', 'user-friends');

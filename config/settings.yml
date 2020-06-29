@@ -1,7 +1,24 @@
 plugins:
-  follow_show_statistics_on_profile:
-    default: true
-    client: true
   discourse_follow_enabled:
     default: true
     client: true
+  follow_show_statistics_on_profile:
+    default: true
+    client: true
+  follow_notifications_enabled:
+    default: true
+    client: true
+  follow_followers_visible:
+    type: enum
+    default: all
+    choices:
+      - self
+      - all
+      - none
+  follow_following_visible:
+    type: enum
+    default: all
+    choices:
+      - self
+      - all
+      - none

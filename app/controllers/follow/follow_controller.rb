@@ -23,18 +23,22 @@ class Follow::FollowController < ApplicationController
 
   def list
     params.require(:type)
-
+    params.require(:username)
+    
     user = User.where('lower(username) = ?', params[:username].downcase).first
-
     raise Discourse::InvalidParameters.new unless user.present?
+    
+    type = params[:type]
+    allowed = SiteSetting.try("follow_#{type}_visible") || nil
 
-    serializer = nil
+    if allowed == 'all' || (allowed == 'self' && (user.id == current_user.id))
+      method = type == 'following' ? 'following_ids' : 'followers'
+      users = user.send(method).map { |user_id| User.find(user_id) }
 
-    method = params[:type] == 'following' ? 'following_ids' : 'followers'
-    users = user.send(method).map { |user_id| User.find(user_id) }
-
-    serializer = ActiveModel::ArraySerializer.new(users, each_serializer: BasicUserSerializer)
-
-    render json: MultiJson.dump(serializer)
+      serializer = ActiveModel::ArraySerializer.new(users, each_serializer: BasicUserSerializer)
+      render json: MultiJson.dump(serializer)
+    else
+      render json: []
+    end
   end
 end
