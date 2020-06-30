@@ -86,7 +86,7 @@ after_initialize do
   
   add_to_class(:user_serializer, :can_see_follow_type) do |type|
     allowed = SiteSetting.try("follow_#{type}_visible") || nil
-    (allowed == 'self' && object.id == scope.current_user.id) || allowed == 'all'
+    (allowed == 'self' && scope.current_user && object.id == scope.current_user.id) || allowed == 'all'
   end
   
   %w[
