@@ -49,7 +49,7 @@ class Follow::Updater
     end
   end
   
-  def should_notify?
+  def should_notify?(payload)
     SiteSetting.follow_notifications_enabled &&
     !@follower.follower_disable_send &&
     !@target.follower_disable_receive &&
