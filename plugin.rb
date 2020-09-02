@@ -117,13 +117,13 @@ after_initialize do
   module UserDestroyerFollowerExtension
     protected def prepare_for_destroy(user)
       user.following_ids.each do |user_id|
-        if following = User.find(user_id)
+        if following = User.find_by(id: user_id)
           updater = Follow::Updater.new(user, following)
           updater.update(false)
         end
       end
       user.followers.each do |user_id|
-        if follower = User.find(user_id)
+        if follower = User.find_by(id: user_id)
           updater = Follow::Updater.new(follower, user)
           updater.update(false)
         end
