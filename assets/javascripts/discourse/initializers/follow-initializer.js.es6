@@ -36,6 +36,17 @@ export default {
       api.modifyClass("controller:preferences/notifications", {
         actions: {
           save() {
+            const custom_settings = [
+              'notify_me_when_followed',
+              'notify_followed_user_when_followed',
+              'notify_me_when_followed_replies',
+              'notify_me_when_followed_posts'
+            ];
+
+            custom_settings.forEach( setting => {
+              this.set(`model.custom_fields.${setting}`, this.get(`model.${setting}`))
+            });
+
             this.get("saveAttrNames").push("custom_fields")
             this._super();
           }

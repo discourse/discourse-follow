@@ -13,7 +13,6 @@ en:
         following: "{{username}} has started following you."
         following_posted: '{{username}} posted "{{topic}}" - {{site_title}}'
         following_replied: '{{username}} posted in "{{topic}}" - {{site_title}}'
-
     topics:
       none:
         following: "There are no topics from users you're following."
@@ -31,6 +30,8 @@ en:
         label: "Followers"
         none: "No-one is following you yet."
         none_other: "No-one is following {{username}} yet."
-      follow_notifications:
-        disable_receive: "Don't notify me when users follow me."
-        disable_send: "Don't notify users when I follow them."
+      follow_notifications_options:
+        notify_followed_user_when_followed: "Notify users when I follow them."
+        notify_me_when_followed: "Notify me when users follow me."
+        notify_me_when_followed_replies: "Notify me when someone I follow replies."
+        notify_me_when_followed_posts: "Notify me when someone I follow posts."
