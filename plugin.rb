@@ -147,7 +147,7 @@ after_initialize do
         notified = [*notified_users[post.id]]
         followers = SiteSetting.follow_notifications_enabled ? post.is_first_post? ? author_posted_followers(post) : author_replied_followers(post) : []
         type = post.is_first_post? ? :following_posted : :following_replied
-        notify_users(followers - notified, type, post)
+        notify_users((followers || []) - notified, type, post)
       end
     end
 
