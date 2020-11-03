@@ -159,7 +159,9 @@ after_initialize do
 
     def author_replied_followers(post)
       User.find(post.user_id).followers.reduce([]) do |users, user_id|
-        user = User.find(user_id) ? User.find(user_id).notify_me_when_followed_replies ? User.find(user_id) : nil : nil
+        unless user = User.find_by(id: user_id) && user.notify_me_when_followed_replies
+          user = nil
+        end
         following = user ? user.following.select { |data| data[0] == post.user_id } : nil
         if following && following.last.to_i == Follow::Notification.levels[:watching]
           users.push(user)
