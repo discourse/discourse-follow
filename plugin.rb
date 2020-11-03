@@ -153,7 +153,10 @@ after_initialize do
 
     def author_posted_followers(post)
       User.find(post.user_id).followers.map do |user_id|
-        User.find(user_id).notify_me_when_followed_posts ? User.find(user_id) : nil
+        unless (user = User.find_by(id: user_id)) && user.notify_me_when_followed_posts
+          user = nil
+        end
+        user
       end.reject(&:nil?)
     end
 
