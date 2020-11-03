@@ -159,7 +159,7 @@ after_initialize do
 
     def author_replied_followers(post)
       User.find(post.user_id).followers.reduce([]) do |users, user_id|
-        unless user = User.find_by(id: user_id) && user.notify_me_when_followed_replies
+        unless (user = User.find_by(id: user_id)) && user.notify_me_when_followed_replies
           user = nil
         end
         following = user ? user.following.select { |data| data[0] == post.user_id } : nil
