@@ -14,7 +14,7 @@ export default Ember.Component.extend({
 
   @computed('user.following')
   icon(following) {
-    return following ? "user-friends" : "user-check";
+    return following ? "user-check" : "user-plus";
   },
 
   @computed('user', 'currentUser')
