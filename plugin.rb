@@ -11,6 +11,7 @@ register_asset 'stylesheets/mobile/follow.scss', :mobile
 
 if respond_to?(:register_svg_icon)
   register_svg_icon "user-friends"
+  register_svg_icon "user-check"
 end
 
 Discourse.top_menu_items.push(:following)

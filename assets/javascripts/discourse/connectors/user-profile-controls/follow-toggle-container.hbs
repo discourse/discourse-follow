@@ -1,3 +1,3 @@
 {{#if siteSettings.discourse_follow_enabled}}
-  {{follow-toggle user=model}}
+  {{follow-toggle icon=(if model.following 'user-check' 'user-plus') user=model}}
 {{/if}}
