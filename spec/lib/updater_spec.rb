@@ -19,4 +19,16 @@ describe ::Follow::Updater do
     expect(["#{user2.custom_fields['followers']}"]).to eq(["#{user1[:id]},#{user3[:id]}"])
   end
 
+  it "sent a notification" do
+    updater = ::Follow::Updater.new(user1, user2)
+    updater.update(true)
+    payload = {
+      notification_type: Notification.types[:following],
+      data: {
+        display_username: user1.username,
+        following: true
+      }.to_json
+    }
+    expect(user2.notifications.where(payload).where('created_at >= ?', 1.day.ago).exists?).to eq(true)
+  end
 end
