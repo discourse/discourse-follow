@@ -23,7 +23,7 @@ he:
       follow:
         label: "עקוב"
       following:
-        label: "עוקב"
+        label: "עוקב אחרי"
         none: "אינך עוקב אחרי אף אחד."
         none_other: "{{username}} לא עוקב אחרי אף אחד.."
       followers:
