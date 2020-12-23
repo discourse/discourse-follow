@@ -85,8 +85,10 @@ after_initialize do
   add_to_serializer(:user_card, :following) { scope.current_user && SiteSetting.discourse_follow_enabled ? object.followers.include?(scope.current_user.id.to_s) : "" }
   add_to_serializer(:user, :include_following?) { scope.current_user }
   add_to_serializer(:user, :total_followers) { SiteSetting.discourse_follow_enabled ? object.followers.length : 0}
+  add_to_serializer(:user_card, :total_followers) { SiteSetting.discourse_follow_enabled ? object.followers.length : 0}
   add_to_serializer(:user, :include_total_followers?) { SiteSetting.follow_show_statistics_on_profile }
   add_to_serializer(:user, :total_following) { SiteSetting.discourse_follow_enabled ? object.following.length : 0}
+  add_to_serializer(:user_card, :total_following) { SiteSetting.discourse_follow_enabled ? object.following.length : 0}
   add_to_serializer(:user, :include_total_following?) { SiteSetting.follow_show_statistics_on_profile }
   add_to_serializer(:user, :can_see_following) { can_see_follow_type("following") }
   add_to_serializer(:user, :can_see_followers) { can_see_follow_type("followers") }
