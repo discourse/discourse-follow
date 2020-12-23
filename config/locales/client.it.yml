@@ -1,0 +1,37 @@
+it:
+  js:
+    filters:
+      following:
+        title: "Following"
+        help: "argomenti con messaggi dagli utenti che stai seguendo"
+    notifications:
+      following: "<span>{{username}}</span> {{description}}"
+      following_description: "ha iniziato a seguirti."
+      following_posted: "<span>{{username}}</span> {{description}}"
+      following_replied: "<span>{{username}}</span> {{description}}"
+      popup:
+        following: "{{username}} ha iniziato a seguirti."
+        following_posted: '{{username}} ha pubblicato "{{topic}}" - {{site_title}}'
+        following_replied: '{{username}} ha risposto in "{{topic}}" - {{site_title}}'
+    topics:
+      none:
+        following: "Non ci sono argomenti dagli utenti che stai seguendo."
+      bottom:
+        following: "Non ci sono altri argomenti dagli utenti che stai seguendo."
+    user:
+      follow_nav: "Rete"
+      follow:
+        label: "Follow"
+      following:
+        label: "Following"
+        none: "Non stai ancora seguendo nessuno."
+        none_other: "{{username}} non sta ancora seguendo nessuno."
+      followers:
+        label: "Followers"
+        none: "Nessuno ti sta ancora seguendo."
+        none_other: "Nessuno sta ancora seguendo {{username}}."
+      follow_notifications_options:
+        notify_followed_user_when_followed: "Notifica gli utenti se inizio a seguirli."
+        notify_me_when_followed: "Notificami se altri utenti iniziano a seguirmi."
+        notify_me_when_followed_replies: "Notificami se qualcuno che seguo risponde."
+        notify_me_when_followed_posts: "Notificami se qualcuno che seguo pubblica."
