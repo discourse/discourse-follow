@@ -17,7 +17,7 @@ es:
       none:
         following: "No hay temas de los usuarios que sigues."
       bottom:
-        following: "Ya no hay temas de los usuarios que sigues."
+        following: "Ya no hay más temas de los usuarios que sigues."
     user:
       follow_nav: "Network"
       follow:
