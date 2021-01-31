@@ -1,0 +1,37 @@
+es:
+  js:
+    filters:
+      following:
+        title: "Siguiendo"
+        help: "temas de publicaciones de usuarios que sigues"
+    notifications:
+      following: "<span>{{username}}</span> {{description}}"
+      following_description: "ha comenzado a seguirte."
+      following_posted: "<span>{{username}}</span> {{description}}"
+      following_replied: "<span>{{username}}</span> {{description}}"
+      popup:
+        following: "{{username}} ha comenzado a seguirte."
+        following_posted: '{{username}} publicó "{{topic}}" - {{site_title}}'
+        following_replied: '{{username}} ha publicado en "{{topic}}" - {{site_title}}'
+    topics:
+      none:
+        following: "No hay temas de los usuarios que sigues."
+      bottom:
+        following: "Ya no hay temas de los usuarios que sigues."
+    user:
+      follow_nav: "Network"
+      follow:
+        label: "Seguir"
+      following:
+        label: "Siguiendo"
+        none: "Aún no has seguido a nadie."
+        none_other: "{{username}} aún no sigue a nadie."
+      followers:
+        label: "Seguidores"
+        none: "Nadie te sigue todavía."
+        none_other: "Nadie sigue a {{username}} todavía."
+      follow_notifications_options:
+        notify_followed_user_when_followed: "Notificar a los usuarios al seguirlos."
+        notify_me_when_followed: "Notificarme cuando los usuarios me siguen."
+        notify_me_when_followed_replies: "Notificarme cuando alguien que sigo responde."
+        notify_me_when_followed_posts: "Notificarme cuando alguien que sigo publica."
