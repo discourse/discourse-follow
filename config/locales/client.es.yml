@@ -3,7 +3,7 @@ es:
     filters:
       following:
         title: "Siguiendo"
-        help: "temas de publicaciones de usuarios que sigues"
+        help: "temas con publicaciones de usuarios que sigues"
     notifications:
       following: "<span>{{username}}</span> {{description}}"
       following_description: "ha comenzado a seguirte."
