@@ -1,0 +1,37 @@
+hu:
+  js:
+    filters:
+      following:
+        title: "Követés"
+        help: "témák a követett felhasználók hozzászólásaival"
+    notifications:
+      following: "<span>{{username}}</span> {{description}}"
+      following_description: "elkezdett követni téged"
+      following_posted: "<span>{{username}}</span> {{description}}"
+      following_replied: "<span>{{username}}</span> {{description}}"
+      popup:
+        following: "{{username}} elkezdett követni téged"
+        following_posted: '{{username}} posztolt "{{topic}}" - {{site_title}}'
+        following_replied: '{{username}} hozzászólt "{{topic}}" - {{site_title}}'
+    topics:
+      none:
+        following: "Nincs téma a követett felhasználóktól."
+      bottom:
+        following: "Nincs több téma a követett felhasználóktól."
+    user:
+      follow_nav: "Közösség"
+      follow:
+        label: "Követés"
+      following:
+        label: "Követett"
+        none: "Még nem követsz senkit."
+        none_other: "{{username}} még nem követ senkit."
+      followers:
+        label: "Követő"
+        none: "Még senki nem követ téged."
+        none_other: "Még senki nem követi {{username}}."
+      follow_notifications_options:
+        notify_followed_user_when_followed: "Értesítsd a felhasználót, ha elkezdem követni."
+        notify_me_when_followed: "Értesíts amikor valaki elkezd követni."
+        notify_me_when_followed_replies: "Értesíts, ha akit követek, válaszol egy bejegyzésre."
+        notify_me_when_followed_posts: "Értesíts, ha akit követek, közzétesz egy bejegyzést."
