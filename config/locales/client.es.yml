@@ -11,7 +11,7 @@ es:
       following_replied: "<span>{{username}}</span> {{description}}"
       popup:
         following: "{{username}} ha comenzado a seguirte."
-        following_posted: '{{username}} publicó "{{topic}}" - {{site_title}}'
+        following_posted: '{{username}} ha publicado "{{topic}}" - {{site_title}}'
         following_replied: '{{username}} ha publicado en "{{topic}}" - {{site_title}}'
     topics:
       none:
@@ -19,7 +19,7 @@ es:
       bottom:
         following: "Ya no hay más temas de los usuarios que sigues."
     user:
-      follow_nav: "Network"
+      follow_nav: "Red"
       follow:
         label: "Seguir"
       following:
@@ -33,5 +33,5 @@ es:
       follow_notifications_options:
         notify_followed_user_when_followed: "Notificar a los usuarios al seguirlos."
         notify_me_when_followed: "Notificarme cuando los usuarios me siguen."
-        notify_me_when_followed_replies: "Notificarme cuando alguien que sigo responde."
-        notify_me_when_followed_posts: "Notificarme cuando alguien que sigo publica."
+        notify_me_when_followed_replies: "Notificarme cuando alguien que sigo responde a un tema."
+        notify_me_when_followed_posts: "Notificarme cuando alguien que sigo publica un tema."
