@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # name: discourse-follow
 # about: Discourse Follow
 # version: 0.2
@@ -23,12 +24,12 @@ after_initialize do
   Notification.types[:following] = 800
   Notification.types[:following_posted] = 801
   Notification.types[:following_replied] = 802
-  
+
   PostAlerter::NOTIFIABLE_TYPES.push(Notification.types[:following])
   PostAlerter::NOTIFIABLE_TYPES.push(Notification.types[:following_posted])
   PostAlerter::NOTIFIABLE_TYPES.push(Notification.types[:following_replied])
   PostAlerter::COLLAPSED_NOTIFICATION_TYPES.push(Notification.types[:following_replied])
-  
+
   %w[
     ../lib/follow/engine.rb
     ../lib/follow/notification.rb
@@ -38,11 +39,11 @@ after_initialize do
   ].each do |path|
     load File.expand_path(path, __FILE__)
   end
-  
+
   add_to_class(:user, :following_ids) do
     following.map { |f| f.first }
   end
-  
+
   add_to_class(:user, :following) do
     if custom_fields['following']
       [*custom_fields['following']].map do |record|
@@ -52,7 +53,7 @@ after_initialize do
       []
     end
   end
-  
+
   add_to_class(:user, :followers) do
     if custom_fields['followers']
       custom_fields['followers'].split(',')
@@ -60,7 +61,7 @@ after_initialize do
       []
     end
   end
-  
+
   add_to_class(:topic_query, :list_following) do
     create_list(:following) do |topics|
       topics.where("
@@ -92,23 +93,23 @@ after_initialize do
   add_to_serializer(:current_user, :total_following) { object.following.length }
   add_to_serializer(:user_card, :following) { scope.current_user && SiteSetting.discourse_follow_enabled ? object.followers.include?(scope.current_user.id.to_s) : "" }
   add_to_serializer(:user, :include_following?) { scope.current_user }
-  add_to_serializer(:user, :total_followers) { SiteSetting.discourse_follow_enabled ? object.followers.length : 0}
-  add_to_serializer(:user_card, :total_followers) { SiteSetting.discourse_follow_enabled ? object.followers.length : 0}
+  add_to_serializer(:user, :total_followers) { SiteSetting.discourse_follow_enabled ? object.followers.length : 0 }
+  add_to_serializer(:user_card, :total_followers) { SiteSetting.discourse_follow_enabled ? object.followers.length : 0 }
   add_to_serializer(:user, :include_total_followers?) { SiteSetting.follow_show_statistics_on_profile }
-  add_to_serializer(:user, :total_following) { SiteSetting.discourse_follow_enabled ? object.following.length : 0}
-  add_to_serializer(:user_card, :total_following) { SiteSetting.discourse_follow_enabled ? object.following.length : 0}
+  add_to_serializer(:user, :total_following) { SiteSetting.discourse_follow_enabled ? object.following.length : 0 }
+  add_to_serializer(:user_card, :total_following) { SiteSetting.discourse_follow_enabled ? object.following.length : 0 }
   add_to_serializer(:user, :include_total_following?) { SiteSetting.follow_show_statistics_on_profile }
   add_to_serializer(:user, :can_see_following) { can_see_follow_type("following") }
   add_to_serializer(:user, :can_see_followers) { can_see_follow_type("followers") }
   add_to_serializer(:user, :can_see_follow) {
     can_see_following || can_see_followers
   }
-  
+
   add_to_class(:user_serializer, :can_see_follow_type) do |type|
     allowed = SiteSetting.try("follow_#{type}_visible") || nil
     (allowed == 'self' && scope.current_user && object.id == scope.current_user.id) || allowed == 'all'
   end
-  
+
   %w[
     notify_me_when_followed
     notify_followed_user_when_followed
@@ -125,15 +126,15 @@ after_initialize do
         true
       end
     end
-    add_to_serializer(:user, field.to_sym)  {object.send(field)}
+    add_to_serializer(:user, field.to_sym)  { object.send(field) }
     register_editable_user_custom_field field.to_sym
   end
 
   #### Non-Api Monkey patches
-  
+
   ## User Destroyer
   ## There is no DiscourseEvent that fires before UserCustomFields are destroyed
-  
+
   module UserDestroyerFollowerExtension
     protected def prepare_for_destroy(user)
       user.following_ids.each do |user_id|
@@ -151,11 +152,11 @@ after_initialize do
       super(user)
     end
   end
-  
+
   class ::UserDestroyer
     prepend UserDestroyerFollowerExtension
   end
-  
+
   ## PostAlerter
   ## A number of overridden methods need to refer to the core method (i.e. super class)
 

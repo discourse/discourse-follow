@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Follow::Notification
   def self.levels
     @levels ||= Enum.new(

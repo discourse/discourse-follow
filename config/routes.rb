@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Discourse::Application.routes.append do
   mount ::Follow::Engine, at: "follow"
   %w{users u}.each_with_index do |root_path, index|

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Follow::FollowController < ApplicationController
   def index
   end
@@ -24,10 +25,10 @@ class Follow::FollowController < ApplicationController
   def list
     params.require(:type)
     params.require(:username)
-    
+
     user = User.where('lower(username) = ?', params[:username].downcase).first
     raise Discourse::InvalidParameters.new unless user.present?
-    
+
     type = params[:type]
     allowed = SiteSetting.try("follow_#{type}_visible") || nil
 

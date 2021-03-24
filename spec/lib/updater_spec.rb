@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative '../plugin_helper'
 
 describe ::Follow::Updater do
@@ -36,13 +37,13 @@ describe ::Follow::Updater do
   it "sent a notification for original poster and replier" do
     updater = ::Follow::Updater.new(user1, user3)
     updater.update(true)
-  
+
     updater = ::Follow::Updater.new(user2, user3)
     updater.update(true)
 
     first_post = Fabricate(:post, topic: topic, user: user1)
     second_post = Fabricate(:post, topic: topic, user: user2)
-  
+
     payload = {
       notification_type: Notification.types[:following],
       data: {
