@@ -1,25 +1,25 @@
-import { ajax } from 'discourse/lib/ajax';
+import { ajax } from "discourse/lib/ajax";
 import DiscourseRoute from "discourse/routes/discourse";
 
 export default DiscourseRoute.extend({
-  model(params) {
-    return ajax(`/u/${this.paramsFor('user').username}/follow/following`, {
-      type: 'GET',
+  model() {
+    return ajax(`/u/${this.paramsFor("user").username}/follow/following`, {
+      type: "GET",
       data: {
-        type: 'followers'
-      }
+        type: "followers",
+      },
     });
   },
 
   setupController(controller, model) {
-    this.controllerFor('follow-users').setProperties({
+    this.controllerFor("follow-users").setProperties({
       users: model,
-      type: 'followers',
-      viewing: this.paramsFor('user').username
+      type: "followers",
+      viewing: this.paramsFor("user").username,
     });
   },
 
   renderTemplate() {
-    this.render('follow-users');
-  }
+    this.render("follow-users");
+  },
 });

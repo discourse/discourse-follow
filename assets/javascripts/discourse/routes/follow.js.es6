@@ -11,9 +11,9 @@ export default DiscourseRoute.extend({
     }
   },
 
-  actions:{
-    refreshFollow(){
+  actions: {
+    refreshFollow() {
       this.refresh();
-    }
-  }
+    },
+  },
 });
