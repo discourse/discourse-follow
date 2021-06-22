@@ -1,10 +1,10 @@
 {{#if siteSettings.discourse_follow_enabled}}
   {{#if siteSettings.follow_show_statistics_on_profile}}
     {{#if user.total_following}}
-      {{follow-statistic label="user.following.label" total=user.total_following context="card"}}
+      <h3>{{i18n "user.following.label"}}<span class="value">{{user.total_following}}</span></h3>
     {{/if}}
     {{#if user.total_followers}}
-      {{follow-statistic label="user.followers.label" total=user.total_followers context="card"}}
+      <h3>{{i18n "user.followers.label"}}<span class="value">{{user.total_followers}}</span></h3>
     {{/if}}
   {{/if}}
 {{/if}}
