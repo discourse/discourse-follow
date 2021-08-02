@@ -1,6 +1,6 @@
 # name: discourse-follow
 # about: Discourse Follow
-# version: 0.2
+# version: 0.3
 # authors: Angus McLeod
 # url: https://github.com/paviliondev/discourse-follow
 
@@ -88,7 +88,12 @@ after_initialize do
   
   add_to_class(:user_serializer, :can_see_follow_type) do |type|
     allowed = SiteSetting.try("follow_#{type}_visible") || nil
-    (allowed == 'self' && scope.current_user && object.id == scope.current_user.id) || allowed == 'all'
+
+    allowedGroup = Group.find_by(name: allowed)
+
+    groupUserEntryExists = scope.current_user && allowedGroup && GroupUser.find_by(user_id: scope.current_user.id, group_id: allowedGroup.id)
+
+    allowed == 'everyone' || allowed == 'self' && scope.current_user && user.id == scope.current_user.id || groupUserEntryExists
   end
   
   %w[
