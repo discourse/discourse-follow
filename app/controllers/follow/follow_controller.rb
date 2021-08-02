@@ -24,14 +24,19 @@ class Follow::FollowController < ApplicationController
   def list
     params.require(:type)
     params.require(:username)
-    
+
     user = User.where('lower(username) = ?', params[:username].downcase).first
     raise Discourse::InvalidParameters.new unless user.present?
-    
+
     type = params[:type]
+
     allowed = SiteSetting.try("follow_#{type}_visible") || nil
 
-    if allowed == 'all' || (allowed == 'self' && (user.id == current_user.id))
+    allowedGroup = Group.find_by(name: allowed)
+
+    groupUserEntryExists = current_user && allowedGroup && GroupUser.find_by(user_id: current_user.id, group_id: allowedGroup.id)
+
+    if allowed == 'everyone' || allowed == 'self' && current_user && user.id == current_user.id || groupUserEntryExists
       method = type == 'following' ? 'following_ids' : 'followers'
       users = user.send(method).map { |user_id| User.find(user_id) }
 

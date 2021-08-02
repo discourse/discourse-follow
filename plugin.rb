@@ -71,23 +71,23 @@ after_initialize do
     end
   end
 
-  public_user_custom_fields_setting = SiteSetting.public_user_custom_fields
-  if public_user_custom_fields_setting.empty?
-    SiteSetting.set("public_user_custom_fields", "followers|following")
-  else
-    if public_user_custom_fields_setting !~ /followers/
-      SiteSetting.set(
-        "public_user_custom_fields",
-        [SiteSetting.public_user_custom_fields, "followers"].join("|"),
-      )
-    end
-    if public_user_custom_fields_setting !~ /following/
-      SiteSetting.set(
-        "public_user_custom_fields",
-        [SiteSetting.public_user_custom_fields, "following"].join("|"),
-      )
-    end
-  end
+  # public_user_custom_fields_setting = SiteSetting.public_user_custom_fields
+  # if public_user_custom_fields_setting.empty?
+  #   SiteSetting.set("public_user_custom_fields", "followers|following")
+  # else
+  #   if public_user_custom_fields_setting !~ /followers/
+  #     SiteSetting.set(
+  #       "public_user_custom_fields",
+  #       [SiteSetting.public_user_custom_fields, "followers"].join("|"),
+  #     )
+  #   end
+  #   if public_user_custom_fields_setting !~ /following/
+  #     SiteSetting.set(
+  #       "public_user_custom_fields",
+  #       [SiteSetting.public_user_custom_fields, "following"].join("|"),
+  #     )
+  #   end
+  # end
 
   add_to_serializer(:current_user, :total_following) { object.following.length }
   add_to_serializer(:user_card, :following) { scope.current_user && SiteSetting.discourse_follow_enabled ? object.followers.include?(scope.current_user.id.to_s) : "" }
@@ -106,7 +106,12 @@ after_initialize do
   
   add_to_class(:user_serializer, :can_see_follow_type) do |type|
     allowed = SiteSetting.try("follow_#{type}_visible") || nil
-    (allowed == 'self' && scope.current_user && object.id == scope.current_user.id) || allowed == 'all'
+
+    allowedGroup = Group.find_by(name: allowed)
+
+    groupUserEntryExists = scope.current_user && allowedGroup && GroupUser.find_by(user_id: scope.current_user.id, group_id: allowedGroup.id)
+
+    allowed == 'everyone' || allowed == 'self' && scope.current_user && user.id == scope.current_user.id || groupUserEntryExists
   end
   
   %w[
