@@ -10,7 +10,7 @@ plugins:
     client: true
   follow_followers_visible:
     type: enum
-    default: all
+    default: everyone
     choices:
       - none
       - self
@@ -23,7 +23,7 @@ plugins:
       - everyone
   follow_following_visible:
     type: enum
-    default: all
+    default: everyone
     choices:
       - none
       - self
