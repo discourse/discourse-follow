@@ -1,5 +1,5 @@
 import { ajax } from 'discourse/lib/ajax';
-import { default as computed, observes, on } from 'ember-addons/ember-computed-decorators';
+import { default as computed, observes, on } from 'discourse-common/utils/decorators';
 import { getOwner } from 'discourse-common/lib/get-owner';
 
 export default Ember.Component.extend({
