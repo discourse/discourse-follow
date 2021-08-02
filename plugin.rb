@@ -71,24 +71,6 @@ after_initialize do
     end
   end
 
-  public_user_custom_fields_setting = SiteSetting.public_user_custom_fields
-  if public_user_custom_fields_setting.empty?
-    SiteSetting.set("public_user_custom_fields", "followers|following")
-  else
-    if public_user_custom_fields_setting !~ /followers/
-      SiteSetting.set(
-        "public_user_custom_fields",
-        [SiteSetting.public_user_custom_fields, "followers"].join("|"),
-      )
-    end
-    if public_user_custom_fields_setting !~ /following/
-      SiteSetting.set(
-        "public_user_custom_fields",
-        [SiteSetting.public_user_custom_fields, "following"].join("|"),
-      )
-    end
-  end
-
   add_to_serializer(:current_user, :total_following) { object.following.length }
   add_to_serializer(:user_card, :following) { scope.current_user && SiteSetting.discourse_follow_enabled ? object.followers.include?(scope.current_user.id.to_s) : "" }
   add_to_serializer(:user, :include_following?) { scope.current_user }
