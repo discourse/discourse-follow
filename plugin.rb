@@ -89,11 +89,14 @@ after_initialize do
   add_to_class(:user_serializer, :can_see_follow_type) do |type|
     allowed = SiteSetting.try("follow_#{type}_visible") || nil
 
-    allowedGroup = Group.find_by(name: allowed)
+    userInAllowedGroup = false
 
-    groupUserEntryExists = scope.current_user && allowedGroup && GroupUser.find_by(user_id: scope.current_user.id, group_id: allowedGroup.id)
+    if !['everyone', 'self', 'no-one'].include? allowed
+      allowedGroup = Group.find_by(name: allowed)
+      userInAllowedGroup = scope.current_user && allowedGroup && GroupUser.find_by(user_id: scope.current_user.id, group_id: allowedGroup.id)
+    end
 
-    allowed == 'everyone' || allowed == 'self' && scope.current_user && user.id == scope.current_user.id || groupUserEntryExists
+    allowed == 'everyone' || allowed != 'no-one' && scope.current_user && user.id == scope.current_user.id || userInAllowedGroup
   end
   
   %w[

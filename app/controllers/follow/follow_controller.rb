@@ -32,11 +32,14 @@ class Follow::FollowController < ApplicationController
 
     allowed = SiteSetting.try("follow_#{type}_visible") || nil
 
-    allowedGroup = Group.find_by(name: allowed)
+    userInAllowedGroup = false
 
-    groupUserEntryExists = current_user && allowedGroup && GroupUser.find_by(user_id: current_user.id, group_id: allowedGroup.id)
+    if !['everyone', 'self', 'no-one'].include? allowed
+      allowedGroup = Group.find_by(name: allowed)
+      userInAllowedGroup = current_user && allowedGroup && GroupUser.find_by(user_id: current_user.id, group_id: allowedGroup.id)
+    end
 
-    if allowed == 'everyone' || allowed == 'self' && current_user && user.id == current_user.id || groupUserEntryExists
+    if  allowed == 'everyone' || allowed != 'no-one' && current_user && user.id == current_user.id || userInAllowedGroup
       method = type == 'following' ? 'following_ids' : 'followers'
       users = user.send(method).map { |user_id| User.find(user_id) }
 

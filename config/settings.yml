@@ -12,7 +12,7 @@ plugins:
     type: enum
     default: everyone
     choices:
-      - none
+      - no-one
       - self
       - staff
       - trust_level_4
@@ -25,7 +25,7 @@ plugins:
     type: enum
     default: everyone
     choices:
-      - none
+      - no-one
       - self
       - staff
       - trust_level_4
