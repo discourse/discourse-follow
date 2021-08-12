@@ -39,11 +39,11 @@ export default Ember.Component.extend({
       }).finally(() => {
         this.set('loading', false);
 
-        let existingTotal = Discourse.User.currentProp('total_following');
+        let existingTotal = this.currentUser.total_following;
         let changeTotal = follow ? 1 : -1;
         let newTotal = existingTotal + changeTotal;
 
-        Discourse.User.currentProp('total_following', newTotal);
+        this.currentUser.set('total_following', newTotal);
 
         const currentRouteName = this.get("router.router.currentRouteName");
 
