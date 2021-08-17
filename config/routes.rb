@@ -5,6 +5,7 @@ Discourse::Application.routes.append do
     get "#{root_path}/:username/follow/following" => "follow/follow#list", constraints: { username: RouteFormat.username }
     get "#{root_path}/:username/follow/followers" => "follow/follow#list", constraints: { username: RouteFormat.username }
   end
+  delete "admin/follow/delete_notifications" => "follow/follow_admin#delete_notifications", constraints: AdminConstraint.new
 end
 
 Follow::Engine.routes.draw do

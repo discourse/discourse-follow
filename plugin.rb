@@ -34,6 +34,7 @@ after_initialize do
     ../lib/follow/notification.rb
     ../lib/follow/updater.rb
     ../app/controllers/follow/follow_controller.rb
+    ../app/controllers/follow/follow_admin_controller.rb
     ../config/routes.rb
   ].each do |path|
     load File.expand_path(path, __FILE__)
