@@ -52,3 +52,20 @@
     padding-left: 5px
   }
 }
+
+.admin-contents table.follow-admin {
+
+  border-collapse: collapse;
+
+  tr:hover  {
+    background-color: unset;
+  }
+
+  td {
+   text-align: center;
+  }
+
+  td:first-of-type {
+    text-align: left;
+   }
+}
