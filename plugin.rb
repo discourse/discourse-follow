@@ -183,7 +183,7 @@ after_initialize do
           user = nil
         end
         following = user ? user.following.select { |data| data[0] == post.user_id } : nil
-        if following && following.last.to_i == Follow::Notification.levels[:watching]
+        if following #&& following.last.to_i == Follow::Notification.levels[:watching]
           users.push(user)
         else
           users
@@ -193,15 +193,15 @@ after_initialize do
 
     def notify_users(users, type, post, opts = {})
       users = super(users, type, post, opts = {})
-      add_notified_users(users, post.id)
+      # add_notified_users(users, post.id)
       users
     end
 
-    def add_notified_users(users, post_id)
-      new_users = [*users]
-      current_users = notified_users[post_id] || []
-      notified_users[post_id] = (new_users + current_users).uniq
-    end
+    # def add_notified_users(users, post_id)
+    #   new_users = [*users]
+    #   current_users = notified_users[post_id] || []
+    #   notified_users[post_id] = (new_users + current_users).uniq
+    # end
 
     def notified_users
       @notified_users ||= []
