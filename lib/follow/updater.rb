@@ -6,7 +6,7 @@ class Follow::Updater
   
   def update(follow)
     follow = ActiveModel::Type::Boolean.new.cast(follow)
-    notification_level = Follow::Notification.levels[:watching]
+    #notification_level = Follow::Notification.levels[:watching]
     
     target_id = @target.id.to_s
     follower_id = @follower.id.to_s
@@ -16,23 +16,14 @@ class Follow::Updater
     
     if follow
       followers.push(follower_id) if followers.exclude?(follower_id)
-
-      if following_ids.include?(target_id)
-        following.each do |f|
-          if f[0] == target_id
-            f[1] = notification_level
-          end
-        end
-      else
-        following.push([target_id, notification_level])
-      end
+      following.push(target_id) if following_ids.exclude?(target_id)
     else
       followers.delete(follower_id)
-      following = following.select { |f| f[0] != target_id }
+      following.delete(target_id)
     end
 
     @target.custom_fields['followers'] = followers.join(',')
-    @follower.custom_fields['following'] = following.map { |f| f.join(',') }
+    @follower.custom_fields['following'] = following.join(',')
 
     @target.save_custom_fields(true)
     @follower.save_custom_fields(true)

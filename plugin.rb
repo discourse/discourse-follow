@@ -160,48 +160,32 @@ after_initialize do
     def after_save_post(post, new_record = false)
       super(post, new_record)
 
-      if new_record && !post.topic.private_message?
+      if SiteSetting.discourse_follow_enabled && new_record && !post.topic.private_message?
         notified = [*notified_users[post.id]]
-        followers = SiteSetting.follow_notifications_enabled ? post.is_first_post? ? author_posted_followers(post) : author_replied_followers(post) : []
+        followers = SiteSetting.follow_notifications_enabled ? author_followers(post) : []
         type = post.is_first_post? ? :following_posted : :following_replied
         notify_users((followers || []) - notified, type, post)
       end
     end
 
-    def author_posted_followers(post)
+    def author_followers(post)
       User.find(post.user_id).followers.map do |user_id|
-        unless (user = User.find_by(id: user_id)) && user.notify_me_when_followed_posts
+        user = User.find_by(id: user_id)
+        if user
+          if post.is_first_post? && user.notify_me_when_followed_posts
+            user
+          elsif
+            !post.is_first_post? && user.notify_me_when_followed_replies
+              user
+          else
+            user = nil
+          end
+        else
           user = nil
         end
         user
       end.reject(&:nil?)
     end
-
-    def author_replied_followers(post)
-      User.find(post.user_id).followers.reduce([]) do |users, user_id|
-        unless (user = User.find_by(id: user_id)) && user.notify_me_when_followed_replies
-          user = nil
-        end
-        following = user ? user.following.select { |data| data[0] == post.user_id } : nil
-        if following #&& following.last.to_i == Follow::Notification.levels[:watching]
-          users.push(user)
-        else
-          users
-        end
-      end
-    end
-
-    # def notify_users(users, type, post, opts = {})
-    #   users = super(users, type, post, opts = {})
-    #   # add_notified_users(users, post.id)
-    #   users
-    # end
-
-    # def add_notified_users(users, post_id)
-    #   new_users = [*users]
-    #   current_users = notified_users[post_id] || []
-    #   notified_users[post_id] = (new_users + current_users).uniq
-    # end
 
     def notified_users
       @notified_users ||= []
@@ -226,9 +210,8 @@ after_initialize do
                 SELECT 1 from user_custom_fields ucf
                 WHERE ucf.user_id = ? AND
                   ucf.name = 'following' AND
-                  split_part(ucf.value,',', 1)::integer = posts.user_id AND
-                  split_part(ucf.value, ',', 2)::integer = ?
-                )", user.id, Follow::Notification.levels[:watching])
+                  posts.user_id = ANY (CONCAT('{',ucf.value,'}')::int[])
+                )", user.id)
           .where(topic_id: topic.id)
       else
         posts = super(user, topic)
