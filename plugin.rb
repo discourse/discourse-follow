@@ -171,16 +171,7 @@ after_initialize do
     def author_followers(post)
       User.find(post.user_id).followers.map do |user_id|
         user = User.find_by(id: user_id)
-        if user
-          if post.is_first_post? && user.notify_me_when_followed_posts
-            user
-          elsif
-            !post.is_first_post? && user.notify_me_when_followed_replies
-              user
-          else
-            user = nil
-          end
-        else
+        unless user && (post.is_first_post? && user.notify_me_when_followed_posts || !post.is_first_post? && user.notify_me_when_followed_replies)
           user = nil
         end
         user
