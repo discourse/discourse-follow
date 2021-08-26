@@ -191,11 +191,11 @@ after_initialize do
       end
     end
 
-    def notify_users(users, type, post, opts = {})
-      users = super(users, type, post, opts = {})
-      # add_notified_users(users, post.id)
-      users
-    end
+    # def notify_users(users, type, post, opts = {})
+    #   users = super(users, type, post, opts = {})
+    #   # add_notified_users(users, post.id)
+    #   users
+    # end
 
     # def add_notified_users(users, post_id)
     #   new_users = [*users]
