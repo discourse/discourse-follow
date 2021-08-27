@@ -41,7 +41,7 @@ class Follow::FollowController < ApplicationController
 
     if  allowed == 'everyone' || allowed != 'no-one' && current_user && user.id == current_user.id || userInAllowedGroup
       method = type == 'following' ? 'following' : 'followers'
-      users = user.send(method).map { |user_id| User.find(user_id) }
+      users = Array(user.send(method)).map { |user_id| User.find(user_id) }
 
       serializer = ActiveModel::ArraySerializer.new(users, each_serializer: BasicUserSerializer)
       render json: MultiJson.dump(serializer)
