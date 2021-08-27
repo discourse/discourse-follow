@@ -12,11 +12,11 @@ class Follow::Updater
     follower_id = @follower.id.to_s
     followers = @target.followers
     following = @follower.following
-    following_ids = @follower.following_ids
+    #following_ids = @follower.following_ids
     
     if follow
       followers.push(follower_id) if followers.exclude?(follower_id)
-      following.push(target_id) if following_ids.exclude?(target_id)
+      following.push(target_id) if following.exclude?(target_id)
     else
       followers.delete(follower_id)
       following.delete(target_id)

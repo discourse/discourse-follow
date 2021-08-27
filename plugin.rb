@@ -41,14 +41,10 @@ after_initialize do
   ].each do |path|
     load File.expand_path(path, __FILE__)
   end
-  
-  add_to_class(:user, :following_ids) do
-    following.map { |f| f.first }
-  end
-  
+ 
   add_to_class(:user, :following) do
     if custom_fields['following']
-      custom_fields['following'].split(',')
+      custom_fields['following']
     else
       []
     end
@@ -56,7 +52,7 @@ after_initialize do
   
   add_to_class(:user, :followers) do
     if custom_fields['followers']
-      custom_fields['followers'].split(',')
+      custom_fields['followers']
     else
       []
     end
@@ -68,7 +64,7 @@ after_initialize do
         topics.id IN (
           SELECT topic_id FROM posts
           WHERE posts.user_id in (?)
-        )", @user.following_ids)
+        )", @user.following)
     end
   end
 
@@ -128,8 +124,8 @@ after_initialize do
   module UserDestroyerFollowerExtension
     protected def prepare_for_destroy(user)
       if SiteSetting.discourse_follow_enabled
-        if user.following_ids.present?
-          user.following_ids.each do |user_id|
+        if user.following.present?
+          user.following.each do |user_id|
             if following = User.find_by(id: user_id)
               updater = Follow::Updater.new(user, following)
               updater.update(false)
