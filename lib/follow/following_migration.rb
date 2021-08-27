@@ -1,22 +1,30 @@
 class Follow::FollowingMigration
   def self.transform_user_arrays
+    p "====================================================="
+    p "|                                                   |"
+    p "| FOLLOW PLUGIN:  Starting following data migration |"
+    p "|                                                   |"
+    p "====================================================="
+    p "                                                     "
+    
     User.find_each do |u|
       if u.following.count > 0
-        u.custom_fields["following"] = convert_to_simple_array(u.following)
-        byebug
+        u.custom_fields["following"] = convert_to_simple_array(u.custom_fields["following"])
+        u.save_custom_fields(true)
       end
     end
-    p "Completed following migration"
+    p "====================================================="
+    p "|                                                   |"
+    p "| FOLLOW PLUGIN: Completed following data migration |"
+    p "|                                                   |"
+    p "====================================================="
   end
 
   def self.convert_to_simple_array(this_array)
-    this_array.reduce([]) do |new_list, item|
-      if item.is_a? Integer
-        this = item
-      else
-        this = item [0]
-      end
-      new_list.push(this)
+    new_array = []
+    this_array.each do |entry|
+      new_array.push(entry.split(',')[0])
     end
+    new_array
   end
 end

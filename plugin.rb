@@ -1,7 +1,7 @@
 # name: discourse-follow
 # about: Discourse Follow
-# version: 0.3
-# authors: Angus McLeod
+# version: 0.4
+# authors: Angus McLeod, Robert Barrow
 # url: https://github.com/paviliondev/discourse-follow
 
 enabled_site_setting :discourse_follow_enabled
@@ -225,5 +225,5 @@ after_initialize do
     prepend PostAlerterFollowExtension
   end
   
- # Follow::FollowingMigration.transform_user_arrays
+  Follow::FollowingMigration.transform_user_arrays
 end
