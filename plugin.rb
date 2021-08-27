@@ -33,9 +33,11 @@ after_initialize do
     ../lib/follow/engine.rb
     ../lib/follow/notification.rb
     ../lib/follow/updater.rb
+    ../lib/follow/following_migration.rb
     ../app/controllers/follow/follow_controller.rb
     ../app/controllers/follow/follow_admin_controller.rb
     ../config/routes.rb
+    ../lib/tasks/follow.rake
   ].each do |path|
     load File.expand_path(path, __FILE__)
   end
@@ -46,9 +48,7 @@ after_initialize do
   
   add_to_class(:user, :following) do
     if custom_fields['following']
-      [*custom_fields['following']].map do |record|
-        record.split(',')
-      end
+      custom_fields['following'].split(',')
     else
       []
     end
@@ -224,4 +224,6 @@ after_initialize do
   class ::PostAlerter
     prepend PostAlerterFollowExtension
   end
+  
+ # Follow::FollowingMigration.transform_user_arrays
 end
