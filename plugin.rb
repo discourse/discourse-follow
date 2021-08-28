@@ -43,6 +43,14 @@ after_initialize do
   add_to_class(:user, :following_ids) do
     following.map { |f| f.first }
   end
+
+  add_to_class(:user, :following_ids_first_post) do
+    following.select { |f| ["0","1"].include?f[1] }.map { |f| f[0] }
+  end
+
+  add_to_class(:user, :following_ids_all_posts) do
+    following.select { |f| f[1] == "0" }.map { |f| f[0] }
+  end
   
   add_to_class(:user, :following) do
     if custom_fields['following']
@@ -68,7 +76,10 @@ after_initialize do
         topics.id IN (
           SELECT topic_id FROM posts
           WHERE posts.user_id in (?)
-        )", @user.following_ids)
+          UNION SELECT topic_id FROM posts
+          WHERE posts.user_id in (?)
+          AND posts.post_number = 1
+        )", @user.following_ids_all_posts, @user.following_ids_first_post)
     end
   end
 
