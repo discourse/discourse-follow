@@ -9,12 +9,32 @@ export default Ember.Component.extend({
 
   @computed('user.following')
   label(following) {
-    return following ? "user.following.label" : "user.follow.label";
+    switch(following)
+    {
+      case "":
+        return "user.following_level.not_following.label";
+      case "0":
+        return "user.following_level.watching.label";
+      case "1":
+        return "user.following_level.watching_first_post.label";
+      default:
+        return "user.following_level.not_following.label";
+    }
   },
 
   @computed('user.following')
   icon(following) {
-    return following ? "user-check" : "user-plus";
+    switch(following)
+    {
+      case "":
+        return "user-plus";
+      case "0":
+        return "user-check";
+      case "1":
+        return "user-check";
+      default:
+        return "user-plus";
+    }
   },
 
   @computed('user', 'currentUser')
@@ -25,7 +45,7 @@ export default Ember.Component.extend({
   actions: {
     follow() {
       let user = this.get('user');
-      let follow = !user.following;
+      let follow = "cycle";
 
       this.set('loading', true);
 
@@ -35,7 +55,7 @@ export default Ember.Component.extend({
           follow
         }
       }).then((result) => {
-        this.set('user.following', result.following);
+        this.set('user.following', result.follow_level);
       }).finally(() => {
         this.set('loading', false);
 

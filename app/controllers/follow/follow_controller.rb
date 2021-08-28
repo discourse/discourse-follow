@@ -11,11 +11,9 @@ class Follow::FollowController < ApplicationController
 
     if user = User.find_by(username: params[:username])
       updater = Follow::Updater.new(current_user, user)
-      updater.update(params[:follow])
+      new_follow_level = updater.cycle
 
-      following = user.followers.include?(current_user.id.to_s)
-
-      render json: success_json.merge(following: following)
+      render json: success_json.merge(follow_level: new_follow_level)
     else
       render json: failed_json
     end

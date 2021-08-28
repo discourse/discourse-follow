@@ -73,7 +73,7 @@ after_initialize do
   end
 
   add_to_serializer(:current_user, :total_following) { object.following.length }
-  add_to_serializer(:user_card, :following) { scope.current_user && SiteSetting.discourse_follow_enabled ? object.followers.include?(scope.current_user.id.to_s) : "" }
+  add_to_serializer(:user_card, :following) { scope.current_user && SiteSetting.discourse_follow_enabled ? (following_entry = scope.current_user.following.find {|e| e[0] == object.id.to_s}) ?  following_entry[1] : "" : "" }
   add_to_serializer(:user, :include_following?) { scope.current_user }
   add_to_serializer(:user, :total_followers) { SiteSetting.discourse_follow_enabled ? object.followers.length : 0}
   add_to_serializer(:user_card, :total_followers) { SiteSetting.discourse_follow_enabled ? object.followers.length : 0}

@@ -35,6 +35,17 @@ en:
       follow_nav: "Network"
       follow:
         label: "Follow"
+      following_level:
+        not_following:
+          label: "Follow"
+        watching_first_post:
+          label: "Following (Topics)"
+        watching:
+          label: "Following (All)"
+      following_watching:
+        label: "Following (All)"
+      following_watching_first_post:
+        label: "Following (Topics)"
       following:
         label: "Following"
         none: "You're not following anyone yet."
