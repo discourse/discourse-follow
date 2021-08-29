@@ -58,7 +58,7 @@ class Follow::Updater
     
     if ["0","1"].include?new_following_level
       payload = {
-        notification_type: notification_level,
+        notification_type: Notification.types[:following],
         data: {
           display_username: @follower.username,
           following: true
