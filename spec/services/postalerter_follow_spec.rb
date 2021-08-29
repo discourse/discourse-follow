@@ -8,10 +8,10 @@ describe ::Follow::Updater do
 
   it "sent a notification for original poster and replier" do
     updater = ::Follow::Updater.new(user3, user1)
-    updater.update(true)
+    updater.cycle
   
     updater = ::Follow::Updater.new(user3, user2)
-    updater.update(true)
+    updater.cycle
     
     first_post = Fabricate(:post, topic: topic, user: user1)
     PostAlerter.post_created(first_post)

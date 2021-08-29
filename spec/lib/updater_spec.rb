@@ -4,27 +4,26 @@ describe ::Follow::Updater do
   fab!(:user1) { Fabricate(:user) }
   fab!(:user2) { Fabricate(:user) }
   fab!(:user3) { Fabricate(:user) }
-  fab!(:user4) { Fabricate(:user) }
   fab!(:topic) { Fabricate(:topic) }
   fab!(:topic2) { Fabricate(:topic) }
 
   it "expect users followers to include follower" do
     updater = ::Follow::Updater.new(user1, user2)
-    updater.update(true)
+    updater.cycle
     expect(["#{user2.custom_fields['followers']}"]).to eq(["#{user1[:id]}"])
   end
 
   it "expect users followers to include multiple followers" do
     updater = ::Follow::Updater.new(user1, user2)
-    updater.update(true)
+    updater.cycle
     updater = ::Follow::Updater.new(user3, user2)
-    updater.update(true)
+    updater.cycle
     expect(["#{user2.custom_fields['followers']}"]).to eq(["#{user1[:id]},#{user3[:id]}"])
   end
 
   it "sent a notification" do
     updater = ::Follow::Updater.new(user1, user2)
-    updater.update(true)
+    updater.cycle
     payload = {
       notification_type: Notification.types[:following],
       data: {
@@ -37,10 +36,10 @@ describe ::Follow::Updater do
 
   it "sent a notification for original poster and replier" do
     updater = ::Follow::Updater.new(user3, user1)
-    updater.update(true)
+    updater.cycle
   
     updater = ::Follow::Updater.new(user3, user2)
-    updater.update(true)
+    updater.cycle
 
     first_post = Fabricate(:post, topic: topic, user: user1)
     second_post = Fabricate(:post, topic: topic, user: user2)
