@@ -173,9 +173,9 @@ after_initialize do
     def after_save_post(post, new_record = false)
       super(post, new_record)
 
-      if new_record && !post.topic.private_message?
+      if SiteSetting.discourse_follow_enabled && SiteSetting.follow_notifications_enabled && new_record && !post.topic.private_message?
         notified = [*notified_users[post.id]]
-        followers = SiteSetting.follow_notifications_enabled ? post.is_first_post? ? author_posted_followers(post) : author_replied_followers(post) : []
+        followers =  post.is_first_post? ? author_posted_followers(post) : author_replied_followers(post)
         type = post.is_first_post? ? :following_posted : :following_replied
         notify_users((followers || []) - notified, type, post)
       end
@@ -195,7 +195,7 @@ after_initialize do
         unless (user = User.find_by(id: user_id)) && user.notify_me_when_followed_replies
           user = nil
         end
-        following = user ? user.following.select { |data| data[0] == post.user_id } : nil
+        following = user ? user.following.select { |data| data[0] == post.user_id.to_s } : nil
         if following && following.last.to_i == Follow::Notification.levels[:watching]
           users.push(user)
         else
