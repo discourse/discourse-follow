@@ -2,9 +2,8 @@ class Follow::FollowController < ApplicationController
   def index
   end
 
-  def update
+  def cycle
     params.require(:username)
-    params.require(:follow)
 
     raise Discourse::InvalidAccess.new unless current_user
     raise Discourse::InvalidParameters.new if current_user.username == params[:username]

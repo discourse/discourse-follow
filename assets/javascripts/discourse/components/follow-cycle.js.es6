@@ -4,7 +4,7 @@ import { getOwner } from 'discourse-common/lib/get-owner';
 
 export default Ember.Component.extend({
   router: Ember.inject.service('-routing'),
-  classNames: 'follow-toggle',
+  classNames: 'follow-cycle',
   tagName: 'li',
 
   @computed('user.following')
@@ -45,25 +45,43 @@ export default Ember.Component.extend({
   actions: {
     follow() {
       let user = this.get('user');
-      let follow = "cycle";
 
       this.set('loading', true);
 
       ajax(`/follow/${user.username}`, {
-        type: 'PUT',
-        data: {
-          follow
-        }
+        type: 'PUT'
       }).then((result) => {
         this.set('user.following', result.follow_level);
+
+        switch(result.follow_level)
+        {
+          case "":
+            this.set('user.total_followers', this.user.total_followers - 1);
+            break;
+          case "0":
+            this.set('user.total_followers', this.user.total_followers + 1);
+            break;
+          case "1":
+            break;
+          default:
+            break;
+        }
       }).finally(() => {
         this.set('loading', false);
 
-        let existingTotal = this.currentUser.total_following;
-        let changeTotal = follow ? 1 : -1;
-        let newTotal = existingTotal + changeTotal;
-
-        this.currentUser.set('total_following', newTotal);
+        switch(result.follow_level)
+        {
+          case "":
+            this.currentUser.set('total_following',  this.currentUser.total_following - 1);
+            break;
+          case "0":
+            this.currentUser.set('total_following',  this.currentUser.total_following + 1);
+            break;
+          case "1":
+            break;
+          default:
+            break;
+        }
 
         const currentRouteName = this.get("router.router.currentRouteName");
 
