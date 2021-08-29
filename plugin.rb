@@ -195,7 +195,7 @@ after_initialize do
         unless (user = User.find_by(id: user_id)) && user.notify_me_when_followed_replies
           user = nil
         end
-        following = user ? user.following.select { |data| data[0] == post.user_id.to_s } : nil
+        following = user ? user.following.find { |data| data[0] == post.user_id.to_s } : nil
         if following && following.last.to_i == Follow::Notification.levels[:watching]
           users.push(user)
         else
