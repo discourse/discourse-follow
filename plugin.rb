@@ -96,7 +96,7 @@ after_initialize do
     can_see_following || can_see_followers
   }
 
-  add_to_serializer(:user_card, :following) { scope.current_user && SiteSetting.discourse_follow_enabled ? (following_entry = scope.current_user.following.find {|e| e[0] == object.id.to_s}) ?  following_entry[1] : "" : "" }
+  add_to_serializer(:user_card, :following_notification_level) { scope.current_user && SiteSetting.discourse_follow_enabled ? (following_entry = scope.current_user.following.find {|e| e[0] == object.id.to_s}) ?  following_entry[1] : "" : "" }
   add_to_serializer(:user_card, :total_followers) { SiteSetting.discourse_follow_enabled ? object.followers.length : 0}
   add_to_serializer(:user_card, :total_following) { SiteSetting.discourse_follow_enabled ? object.following.length : 0}
 

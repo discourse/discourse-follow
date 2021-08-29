@@ -9,5 +9,5 @@ Discourse::Application.routes.append do
 end
 
 Follow::Engine.routes.draw do
-  put ":username" => "follow#cycle", constraints: { username: RouteFormat.username, format: /(json|html)/ }, defaults: { format: :json }
+  put ":username" => "follow#update", constraints: { username: RouteFormat.username, format: /(json|html)/ }, defaults: { format: :json }
 end

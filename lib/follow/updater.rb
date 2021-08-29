@@ -4,7 +4,7 @@ class Follow::Updater
     @target = target
   end
   
-  def cycle
+  def update(new_following_level)
     #follow = ActiveModel::Type::Boolean.new.cast(follow)
 
     target_id = @target.id.to_s
@@ -13,41 +13,22 @@ class Follow::Updater
     following = @follower.following
     following_ids = @follower.following_ids
 
-    following_entry = @follower.following.find {|e| e[0] == target_id.to_s}
-     
-    current_follow_level = following_entry ? following_entry[1] : ""
-    
-    case current_follow_level
-      when "0"
-        new_following_level = "1"
-        notification_level = Follow::Notification.levels[:watching_first_post]
-      when "1"
-        new_following_level = ""
-        notification_level = ""
-      else
-        new_following_level = "0"
-        notification_level = Follow::Notification.levels[:watching]
-        # ignore
-    end
-
     case new_following_level
-      when ""
-        followers.delete(follower_id)
-        following = following.select { |f| f[0] != target_id }
-      when "0","1"
+      when "3","4"
         followers.push(follower_id) if followers.exclude?(follower_id)
 
         if following_ids.include?(target_id)
           following.each do |f|
             if f[0] == target_id
-              f[1] = notification_level
+              f[1] = new_following_level
             end
           end
         else
-          following.push([target_id, notification_level])
+          following.push([target_id, new_following_level])
         end
       else
-        # ignore
+        followers.delete(follower_id)
+        following = following.select { |f| f[0] != target_id }
     end
 
     @target.custom_fields['followers'] = followers.join(',')
@@ -56,7 +37,7 @@ class Follow::Updater
     @target.save_custom_fields(true)
     @follower.save_custom_fields(true)
     
-    if ["0","1"].include?new_following_level
+    if ["3","4"].include?new_following_level
       payload = {
         notification_type: Notification.types[:following],
         data: {

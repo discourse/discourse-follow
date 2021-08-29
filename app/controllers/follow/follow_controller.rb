@@ -2,17 +2,18 @@ class Follow::FollowController < ApplicationController
   def index
   end
 
-  def cycle
+  def update
     params.require(:username)
+    params.require(:following_notification_level)
 
     raise Discourse::InvalidAccess.new unless current_user
     raise Discourse::InvalidParameters.new if current_user.username == params[:username]
 
     if user = User.find_by(username: params[:username])
       updater = Follow::Updater.new(current_user, user)
-      new_follow_level = updater.cycle
+      new_following_notification_level = updater.update(params[:following_notification_level])
 
-      render json: success_json.merge(follow_level: new_follow_level)
+      render json: success_json.merge(following_notification_level: new_following_notification_level)
     else
       render json: failed_json
     end
