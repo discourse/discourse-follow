@@ -45,11 +45,11 @@ after_initialize do
   end
 
   add_to_class(:user, :following_ids_first_post) do
-    following.select { |f| ["0","1"].include?f[1] }.map { |f| f[0] }
+    following.select { |f| ["3","4"].include?f[1] }.map { |f| f[0] }
   end
 
   add_to_class(:user, :following_ids_all_posts) do
-    following.select { |f| f[1] == "0" }.map { |f| f[0] }
+    following.select { |f| f[1] == "3" }.map { |f| f[0] }
   end
   
   add_to_class(:user, :following) do
@@ -196,7 +196,7 @@ after_initialize do
           user = nil
         end
         following = user ? user.following.find { |data| data[0] == post.user_id.to_s } : nil
-        if following && following.last.to_i == Follow::Notification.levels[:watching]
+        if following && following.last == Follow::Notification.levels[:watching]
           users.push(user)
         else
           users

@@ -9,21 +9,21 @@ describe ::Follow::Updater do
 
   it "expect users followers to include follower" do
     updater = ::Follow::Updater.new(user1, user2)
-    updater.cycle
+    updater.update(Follow::Notification.levels[:watching_first_post])
     expect(["#{user2.custom_fields['followers']}"]).to eq(["#{user1[:id]}"])
   end
 
   it "expect users followers to include multiple followers" do
     updater = ::Follow::Updater.new(user1, user2)
-    updater.cycle
+    updater.update(Follow::Notification.levels[:watching])
     updater = ::Follow::Updater.new(user3, user2)
-    updater.cycle
+    updater.update(Follow::Notification.levels[:watching_first_post])
     expect(["#{user2.custom_fields['followers']}"]).to eq(["#{user1[:id]},#{user3[:id]}"])
   end
 
   it "sent a notification" do
     updater = ::Follow::Updater.new(user1, user2)
-    updater.cycle
+    updater.update(Follow::Notification.levels[:watching])
     payload = {
       notification_type: Notification.types[:following],
       data: {
@@ -36,10 +36,10 @@ describe ::Follow::Updater do
 
   it "sent a notification for original poster and replier" do
     updater = ::Follow::Updater.new(user3, user1)
-    updater.cycle
+    updater.update(Follow::Notification.levels[:watching_first_post])
   
     updater = ::Follow::Updater.new(user3, user2)
-    updater.cycle
+    updater.update(Follow::Notification.levels[:watching])
 
     first_post = Fabricate(:post, topic: topic, user: user1)
     second_post = Fabricate(:post, topic: topic, user: user2)
@@ -68,7 +68,7 @@ describe ::Follow::Updater do
         original_post_type: 1,
         original_username: user2.username,
         revision_number: nil,
-        display_username: "2 replies"
+        display_username: user2.username
       }.to_json
     }
 
