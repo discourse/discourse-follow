@@ -49,3 +49,11 @@
     text-align: left;
    }
 }
+
+.select-kit.dropdown-select-box.user-notifications-dropdown {
+  width:100%;
+  .select-kit-header-wrapper {
+    align-items: center;
+    justify-content: center;
+  }
+}
