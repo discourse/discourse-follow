@@ -1,7 +1,7 @@
 # name: discourse-follow
 # about: Discourse Follow
-# version: 0.3
-# authors: Angus McLeod
+# version: 1.0
+# authors: Angus McLeod, Robert Barrow
 # url: https://github.com/paviliondev/discourse-follow
 
 enabled_site_setting :discourse_follow_enabled
@@ -33,6 +33,7 @@ after_initialize do
     ../lib/follow/engine.rb
     ../lib/follow/notification.rb
     ../lib/follow/updater.rb
+    ../lib/follow/following_migration.rb
     ../app/controllers/follow/follow_controller.rb
     ../app/controllers/follow/follow_admin_controller.rb
     ../config/routes.rb
@@ -138,4 +139,5 @@ after_initialize do
     add_to_serializer(:user, field.to_sym)  {object.send(field)}
     register_editable_user_custom_field field.to_sym
   end
+  Follow::FollowingMigration.transform_user_following_arrays
 end
