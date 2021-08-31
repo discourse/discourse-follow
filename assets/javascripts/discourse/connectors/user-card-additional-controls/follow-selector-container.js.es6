@@ -4,11 +4,11 @@ export default {
     Ember.run.scheduleOnce('afterRender', () => {
       const $container = $(component.get('element'));
       const $usercardControls = $container.siblings('ul.usercard-controls');
-      const toggle = 'li.follow-toggle';
+      const container = 'li.follow-selector-container';
       
-      if (!$usercardControls.find(toggle).length) {
-        $usercardControls.append($container.find(toggle));
+      if (!$usercardControls.find(container).length) {
+        $usercardControls.append($container.find(container));
       }
     });
-  }
+ }
 }

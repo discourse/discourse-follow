@@ -9,7 +9,7 @@ RSpec.describe 'FollowController', type: :request do
   context "lists" do
     before do
       updater = ::Follow::Updater.new(user1, user2)
-      updater.update(true)
+      updater.update(Follow::Notification.levels[:watching])
     end
 
     it "following" do
@@ -32,8 +32,9 @@ RSpec.describe 'FollowController', type: :request do
   it "updates followers" do
     sign_in(user1)
 
-    put "/follow/#{user2.username}.json", params: { follow: true }
+    put "/follow/#{user2.username}.json", params: {following_notification_level: Follow::Notification.levels[:watching]}
+
     expect(response.status).to eq(200)
-    expect(response.parsed_body['following']).to eq(true)
+    expect(response.parsed_body['following_notification_level']).to eq("3")
   end
 end

@@ -1,7 +1,7 @@
 # name: discourse-follow
 # about: Discourse Follow
-# version: 0.3
-# authors: Angus McLeod
+# version: 1.0
+# authors: Angus McLeod, Robert Barrow
 # url: https://github.com/paviliondev/discourse-follow
 
 enabled_site_setting :discourse_follow_enabled
@@ -33,15 +33,26 @@ after_initialize do
     ../lib/follow/engine.rb
     ../lib/follow/notification.rb
     ../lib/follow/updater.rb
+    ../lib/follow/following_migration.rb
     ../app/controllers/follow/follow_controller.rb
     ../app/controllers/follow/follow_admin_controller.rb
     ../config/routes.rb
+    ../app/models/user_destroyer_edits.rb
+    ../app/models/post_alerter_edits.rb
   ].each do |path|
     load File.expand_path(path, __FILE__)
   end
   
   add_to_class(:user, :following_ids) do
     following.map { |f| f.first }
+  end
+
+  add_to_class(:user, :following_ids_first_post) do
+    following.select { |f| ["3","4"].include?f[1] }.map { |f| f[0] }
+  end
+
+  add_to_class(:user, :following_ids_all_posts) do
+    following.select { |f| f[1] == "3" }.map { |f| f[0] }
   end
   
   add_to_class(:user, :following) do
@@ -68,25 +79,34 @@ after_initialize do
         topics.id IN (
           SELECT topic_id FROM posts
           WHERE posts.user_id in (?)
-        )", @user.following_ids)
+          UNION SELECT topic_id FROM posts
+          WHERE posts.user_id in (?)
+          AND posts.post_number = 1
+        )", @user.following_ids_all_posts, @user.following_ids_first_post)
     end
   end
 
   add_to_serializer(:current_user, :total_following) { object.following.length }
-  add_to_serializer(:user_card, :following) { scope.current_user && SiteSetting.discourse_follow_enabled ? object.followers.include?(scope.current_user.id.to_s) : "" }
+
   add_to_serializer(:user, :include_following?) { scope.current_user }
   add_to_serializer(:user, :total_followers) { SiteSetting.discourse_follow_enabled ? object.followers.length : 0}
-  add_to_serializer(:user_card, :total_followers) { SiteSetting.discourse_follow_enabled ? object.followers.length : 0}
   add_to_serializer(:user, :include_total_followers?) { SiteSetting.follow_show_statistics_on_profile }
   add_to_serializer(:user, :total_following) { SiteSetting.discourse_follow_enabled ? object.following.length : 0}
-  add_to_serializer(:user_card, :total_following) { SiteSetting.discourse_follow_enabled ? object.following.length : 0}
   add_to_serializer(:user, :include_total_following?) { SiteSetting.follow_show_statistics_on_profile }
   add_to_serializer(:user, :can_see_following) { can_see_follow_type("following") }
   add_to_serializer(:user, :can_see_followers) { can_see_follow_type("followers") }
   add_to_serializer(:user, :can_see_follow) {
     can_see_following || can_see_followers
   }
-  
+
+  add_to_serializer(:user_card, :following_notification_level) {
+    scope.current_user && SiteSetting.discourse_follow_enabled ?
+      (following_entry = scope.current_user.following.find {|e| e[0] == object.id.to_s}) ? following_entry[1] : ""
+      : ""
+  }
+  add_to_serializer(:user_card, :total_followers) { SiteSetting.discourse_follow_enabled ? object.followers.length : 0}
+  add_to_serializer(:user_card, :total_following) { SiteSetting.discourse_follow_enabled ? object.following.length : 0}
+
   add_to_class(:user_serializer, :can_see_follow_type) do |type|
     allowed = SiteSetting.try("follow_#{type}_visible") || nil
 
@@ -119,135 +139,5 @@ after_initialize do
     add_to_serializer(:user, field.to_sym)  {object.send(field)}
     register_editable_user_custom_field field.to_sym
   end
-
-  #### Non-Api Monkey patches
-  
-  ## User Destroyer
-  ## There is no DiscourseEvent that fires before UserCustomFields are destroyed
-  
-  module UserDestroyerFollowerExtension
-    protected def prepare_for_destroy(user)
-      if SiteSetting.discourse_follow_enabled
-        if user.following_ids.present?
-          user.following_ids.each do |user_id|
-            if following = User.find_by(id: user_id)
-              updater = Follow::Updater.new(user, following)
-              updater.update(false)
-            end
-          end
-        end
-        if user.followers.present? && 
-          user.followers.each do |user_id|
-            if follower = User.find_by(id: user_id)
-              updater = Follow::Updater.new(follower, user)
-              updater.update(false)
-            end
-          end
-        end
-      end
-      super(user)
-    end
-  end
-  
-  class ::UserDestroyer
-    prepend UserDestroyerFollowerExtension
-  end
-  
-  ## PostAlerter
-  ## A number of overridden methods need to refer to the core method (i.e. super class)
-
-  module PostAlerterFollowExtension
-    def after_save_post(post, new_record = false)
-      super(post, new_record)
-
-      if new_record && !post.topic.private_message?
-        notified = [*notified_users[post.id]]
-        followers = SiteSetting.follow_notifications_enabled ? post.is_first_post? ? author_posted_followers(post) : author_replied_followers(post) : []
-        type = post.is_first_post? ? :following_posted : :following_replied
-        notify_users((followers || []) - notified, type, post)
-      end
-    end
-
-    def author_posted_followers(post)
-      User.find(post.user_id).followers.map do |user_id|
-        unless (user = User.find_by(id: user_id)) && user.notify_me_when_followed_posts
-          user = nil
-        end
-        user
-      end.reject(&:nil?)
-    end
-
-    def author_replied_followers(post)
-      User.find(post.user_id).followers.reduce([]) do |users, user_id|
-        unless (user = User.find_by(id: user_id)) && user.notify_me_when_followed_replies
-          user = nil
-        end
-        following = user ? user.following.select { |data| data[0] == post.user_id } : nil
-        if following && following.last.to_i == Follow::Notification.levels[:watching]
-          users.push(user)
-        else
-          users
-        end
-      end
-    end
-
-    def notify_users(users, type, post, opts = {})
-      users = super(users, type, post, opts = {})
-      add_notified_users(users, post.id)
-      users
-    end
-
-    def add_notified_users(users, post_id)
-      new_users = [*users]
-      current_users = notified_users[post_id] || []
-      notified_users[post_id] = (new_users + current_users).uniq
-    end
-
-    def notified_users
-      @notified_users ||= []
-    end
-
-    def create_notification(user, type, post, opts = {})
-      @current_notification_type = type
-      super(user, type, post, opts)
-      @current_notification_type = nil
-    end
-
-    def unread_posts(user, topic)
-      if @current_notification_type == Notification.types[:following_replied]
-        posts = Post.secured(Guardian.new(user))
-          .where('post_number > COALESCE((
-                   SELECT last_read_post_number FROM topic_users tu
-                   WHERE tu.user_id = ? AND tu.topic_id = ? ),0)',
-                    user.id, topic.id)
-
-        posts = posts
-          .where("exists(
-                SELECT 1 from user_custom_fields ucf
-                WHERE ucf.user_id = ? AND
-                  ucf.name = 'following' AND
-                  split_part(ucf.value,',', 1)::integer = posts.user_id AND
-                  split_part(ucf.value, ',', 2)::integer = ?
-                )", user.id, Follow::Notification.levels[:watching])
-          .where(topic_id: topic.id)
-      else
-        posts = super(user, topic)
-      end
-
-      posts
-    end
-
-    def first_unread_post(user, topic)
-      unread_posts(user, topic).order('post_number').first
-    end
-
-    def unread_count(user, topic)
-      unread_posts(user, topic).count
-    end
-  end
-
-  require_dependency 'post_alerter'
-  class ::PostAlerter
-    prepend PostAlerterFollowExtension
-  end
+  Follow::FollowingMigration.transform_user_following_arrays
 end
