@@ -1,0 +1,37 @@
+ca:
+  js:
+    filters:
+      following:
+        title: "Seguint"
+        help: "temes amb publicacions d'usuaris que segueixes"
+    notifications:
+      following: "<span>{{username}}</span> {{description}}"
+      following_description: "t'ha començat a seguir."
+      following_posted: "<span>{{username}}</span> {{description}}"
+      following_replied: "<span>{{username}}</span> {{description}}"
+      popup:
+        following: "{{username}} t'ha començat a seguir."
+        following_posted: '{{username}} ha publicat "{{topic}}" - {{site_title}}'
+        following_replied: '{{username}} ha publicat en "{{topic}}" - {{site_title}}'
+    topics:
+      none:
+        following: "No hi ha temes dels usuaris que segueixes."
+      bottom:
+        following: "Ja no hi ha temes dels usuaris que seguiexes."
+    user:
+      follow_nav: "Xarxa"
+      follow:
+        label: "Seguir"
+      following:
+        label: "Seguint"
+        none: "No segueixes a ningú encara."
+        none_other: "{{username}} no segueix a ningú encara."
+      followers:
+        label: "Seguidors"
+        none: "Ningú et segeuix encara."
+        none_other: "Ningú segueix a {{username}} encara."
+      follow_notifications_options:
+        notify_followed_user_when_followed: "Notifica als usuaris quan els segueixo."
+        notify_me_when_followed: "Notifica'm quan els usuaris em segueixen."
+        notify_me_when_followed_replies: "Notifica'm quan algú que segueixo respon a un tema."
+        notify_me_when_followed_posts: "Notifica'm quan algú que segueixo publica un tema."
