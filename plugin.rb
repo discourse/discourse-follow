@@ -33,7 +33,6 @@ after_initialize do
     ../lib/follow/engine.rb
     ../lib/follow/notification.rb
     ../lib/follow/updater.rb
-    ../lib/follow/following_migration.rb
     ../app/controllers/follow/follow_controller.rb
     ../app/controllers/follow/follow_admin_controller.rb
     ../config/routes.rb
@@ -140,4 +139,3 @@ after_initialize do
     register_editable_user_custom_field field.to_sym
   end
 end
-
