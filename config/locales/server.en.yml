@@ -5,3 +5,4 @@ en:
     follow_notifications_enabled: "Enable all follow notifications."
     follow_followers_visible: "Followers visibility."
     follow_following_visible: "Following visibility."
+    follow_following_data_migration: "Run the Following data migration (should only need to happen ONCE)"
