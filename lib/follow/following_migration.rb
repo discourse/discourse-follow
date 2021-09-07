@@ -13,6 +13,9 @@ class Follow::FollowingMigration
         u.save_custom_fields(true)
       end
     end
+
+    SiteSetting.follow_following_data_migration = false
+    
     p "====================================================="
     p "|                                                   |"
     p "| FOLLOW PLUGIN: Completed following data migration |"
