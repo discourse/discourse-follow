@@ -1,35 +1,66 @@
-es:
+en:
+  admin_js:
+    admin:
+      follow:
+        label: "Seguir"
+        settings:
+          label: "Ajustes"
+        delete_notifications:
+          label: "Eliminar notificaciones de seguimiento para todos los usuarios"
+          advice: "(haz esto antes de deshabilitar o eliminar el plugin)"
+          modal_title: "Eliminar. notificaciones de seguimiento"
+          modal_question: "¿Estás seguro que quieres las notificaciones de seguimiento de todos los usuarios?"
+          modal_cancel: "Cancelar"
+          modal_commit: "Eliminar"
   js:
     filters:
       following:
         title: "Siguiendo"
-        help: "temas con publicaciones de usuarios que sigues"
+        help: "temas con publicaciones de usuarios que estás siguiendo"
     notifications:
       following: "<span>{{username}}</span> {{description}}"
       following_description: "ha comenzado a seguirte."
       following_posted: "<span>{{username}}</span> {{description}}"
       following_replied: "<span>{{username}}</span> {{description}}"
+      titles:
+        following_posted: "nuevo tema de alguien que estás siguiendo"
+        following_replied: "nueva publicación de alguien que estás siguiendo"
+        following: "alguien ha comenzado a seguirte"
       popup:
         following: "{{username}} ha comenzado a seguirte."
         following_posted: '{{username}} ha publicado "{{topic}}" - {{site_title}}'
         following_replied: '{{username}} ha publicado en "{{topic}}" - {{site_title}}'
     topics:
       none:
-        following: "No hay temas de los usuarios que sigues."
+        following: "No hay temas de usuarios que estás siguiendo."
       bottom:
-        following: "Ya no hay más temas de los usuarios que sigues."
+        following: "Ya no hay más temas de los usuarios que estás siguiendo."
     user:
       follow_nav: "Red"
       follow:
         label: "Seguir"
+      following_level:
+        regular:
+          title: "Regular Only"
+          description: "No seguirás a este usuario, las notificaciones estarán como normal. Solamente aparecerán en la lista de temas que sigues si publicas en un tema en el que respondió un usuario que sigues."
+        watching_first_post:
+          title: "Siguiendo (Temas)"
+          description: "Seguirás a este usuario, y recibirás notificaciones para todos sus nuevos temas. Solamente los temas de su autoría aparecerán en la lista de temas que sigues."
+        watching:
+          title: "Siguiendo (Todo)"
+          description: "Seguirás a este usuario, y recibirás notificaciones para todas sus publicaciones. Todos los temas con respuestas suyas aparecerán en la lista de temas que sigues."
+      following_watching:
+        label: "Siguiendo (Todo)"
+      following_watching_first_post:
+        label: "Siguiendo (Temas)"
       following:
         label: "Siguiendo"
-        none: "Aún no has seguido a nadie."
+        none: "Aún no sigues a nadie."
         none_other: "{{username}} aún no sigue a nadie."
       followers:
         label: "Seguidores"
-        none: "Nadie te sigue todavía."
-        none_other: "Nadie sigue a {{username}} todavía."
+        none: "Aún nadie te sigue."
+        none_other: "Aún nadie sigue a {{username}}."
       follow_notifications_options:
         notify_followed_user_when_followed: "Notificar a los usuarios al seguirlos."
         notify_me_when_followed: "Notificarme cuando los usuarios me siguen."
