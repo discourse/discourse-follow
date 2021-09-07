@@ -22,6 +22,10 @@ en:
       following_description: "has started following you."
       following_posted: "<span>{{username}}</span> {{description}}"
       following_replied: "<span>{{username}}</span> {{description}}"
+      titles:
+        following_posted: "new topic from someone you are following"
+        following_replied: "new post from someone you are following"
+        following: "someone has started following you"
       popup:
         following: "{{username}} has started following you."
         following_posted: '{{username}} posted "{{topic}}" - {{site_title}}'
