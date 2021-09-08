@@ -5,4 +5,3 @@ ca:
     follow_notifications_enabled: "Activar totes les notificacions de seguiment."
     follow_followers_visible: "Visibilitat de seguidors."
     follow_following_visible: "Visibilitat de següents."
-    follow_following_data_migration: "Executar la migració de dades (sol haura de ser necessari UNA VEGADA)"
