@@ -41,7 +41,7 @@ es:
         label: "Seguir"
       following_level:
         regular:
-          title: "Regular Only"
+          title: "Regular solamente"
           description: "No seguirás a este usuario, las notificaciones estarán como normal. Solamente aparecerán en la lista de temas que sigues si publicas en un tema en el que respondió un usuario que sigues."
         watching_first_post:
           title: "Siguiendo (Temas)"
