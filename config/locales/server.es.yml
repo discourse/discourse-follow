@@ -5,4 +5,3 @@ es:
     follow_notifications_enabled: "Habilitar todas las notificaciones de seguimiento."
     follow_followers_visible: "Visibilidad de seguidores."
     follow_following_visible: "Visibilidad de siguientes."
-    follow_following_data_migration: "Ejecutar la migración de datos (solo debería ser necesario UNA VEZ)"
