@@ -33,7 +33,6 @@ after_initialize do
     ../lib/follow/engine.rb
     ../lib/follow/notification.rb
     ../lib/follow/updater.rb
-    ../lib/follow/following_migration.rb
     ../app/controllers/follow/follow_controller.rb
     ../app/controllers/follow/follow_admin_controller.rb
     ../config/routes.rb
@@ -138,8 +137,5 @@ after_initialize do
     end
     add_to_serializer(:user, field.to_sym)  {object.send(field)}
     register_editable_user_custom_field field.to_sym
-  end
-  if SiteSetting.follow_following_data_migration
-    Follow::FollowingMigration.transform_user_following_arrays
   end
 end

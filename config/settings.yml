@@ -34,6 +34,3 @@ plugins:
       - trust_level_1
       - trust_level_0
       - everyone
-  follow_following_data_migration:
-    default: true
-    client: false
