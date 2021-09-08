@@ -41,15 +41,15 @@ ca:
         label: "Seguir"
       following_level:
         regular:
-          title: "Regular Only"
+          title: "Regular solament"
           description: "No seguiràs a aquest usuari, notificacions estaran com a normal. Solament apareixeran a la llista de temes que segueixes si publicas en un tema en que un usuari que segueixes ha publicat"
           title: "Seguint (Temes)"
           description: "Seguiràs a aquest usuari, i rebràs notificacions per a tots els seus nous temes. Solament temes de la seva autoria apareixeran a la llista de temes que segueixes"
         watching:
-          title: "Seguint (Tots)"
+          title: "Seguint (Tot)"
           description: "Seguiràs a aquest usuari, i rebràs notificacions per a totes les seves publicacions. Tots els temes contenint les seves publicacions apareixeran a la llista de temes que segueixes"
       following_watching:
-        label: "Seguint (Tots)"
+        label: "Seguint (Tot)"
       following_watching_first_post:
         label: "Seguint (Temes)"
       following:
