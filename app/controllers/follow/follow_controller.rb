@@ -1,50 +1,66 @@
+# frozen_string_literal: true
+
 class Follow::FollowController < ApplicationController
-  def index
+  FOLLOWING ||= :following
+  FOLLOWERS ||= :followers
+
+  def follow
+    raise Discourse::InvalidAccess.new if !current_user
+
+    user = User.find_by_username(params.require(:username))
+    if user.blank?
+      return render json: {
+        errors: [I18n.t("follow.user_not_found", username: params[:username].inspect)]
+      }, status: 404
+    end
+
+    Follow::Updater.new(current_user, user).watch_follow
+    render json: success_json
   end
 
-  def update
-    params.require(:username)
-    params.require(:following_notification_level)
+  def unfollow
+    raise Discourse::InvalidAccess.new if !current_user
 
-    raise Discourse::InvalidAccess.new unless current_user
-    raise Discourse::InvalidParameters.new if current_user.username == params[:username]
-
-    if user = User.find_by(username: params[:username])
-      updater = Follow::Updater.new(current_user, user)
-      new_following_notification_level = updater.update(params[:following_notification_level])
-
-      render json: success_json.merge(following_notification_level: new_following_notification_level)
-    else
-      render json: failed_json
+    user = User.find_by_username(params.require(:username))
+    if user.blank?
+      return render json: {
+        errors: [I18n.t("follow.user_not_found", username: params[:username].inspect)]
+      }, status: 404
     end
+
+    Follow::Updater.new(current_user, user).unfollow
+    render json: success_json
   end
 
-  def list
-    params.require(:type)
-    params.require(:username)
+  def list_following
+    list(FOLLOWING)
+  end
 
-    user = User.where('lower(username) = ?', params[:username].downcase).first
-    raise Discourse::InvalidParameters.new unless user.present?
+  def list_followers
+    list(FOLLOWERS)
+  end
 
-    type = params[:type]
+  private
 
-    allowed = SiteSetting.try("follow_#{type}_visible") || nil
+  def list(type)
+    user = User.find_by_username(params.require(:username))
+    raise Discourse::NotFound.new if user.blank?
 
-    userInAllowedGroup = false
-
-    if !['everyone', 'self', 'no-one'].include? allowed
-      allowedGroup = Group.find_by(name: allowed)
-      userInAllowedGroup = current_user && allowedGroup && GroupUser.find_by(user_id: current_user.id, group_id: allowedGroup.id)
-    end
-
-    if  allowed == 'everyone' || allowed != 'no-one' && current_user && user.id == current_user.id || userInAllowedGroup
-      method = type == 'following' ? 'following_ids' : 'followers'
-      users = user.send(method).map { |user_id| User.find(user_id) }
-
-      serializer = ActiveModel::ArraySerializer.new(users, each_serializer: BasicUserSerializer)
-      render json: MultiJson.dump(serializer)
+    if type == FOLLOWERS
+      if !FollowPagesVisibility.can_see_followers_page?(user: current_user, target_user: user)
+        raise Discourse::InvalidAccess.new
+      end
+      users = user.followers.to_a
+    elsif type == FOLLOWING
+      if !FollowPagesVisibility.can_see_following_page?(user: current_user, target_user: user)
+        raise Discourse::InvalidAccess.new
+      end
+      users = user.following.to_a
     else
-      render json: []
+      raise Discourse::InvalidParameters.new
     end
+
+    serializer = ActiveModel::ArraySerializer.new(users, each_serializer: BasicUserSerializer)
+    render json: MultiJson.dump(serializer)
   end
 end

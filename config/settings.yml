@@ -9,28 +9,16 @@ plugins:
     default: true
     client: true
   follow_followers_visible:
-    type: enum
+    enum: "FollowPagesVisibility"
     default: everyone
-    choices:
-      - no-one
-      - self
-      - staff
-      - trust_level_4
-      - trust_level_3
-      - trust_level_2
-      - trust_level_1
-      - trust_level_0
-      - everyone
   follow_following_visible:
-    type: enum
+    enum: "FollowPagesVisibility"
     default: everyone
-    choices:
-      - no-one
-      - self
-      - staff
-      - trust_level_4
-      - trust_level_3
-      - trust_level_2
-      - trust_level_1
-      - trust_level_0
-      - everyone
+  default_notify_me_when_followed:
+    default: true
+  default_notify_followed_user_when_followed:
+    default: true
+  default_notify_me_when_followed_replies:
+    default: false
+  default_notify_me_when_followed_creates_topic:
+    default: false

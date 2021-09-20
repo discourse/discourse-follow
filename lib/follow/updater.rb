@@ -1,67 +1,77 @@
+# frozen_string_literal: true
+
 class Follow::Updater
   def initialize(follower, target)
     @follower = follower
     @target = target
   end
-  
-  def update(new_following_level)
-    #follow = ActiveModel::Type::Boolean.new.cast(follow)
 
-    target_id = @target.id.to_s
-    follower_id = @follower.id.to_s
-    followers = @target.followers
-    following = @follower.following
-    following_ids = @follower.following_ids
-
-    case new_following_level
-      when "3","4"
-        followers.push(follower_id) if followers.exclude?(follower_id)
-
-        if following_ids.include?(target_id)
-          following.each do |f|
-            if f[0] == target_id
-              f[1] = new_following_level
-            end
-          end
-        else
-          following.push([target_id, new_following_level])
-        end
-      else
-        followers.delete(follower_id)
-        following = following.select { |f| f[0] != target_id }
-    end
-
-    @target.custom_fields['followers'] = followers.join(',')
-    @follower.custom_fields['following'] = following.map { |f| f.join(',') }
-
-    @target.save_custom_fields(true)
-    @follower.save_custom_fields(true)
-    
-    if ["3","4"].include?new_following_level
-      payload = {
-        notification_type: Notification.types[:following],
-        data: {
-          display_username: @follower.username,
-          following: true
-        }.to_json
-      }
-      send_notification(payload) if should_notify?(payload)
-    end
-
-    new_following_level
+  def watch_follow
+    follow(Follow::Notification.levels[:watching])
   end
-  
+
+  def unfollow
+    UserFollower
+      .where(follower_id: @follower.id, user_id: @target.id)
+      .destroy_all
+  end
+
+  private
+
+  def follow(notification_level)
+    if @target.id == @follower.id
+      raise Discourse::InvalidAccess.new(
+        nil,
+        nil,
+        custom_message: 'follow.user_cannot_follow_themself'
+      )
+    end
+
+    %i(bot staged suspended).each do |status|
+      if @target.public_send(:"#{status}?")
+        raise Discourse::InvalidAccess.new(
+          nil,
+          nil,
+          custom_message: "follow.user_cannot_follow_#{status}"
+        )
+      end
+    end
+
+    if !Follow::Notification.levels.invert.key?(notification_level)
+      raise Discourse::InvalidParameters.new(
+        I18n.t("follow.invalid_notification_level", level: notification_level.inspect)
+      )
+    end
+
+    relation = UserFollower.find_or_initialize_by(
+      user_id: @target.id,
+      follower_id: @follower.id,
+    )
+    relation.level = notification_level
+    relation.save!
+
+    payload = {
+      notification_type: Notification.types[:following],
+      data: {
+        display_username: @follower.username
+      }.to_json
+    }
+    send_notification(payload) if should_notify?(payload)
+
+    relation
+  end
+
   def should_notify?(payload)
     SiteSetting.follow_notifications_enabled &&
     @follower.notify_followed_user_when_followed &&
     @target.notify_me_when_followed &&
     !notification_sent_recently(payload)
   end
-  
+
   def send_notification(payload)
     @target.notifications.create!(payload)
   end
-  
+
   def notification_sent_recently(payload)
     @target.notifications.where(payload).where('created_at >= ?', 1.day.ago).exists?
   end
