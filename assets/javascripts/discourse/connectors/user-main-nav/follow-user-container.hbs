@@ -1,5 +1,3 @@
-{{#if siteSettings.discourse_follow_enabled}}
-  {{#if model.can_see_follow}}
-    {{#link-to 'follow'}}{{d-icon "users"}}{{i18n 'user.follow_nav'}}{{/link-to}}
-  {{/if}}
+{{#if model.can_see_network_tab}}
+  {{#link-to "follow"}}{{d-icon "users"}}{{i18n "user.follow_nav"}}{{/link-to}}
 {{/if}}

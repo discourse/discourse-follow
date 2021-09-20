@@ -1,17 +1,4 @@
 en:
-  admin_js:
-    admin:
-      follow:
-        label: "Follow"
-        settings:
-          label: "Settings"
-        delete_notifications:
-          label: "Delete Follow Notifications for All Users"
-          advice: "(do this before disabling or removing the plugin)"
-          modal_title: "Delete Follow Notifications"
-          modal_question: "Are you sure you want to delete all users Follow Notifications?"
-          modal_cancel: "Cancel"
-          modal_commit: "Delete"
   js:
     filters:
       following:
@@ -39,16 +26,6 @@ en:
       follow_nav: "Network"
       follow:
         label: "Follow"
-      following_level:
-        regular:
-          title: "Regular Only"
-          description: "You will not be following this User, Notifications will be as normal.  They will only appear in the Following Topic List if Posting within a Topic also Posted in by someone you are Following"
-        watching_first_post:
-          title: "Following (Topics)"
-          description: "You will be following this User, and will receive Notifications for all their new Topics.  Only Topics they have authored will appear in the Following Topic list"
-        watching:
-          title: "Following (All)"
-          description: "You will be following this User, and will receive Notifications for all their Posts.  All Topics containing their Posts will appear in the Following Topic list"
       following_watching:
         label: "Following (All)"
       following_watching_first_post:
@@ -62,7 +39,19 @@ en:
         none: "No-one is following you yet."
         none_other: "No-one is following {{username}} yet."
       follow_notifications_options:
-        notify_followed_user_when_followed: "Notify users when I follow them."
-        notify_me_when_followed: "Notify me when users follow me."
-        notify_me_when_followed_replies: "Notify me when someone I follow replies."
-        notify_me_when_followed_posts: "Notify me when someone I follow posts."
+        notify_followed_user_when_followed: "Notify users when I follow them"
+        notify_me_when_followed: "Notify me when users follow me"
+        notify_me_when_followed_replies: "Notify me when someone I follow replies"
+        notify_me_when_followed_creates_topic: "Notify me when someone I follow creates a topic"
+    follow:
+      follow_pages_visibility:
+        no-one: "No one"
+        self: "Self"
+        trust_level_4: "Trust Level 4"
+        trust_level_3: "Trust Level 3"
+        trust_level_2: "Trust Level 2"
+        trust_level_1: "Trust Level 1"
+        trust_level_0: "Trust Level 0"
+        everyone: "Everyone"
+      follow_button_label: "Follow"
+      unfollow_button_label: "Unfollow"

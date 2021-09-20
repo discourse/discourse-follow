@@ -5,3 +5,10 @@ en:
     follow_notifications_enabled: "Enable all follow notifications."
     follow_followers_visible: "Followers visibility."
     follow_following_visible: "Following visibility."
+  follow:
+    user_not_found: "Couldn't find user with username %{username}"
+    user_cannot_follow_themself: "User is not allowed to follow themself"
+    invalid_notification_level: "Invalid notification level %{level}"
+    cannot_follow_bot: "Cannot follow a bot user"
+    cannot_follow_suspended: "Cannot follow a suspend user"
+    cannot_follow_staged: "Cannot follow a staged user"

@@ -1,18 +1,18 @@
 {{#d-section pageClass="user-follow" class="user-secondary-navigation" scrollTop="false"}}
-  {{#mobile-nav class='activity-nav' desktopClass='action-list follow-list nav-stacked' currentPath=router._router.currentPath}}
+  {{#mobile-nav class="activity-nav" desktopClass="action-list follow-list nav-stacked" currentPath=router._router.currentPath}}
     {{#if model.can_see_following}}
       <li>
-        {{#link-to 'following'}}{{i18n 'user.following.label'}}{{/link-to}}
+        {{#link-to "following"}}{{i18n "user.following.label"}}{{/link-to}}
       </li>
     {{/if}}
     {{#if model.can_see_followers}}
       <li>
-        {{#link-to 'followers'}}{{i18n 'user.followers.label'}}{{/link-to}}
+        {{#link-to "followers"}}{{i18n "user.followers.label"}}{{/link-to}}
       </li>
     {{/if}}
   {{/mobile-nav}}
 {{/d-section}}
 
-<section class='user-content'>
+<section class="user-content">
   {{outlet}}
 </section>
