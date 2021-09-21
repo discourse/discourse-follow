@@ -29,9 +29,7 @@ Discourse::Application.routes.append do
 end
 
 Discourse.top_menu_items.push(:following)
-Discourse.anonymous_top_menu_items.push(:following)
 Discourse.filters.push(:following)
-Discourse.anonymous_filters.push(:following)
 
 after_initialize do
   Notification.types[:following] = 800
@@ -58,15 +56,17 @@ after_initialize do
   add_to_class(:topic_query, :list_following) do
     create_list(:following) do |topics|
       allowed_post_types = [Post.types[:regular]]
-      allowed_post_types << Post.types[:whisper] if @user&.staff?
+      allowed_post_types << Post.types[:whisper] if @user.staff?
       topics.joins(<<~SQL)
         INNER JOIN (
-          SELECT topic_id
+          SELECT DISTINCT topic_id
           FROM posts
           INNER JOIN user_followers
           ON user_followers.user_id = posts.user_id
           WHERE follower_id = #{@user.id}
           AND posts.post_type IN (#{allowed_post_types.join(",")})
+          AND posts.deleted_at IS NULL
+          AND posts.deleted_by_id IS NULL
         ) topics_by_followed_users
         ON topics_by_followed_users.topic_id = topics.id
       SQL
@@ -76,10 +76,6 @@ after_initialize do
   add_to_serializer(:current_user, :total_following) do
     object.following.count
   end
-
-  # add_to_serializer(:user, :include_following?) do
-  #   SiteSetting.discourse_follow_enabled && scope.current_user
-  # end
 
   add_to_serializer(:user, :total_followers, false) do
     object.followers.count

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe "/following topic list" do
-  fab!(:follower) { Fabricate(:user) }
+  fab!(:follower) { Fabricate(:admin) }
   fab!(:followed1) { Fabricate(:admin) }
   fab!(:followed2) { Fabricate(:admin) }
 
@@ -11,6 +11,7 @@ describe "/following topic list" do
   fab!(:secure_category) { Fabricate(:private_category, group: group) }
 
   before do
+    Jobs.run_immediately!
     Follow::Updater.new(follower, followed1).watch_follow
     Follow::Updater.new(follower, followed2).watch_follow
     SiteSetting.enable_whispers = true
@@ -37,6 +38,7 @@ describe "/following topic list" do
   end
 
   it "does not show private topics that follower does not have access to" do
+    follower.update!(admin: false)
     create_topic(user: Fabricate(:admin), category: secure_category).tap do |t|
       create_post(topic: t, user: t.user) # 1st post
       create_post(topic: t, user: followed1)
@@ -99,6 +101,21 @@ describe "/following topic list" do
     end
     normal_topic = create_topic.tap do |t|
       create_post(topic: t, user: followed2)
+    end
+    get "/following.json"
+    topics = response.parsed_body["topic_list"]["topics"]
+    expect(topics.map { |j| j["id"] }).to contain_exactly(normal_topic.id)
+  end
+
+  it "does not show topics that contain only deleted posts by a followed user" do
+    create_topic.tap do |t|
+      create_post(topic: t, user: t.user) # 1st post
+      post = create_post(topic: t, user: followed2)
+      PostDestroyer.new(Discourse.system_user, post).destroy
+    end
+    normal_topic = create_topic.tap do |t|
+      create_post(topic: t, user: t.user) # 1st post
+      post = create_post(topic: t, user: followed2)
     end
     get "/following.json"
     topics = response.parsed_body["topic_list"]["topics"]
