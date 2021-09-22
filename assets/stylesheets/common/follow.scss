@@ -1,24 +1,5 @@
-.about.collapsed-info .follow-selector-container {
-  margin-top: 1px;
-
-  button {
-    padding: 5px 10px;
-    min-height: initial;
-    margin-bottom: 0;
-  }
-}
-
-.viewing-self .follow-selector-container {
-  display: none !important;
-}
-
 .follow-users {
   padding: 10px 20px;
-}
-
-.follow-none {
-  background-color: $primary-low;
-  padding: 20px 30px;
 }
 
 .follow-statistic {
@@ -31,36 +12,4 @@
   .value {
     padding-left: 5px;
   }
-}
-
-.admin-contents table.follow-admin {
-  border-collapse: collapse;
-
-  tr:hover {
-    background-color: unset;
-  }
-
-  td {
-    text-align: center;
-  }
-
-  td:first-of-type {
-    text-align: left;
-  }
-}
-
-.select-kit.dropdown-select-box.user-notifications-dropdown {
-  width: 100%;
-  .select-kit-header-wrapper {
-    align-items: center;
-    justify-content: center;
-  }
-}
-
-.select-kit.dropdown-select-box .select-kit-row .texts .desc {
-  text-align: left;
-}
-
-.user-main .about .controls {
-  max-width: 14em;
 }
