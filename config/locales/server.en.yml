@@ -5,6 +5,11 @@ en:
     follow_notifications_enabled: "Enable all follow notifications."
     follow_followers_visible: "Followers visibility."
     follow_following_visible: "Following visibility."
+    default_notify_me_when_followed: 'Default value for the <code>Notify me when users follow me</code> user preference. Changing this setting only applies to users who have never changed their notification preferences of the follow plugin'
+    default_notify_followed_user_when_followed: 'Default value for the <code>Notify users when I follow them</code> user preference. Changing this setting only applies to users who have never changed their notification preferences of the follow plugin'
+    default_notify_me_when_followed_replies: 'Default value for the <code>Notify me when someone I follow replies</code> user preference. Changing this setting only applies to users who have never changed their notification preferences of the follow plugin'
+    default_notify_me_when_followed_creates_topic: 'Default value for the <code>Notify me when someone I follow creates a topic</code> user preference. Changing this setting only applies to users who have never changed their notification preferences of the follow plugin'
+
   follow:
     user_not_found: "Couldn't find user with username %{username}"
     user_cannot_follow_themself: "User is not allowed to follow themself"

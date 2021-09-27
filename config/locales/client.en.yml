@@ -23,7 +23,7 @@ en:
       bottom:
         following: "There are no more topics from users you're following."
     user:
-      follow_nav: "Network"
+      follow_nav: "Follows"
       follow:
         label: "Follow"
       following_watching:
