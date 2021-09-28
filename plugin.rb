@@ -221,6 +221,30 @@ after_initialize do
       count = posts_by_following.count
       original_post = post
       post = posts_by_following.order('post_number').first || post
+
+      begin
+        orig_logster_env = Thread.current[Logster::Logger::LOGSTER_ENV]
+        new_env = orig_logster_env.dup || {}
+        new_env.merge!(
+          follower_ids: followers.pluck(:id).inspect,
+          topic_id: topic.id,
+          post_user_id: post.user.id,
+          follower_id: f.id,
+          post_id: post.id,
+          post_number: post.post_number,
+          notified_size: notified&.size.inspect,
+          notified_ids: notified&.map(&:id).inspect,
+          original_post_id: original_post.id,
+          original_post_number: original_post.post_number,
+          count: count,
+          sql_query: posts_by_following.to_sql
+        )
+        Thread.current[Logster::Logger::LOGSTER_ENV] = new_env
+        Rails.logger.warn("[osama-debug-follow-plugin] notification from topic #{topic.id} to user #{f.id}")
+      ensure
+        Thread.current[Logster::Logger::LOGSTER_ENV] = orig_logster_env
+      end
+
       display_username = post.user.username
       if count > 1
         I18n.with_locale(f.effective_locale) do
