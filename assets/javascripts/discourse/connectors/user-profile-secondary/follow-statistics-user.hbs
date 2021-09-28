@@ -1,10 +1,6 @@
-{{#if siteSettings.discourse_follow_enabled}}
-  {{#if siteSettings.follow_show_statistics_on_profile}}
-    {{#if model.total_following}}
-      {{follow-statistic label="user.following.label" total=model.total_following context="profile"}}
-    {{/if}}
-    {{#if model.total_followers}}
-      {{follow-statistic label="user.followers.label" total=model.total_followers context="profile"}}
-    {{/if}}
-  {{/if}}
+{{#if model.total_following}}
+  {{follow-statistic label="user.following.label" total=model.total_following context="profile"}}
+{{/if}}
+{{#if model.total_followers}}
+  {{follow-statistic label="user.followers.label" total=model.total_followers context="profile"}}
 {{/if}}
