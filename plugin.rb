@@ -73,22 +73,22 @@ after_initialize do
     end
   end
 
-  add_to_serializer(:current_user, :total_following) do
-    object.following.count
-  end
-
   add_to_serializer(:user, :total_followers, false) do
-    object.followers.count
+    user.followers.count
   end
   add_to_serializer(:user, :include_total_followers?) do
-    SiteSetting.discourse_follow_enabled && SiteSetting.follow_show_statistics_on_profile
+    SiteSetting.discourse_follow_enabled &&
+      SiteSetting.follow_show_statistics_on_profile &&
+      can_see_followers
   end
 
   add_to_serializer(:user, :total_following, false) do
     user.following.count
   end
   add_to_serializer(:user, :include_total_following?) do
-    SiteSetting.discourse_follow_enabled && SiteSetting.follow_show_statistics_on_profile
+    SiteSetting.discourse_follow_enabled &&
+      SiteSetting.follow_show_statistics_on_profile &&
+      can_see_following
   end
 
   add_to_serializer(:user, :can_see_following) do
@@ -109,11 +109,22 @@ after_initialize do
     SiteSetting.discourse_follow_enabled && scope.current_user.present?
   end
 
-  add_to_serializer(:user_card, :total_followers) do
+  add_to_serializer(:user_card, :total_followers, false) do
     object.followers.count
   end
-  add_to_serializer(:user_card, :total_following) do
+  add_to_serializer(:user_card, :include_total_followers?) do
+    SiteSetting.discourse_follow_enabled &&
+      SiteSetting.follow_show_statistics_on_profile &&
+      FollowPagesVisibility.can_see_followers_page?(user: scope.current_user, target_user: object)
+  end
+
+  add_to_serializer(:user_card, :total_following, false) do
     object.following.count
+  end
+  add_to_serializer(:user_card, :include_total_following?) do
+    SiteSetting.discourse_follow_enabled &&
+      SiteSetting.follow_show_statistics_on_profile &&
+      FollowPagesVisibility.can_see_following_page?(user: scope.current_user, target_user: object)
   end
 
   %i[
