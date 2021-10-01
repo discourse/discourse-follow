@@ -1,0 +1,10 @@
+{{#load-more selector=".user-stream-item" action=(action "loadMore")}}
+  <div class="user-stream">
+    {{#each model.posts as |post|}}
+      {{follow-feed-post post=post}}
+    {{else}}
+      <div class="alert alert-info">{{i18n "user_activity.follow.empty_feed"}}</div>
+    {{/each}}
+  </div>
+  {{conditional-loading-spinner condition=loading}}
+{{/load-more}}

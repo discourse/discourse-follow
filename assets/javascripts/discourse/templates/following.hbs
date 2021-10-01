@@ -1,0 +1,10 @@
+{{#if displayFeedLink}}
+  {{#link-to "userActivity.follow" user.username class="feed-link"}}
+    {{i18n "user.following.feed_link"}}
+  {{/link-to}}
+{{/if}}
+{{follow-users-list
+  users=users
+  type="following"
+  user=user
+}}

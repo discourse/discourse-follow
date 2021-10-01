@@ -28,6 +28,10 @@ describe Follow::FollowController do
     expect(response.parsed_body.map { |j| j["id"] }).to contain_exactly(*expected_ids)
   end
 
+  def response_topic_ids(response)
+    response.parsed_body["posts"].map { |t| t["id"] }
+  end
+
   ["followers", "following"].each do |type|
     describe "#list_#{type}" do
       before do
@@ -115,7 +119,6 @@ describe Follow::FollowController do
 
   describe "#unfollow" do
     before do
-
       ::Follow::Updater.new(user1, user2).watch_follow
       ::Follow::Updater.new(user2, user1).watch_follow
     end
@@ -132,6 +135,135 @@ describe Follow::FollowController do
       delete "/follow/doesnotexist.json"
       expect(response.status).to eq(404)
       expect(response.parsed_body["errors"]).to include(I18n.t("follow.user_not_found", username: "doesnotexist".inspect))
+    end
+  end
+
+  describe "#posts" do
+    before do
+      ::Follow::Updater.new(user1, user2).watch_follow
+      ::Follow::Updater.new(user1, tl3).watch_follow
+    end
+
+    fab!(:post_5) { Fabricate(:post, user: user2, created_at: 20.hours.ago) }
+    fab!(:post_4) { Fabricate(:post, user: user2, created_at: 10.hours.ago) }
+    fab!(:post_3) { Fabricate(:post, user: user2, created_at: 5.hours.ago) }
+    fab!(:post_2) { Fabricate(:post, user: tl3, created_at: 3.hours.ago) }
+    fab!(:post_1) { Fabricate(:post, user: user2, topic: post_3.topic, created_at: 2.hours.ago) }
+    fab!(:post_by_unfollowed_user) { Fabricate(:post) }
+
+    it "does not allow non-staff users to access the follow posts feed of other users" do
+      sign_in(user1)
+      get "/follow/posts/#{user2.username}.json"
+      expect(response.status).to eq(403)
+
+      sign_in(user2)
+      get "/follow/posts/#{user1.username}.json"
+      expect(response.status).to eq(403)
+
+      sign_out
+      get "/follow/posts/#{user1.username}.json"
+      expect(response.status).to eq(403)
+    end
+
+    it "allows staff users to acess the follow posts feed of other users" do
+      mod = Fabricate(:moderator)
+      sign_in(mod)
+      get "/follow/posts/#{user1.username}.json"
+      expect(response.status).to eq(200)
+      expect(response_topic_ids(response)).to eq(
+        [post_1, post_2, post_3, post_4, post_5].map(&:id)
+      )
+
+      admin = Fabricate(:admin)
+      sign_in(admin)
+      get "/follow/posts/#{user1.username}.json"
+      expect(response.status).to eq(200)
+      expect(response_topic_ids(response)).to eq(
+        [post_1, post_2, post_3, post_4, post_5].map(&:id)
+      )
+    end
+
+    it "allows users to see their own follow posts feed" do
+      sign_in(user1)
+      get "/follow/posts/#{user1.username}.json"
+      expect(response.status).to eq(200)
+      expect(response_topic_ids(response)).to eq(
+        [post_1, post_2, post_3, post_4, post_5].map(&:id)
+      )
+    end
+
+    it "indicates in the response whether or not there are more posts" do
+      sign_in(user1)
+      get "/follow/posts/#{user1.username}.json", { params: { limit: 2 } }
+      expect(response.status).to eq(200)
+      expect(response_topic_ids(response)).to eq([post_1.id, post_2.id])
+      expect(response.parsed_body['extras']['has_more']).to eq(true)
+
+      get "/follow/posts/#{user1.username}.json", { params: { limit: 5 } }
+      expect(response.status).to eq(200)
+      expect(response_topic_ids(response)).to eq(
+        [post_1, post_2, post_3, post_4, post_5].map(&:id)
+      )
+      expect(response.parsed_body['extras']['has_more']).to eq(false)
+    end
+
+    it "paginates correctly" do
+      sign_in(user1)
+      get "/follow/posts/#{user1.username}.json", { params: { limit: 2 } }
+      expect(response.status).to eq(200)
+      expect(response_topic_ids(response)).to eq([post_1.id, post_2.id])
+      expect(response.parsed_body['extras']['has_more']).to eq(true)
+
+      get "/follow/posts/#{user1.username}.json", {
+        params: { limit: 2, created_before: post_2.created_at }
+      }
+      expect(response.status).to eq(200)
+      expect(response_topic_ids(response)).to eq([post_3.id, post_4.id])
+      expect(response.parsed_body['extras']['has_more']).to eq(true)
+
+      get "/follow/posts/#{user1.username}.json", {
+        params: { limit: 2, created_before: post_4.created_at }
+      }
+      expect(response.status).to eq(200)
+      expect(response_topic_ids(response)).to eq([post_5.id])
+      expect(response.parsed_body['extras']['has_more']).to eq(false)
+    end
+
+    it "responds with an error if the supplied created_before date is invalid" do
+      sign_in(user1)
+      get "/follow/posts/#{user1.username}.json", {
+        params: { created_before: "sdfsfs" }
+      }
+      expect(response.status).to eq(400)
+      expect(response.parsed_body["errors"]).to contain_exactly(
+        I18n.t("follow.invalid_created_before_date", value: "sdfsfs".inspect)
+      )
+    end
+
+    it "serializes posts with all the attributes that the client needs" do
+      sign_in(user1)
+      get "/follow/posts/#{user1.username}.json", { params: { limit: 1 } }
+      expect(response.status).to eq(200)
+      posts = response.parsed_body['posts']
+      p = response.parsed_body['posts'][0]
+      expect(p["excerpt"]).to be_present
+      expect(p["category_id"]).to eq(post_1.topic.category.id)
+      expect(p["created_at"]).to eq(post_1.created_at.iso8601(3))
+      expect(p["id"]).to eq(post_1.id)
+      expect(p["post_number"]).to eq(post_1.post_number)
+      expect(p["topic_id"]).to eq(post_1.topic.id)
+      expect(p["url"]).to eq(post_1.url)
+
+      expect(p["user"]["id"]).to eq(post_1.user.id)
+      expect(p["user"]["username"]).to eq(post_1.user.username)
+      expect(p["user"]["name"]).to eq(post_1.user.name)
+      expect(p["user"]["avatar_template"]).to eq(post_1.user.avatar_template)
+
+      expect(p["topic"]["id"]).to eq(post_1.topic.id)
+      expect(p["topic"]["title"]).to eq(post_1.topic.title)
+      expect(p["topic"]["fancy_title"]).to eq(post_1.topic.fancy_title)
+      expect(p["topic"]["slug"]).to eq(post_1.topic.slug)
+      expect(p["topic"]["posts_count"]).to eq(post_1.topic.posts_count)
     end
   end
 end

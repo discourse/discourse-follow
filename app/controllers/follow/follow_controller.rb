@@ -35,6 +35,39 @@ class Follow::FollowController < ApplicationController
     list(FOLLOWERS)
   end
 
+  def posts
+    raise Discourse::InvalidAccess.new if !current_user
+
+    user = fetch_user
+    return if user.blank?
+
+    ensure_can_see_feed!(user)
+
+    limit = (params[:limit].presence || 20).to_i
+    limit = 20 if limit <= 0
+
+    created_before = nil
+    if val = params[:created_before].presence
+      created_before = validate_date(val)
+      if created_before.nil?
+        return render json: {
+          errors: [
+            I18n.t("follow.invalid_created_before_date", value: val.inspect)
+          ]
+        }, status: 400
+      end
+    end
+
+    posts, has_more = find_posts_feed(user, limit, created_before)
+    render_serialized(
+      posts,
+      FollowPostSerializer,
+      root: 'posts',
+      extras: { has_more: has_more },
+      rest_serializer: true
+    )
+  end
+
   private
 
   def list(type)
@@ -76,5 +109,33 @@ class Follow::FollowController < ApplicationController
       return nil
     end
     user
+  end
+
+  def ensure_can_see_feed!(target_user)
+    if target_user.id != current_user.id && !current_user.staff?
+      raise Discourse::InvalidAccess.new
+    end
+  end
+
+  def validate_date(value)
+    value.to_s.to_datetime
+  rescue Date::Error
+    nil
+  end
+
+  def find_posts_feed(target_user, limit, created_before)
+    posts = UserFollower.posts_for(
+      target_user,
+      current_user: current_user,
+      limit: limit + 1,
+      created_before: created_before
+    ).to_a
+
+    has_more = false
+    if posts.size == limit + 1
+      has_more = true
+      posts.pop
+    end
+    [posts, has_more]
   end
 end

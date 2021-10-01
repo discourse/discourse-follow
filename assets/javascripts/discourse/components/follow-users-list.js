@@ -1,14 +1,11 @@
-import Controller from "@ember/controller";
+import Component from "@ember/component";
 import discourseComputed from "discourse-common/utils/decorators";
+import { propertyEqual } from "discourse/lib/computed";
 import { notEmpty } from "@ember/object/computed";
 
-export default Controller.extend({
+export default Component.extend({
   hasUsers: notEmpty("users"),
-
-  @discourseComputed("viewing")
-  viewingSelf(viewing) {
-    return viewing === this.get("currentUser.username");
-  },
+  viewingSelf: propertyEqual("user.username", "currentUser.username"),
 
   @discourseComputed("type", "viewingSelf")
   noneMessage(type, viewingSelf) {

@@ -17,3 +17,4 @@ en:
     cannot_follow_bot: "Cannot follow a bot user"
     cannot_follow_suspended: "Cannot follow a suspend user"
     cannot_follow_staged: "Cannot follow a staged user"
+    invalid_created_before_date: "Received an invalid date for the `created_before` param: %{value}"
