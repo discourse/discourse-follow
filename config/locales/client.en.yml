@@ -31,6 +31,7 @@ en:
       following_watching_first_post:
         label: "Following (Topics)"
       following:
+        feed_link: "Follow feed"
         label: "Following"
         none: "You're not following anyone yet."
         none_other: "{{username}} is not following anyone yet."
@@ -55,3 +56,7 @@ en:
         everyone: "Everyone"
       follow_button_label: "Follow"
       unfollow_button_label: "Unfollow"
+    user_activity:
+      follow:
+        title: "Follow"
+        empty_feed: "No posts by people you follow yet."
