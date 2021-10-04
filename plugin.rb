@@ -28,9 +28,6 @@ Discourse::Application.routes.append do
   end
 end
 
-Discourse.top_menu_items.push(:following)
-Discourse.filters.push(:following)
-
 after_initialize do
   Notification.types[:following] = 800
   Notification.types[:following_created_topic] = 801
@@ -51,26 +48,6 @@ after_initialize do
 
     has_many :following_relations, class_name: 'UserFollower', foreign_key: :follower_id, dependent: :delete_all
     has_many :following, through: :following_relations, source: :followed_user
-  end
-
-  add_to_class(:topic_query, :list_following) do
-    create_list(:following) do |topics|
-      allowed_post_types = [Post.types[:regular]]
-      allowed_post_types << Post.types[:whisper] if @user.staff?
-      topics.joins(<<~SQL)
-        INNER JOIN (
-          SELECT DISTINCT topic_id
-          FROM posts
-          INNER JOIN user_followers
-          ON user_followers.user_id = posts.user_id
-          WHERE follower_id = #{@user.id}
-          AND posts.post_type IN (#{allowed_post_types.join(",")})
-          AND posts.deleted_at IS NULL
-          AND posts.deleted_by_id IS NULL
-        ) topics_by_followed_users
-        ON topics_by_followed_users.topic_id = topics.id
-      SQL
-    end
   end
 
   add_to_serializer(:user, :total_followers, false) do
