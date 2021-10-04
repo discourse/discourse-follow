@@ -1,9 +1,5 @@
 en:
   js:
-    filters:
-      following:
-        title: "Following"
-        help: "topics with posts from users you're following"
     notifications:
       following: "<span>{{username}}</span> {{description}}"
       following_description: "has started following you."
@@ -17,19 +13,8 @@ en:
         following: "{{username}} has started following you."
         following_created_topic: '{{username}} posted "{{topic}}" - {{site_title}}'
         following_replied: '{{username}} posted in "{{topic}}" - {{site_title}}'
-    topics:
-      none:
-        following: "There are no topics from users you're following."
-      bottom:
-        following: "There are no more topics from users you're following."
     user:
       follow_nav: "Follows"
-      follow:
-        label: "Follow"
-      following_watching:
-        label: "Following (All)"
-      following_watching_first_post:
-        label: "Following (Topics)"
       following:
         feed_link: "Follow feed"
         label: "Following"
