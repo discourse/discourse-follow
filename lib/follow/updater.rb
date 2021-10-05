@@ -43,6 +43,15 @@ class Follow::Updater
       )
     end
 
+    if !@target.allow_people_to_follow_me
+      raise Discourse::InvalidAccess.new(
+        nil,
+        nil,
+        custom_message: "follow.user_does_not_allow_follow",
+        custom_message_params: { username: @target.username }
+      )
+    end
+
     relation = UserFollower.find_or_initialize_by(
       user_id: @target.id,
       follower_id: @follower.id,

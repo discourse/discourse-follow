@@ -100,8 +100,12 @@ describe UserCardSerializer do
   end
 
   context "when there is no current user" do
-    it "is_followed is not included" do
-      expect(get_serializer(followed, current_user: nil)).not_to include(:is_followed)
+    it "is_followed is false" do
+      expect(get_serializer(followed, current_user: nil)[:is_followed]).to eq(false)
+    end
+
+    it "can_follow is false" do
+      expect(get_serializer(followed, current_user: nil)[:can_follow]).to eq(false)
     end
   end
 
@@ -112,6 +116,18 @@ describe UserCardSerializer do
 
     it "is_followed is false if current user is not following the user" do
       expect(get_serializer(followed, current_user: Fabricate(:user))[:is_followed]).to eq(false)
+    end
+
+    it "can_follow is true" do
+      expect(get_serializer(followed, current_user: Fabricate(:user))[:can_follow]).to eq(true)
+    end
+
+    it "can_follow is false if user disables follows" do
+      followed.custom_fields["allow_people_to_follow_me"] = false
+      followed.save!
+      expect(get_serializer(followed, current_user: follower)[:can_follow]).to eq(false)
+      expect(get_serializer(followed, current_user: Fabricate(:user))[:can_follow]).to eq(false)
+      expect(get_serializer(followed, current_user: nil)[:can_follow]).to eq(false)
     end
   end
 end

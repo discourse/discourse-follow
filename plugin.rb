@@ -36,36 +36,15 @@ after_initialize do
   %w[
     ../lib/follow/notification.rb
     ../lib/follow/updater.rb
+    ../lib/follow/user_extension.rb
     ../app/controllers/follow/follow_controller.rb
     ../config/routes.rb
   ].each do |path|
     load File.expand_path(path, __FILE__)
   end
 
-  class ::User
-    has_many :follower_relations, class_name: 'UserFollower', dependent: :delete_all
-    has_many :followers, through: :follower_relations, source: :follower_user
-
-    has_many :following_relations, class_name: 'UserFollower', foreign_key: :follower_id, dependent: :delete_all
-    has_many :following, through: :following_relations, source: :followed_user
-  end
-
-  add_to_serializer(:user, :total_followers, false) do
-    user.followers.count
-  end
-  add_to_serializer(:user, :include_total_followers?) do
-    SiteSetting.discourse_follow_enabled &&
-      SiteSetting.follow_show_statistics_on_profile &&
-      can_see_followers
-  end
-
-  add_to_serializer(:user, :total_following, false) do
-    user.following.count
-  end
-  add_to_serializer(:user, :include_total_following?) do
-    SiteSetting.discourse_follow_enabled &&
-      SiteSetting.follow_show_statistics_on_profile &&
-      can_see_following
+  reloadable_patch do |plugin|
+    User.class_eval { prepend Follow::UserExtension }
   end
 
   add_to_serializer(:user, :can_see_following) do
@@ -74,16 +53,18 @@ after_initialize do
   add_to_serializer(:user, :can_see_followers) do
     FollowPagesVisibility.can_see_followers_page?(user: scope.current_user, target_user: user)
   end
-
   add_to_serializer(:user, :can_see_network_tab) do
     can_see_following || can_see_followers
   end
 
-  add_to_serializer(:user_card, :is_followed, false) do
-    scope.current_user.following.where(id: user.id).exists?
+  # UserSerializer in core inherits from UserCardSerializer.
+  # we don't need to duplicate these attrs for UserSerializer
+  add_to_serializer(:user_card, :can_follow) do
+    scope.current_user.present? && user.allow_people_to_follow_me
   end
-  add_to_serializer(:user_card, :include_is_followed?) do
-    SiteSetting.discourse_follow_enabled && scope.current_user.present?
+
+  add_to_serializer(:user_card, :is_followed) do
+    scope.current_user.present? && scope.current_user.following.where(id: user.id).exists?
   end
 
   add_to_serializer(:user_card, :total_followers, false) do
@@ -109,6 +90,7 @@ after_initialize do
     notify_followed_user_when_followed
     notify_me_when_followed_replies
     notify_me_when_followed_creates_topic
+    allow_people_to_follow_me
   ].each do |field|
     add_to_class(:user, field) do
       v = custom_fields[field]
@@ -130,6 +112,7 @@ after_initialize do
     next if post.post_type == Post.types[:whisper] && post.action_code.present?
     next if [Post.types[:regular], Post.types[:whisper]].exclude?(post.post_type)
     next if !SiteSetting.follow_notifications_enabled
+    next if !post.user.allow_people_to_follow_me
     topic = post.topic
     next if !topic || topic.private_message?
     followers = post.user.followers

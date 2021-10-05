@@ -9,6 +9,7 @@ en:
     default_notify_followed_user_when_followed: 'Default value for the <code>Notify users when I follow them</code> user preference. Changing this setting only applies to users who have never changed their notification preferences of the follow plugin'
     default_notify_me_when_followed_replies: 'Default value for the <code>Notify me when someone I follow replies</code> user preference. Changing this setting only applies to users who have never changed their notification preferences of the follow plugin'
     default_notify_me_when_followed_creates_topic: 'Default value for the <code>Notify me when someone I follow creates a topic</code> user preference. Changing this setting only applies to users who have never changed their notification preferences of the follow plugin'
+    default_allow_people_to_follow_me: 'Default value for the <code>Allow people to follow me</code> user preference. Changing this setting only applies to users who have never changed their notification preferences of the follow plugin'
 
   follow:
     user_not_found: "Couldn't find user with username %{username}"
@@ -18,3 +19,4 @@ en:
     cannot_follow_suspended: "Cannot follow a suspend user"
     cannot_follow_staged: "Cannot follow a staged user"
     invalid_created_before_date: "Received an invalid date for the `created_before` param: %{value}"
+    user_does_not_allow_follow: "%{username} does not allow people to follow them."

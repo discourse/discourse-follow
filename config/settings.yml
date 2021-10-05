@@ -22,3 +22,5 @@ plugins:
     default: false
   default_notify_me_when_followed_creates_topic:
     default: false
+  default_allow_people_to_follow_me:
+    default: true

@@ -173,4 +173,16 @@ describe ::Follow::Updater do
     relation = user1.following_relations.find_by(user_id: user3.id)
     expect(relation.level).to eq(Follow::Notification.levels[:watching])
   end
+
+  it "does not allow following a user who has disabled follows" do
+    user2.custom_fields["allow_people_to_follow_me"] = false
+    user2.save!
+    expect do
+      new_updater(user1, user2).watch_follow
+    end.to raise_error do |error|
+      expect(error).to be_a(Discourse::InvalidAccess)
+      expect(error.custom_message).to eq("follow.user_does_not_allow_follow")
+      expect(error.custom_message_params).to eq({ username: user2.username })
+    end
+  end
 end

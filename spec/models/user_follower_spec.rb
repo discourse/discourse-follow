@@ -106,5 +106,36 @@ describe UserFollower do
       posts = UserFollower.posts_for(follower, current_user: follower, limit: 3)
       expect(posts.pluck(:id)).to eq([post2.id, post1.id, post3.id])
     end
+
+    it "does not include posts from followed users who have disabled follows" do
+      post1 = Fabricate(:post, user: followed)
+      post2 = Fabricate(:post, user: followed2)
+      followed.custom_fields["allow_people_to_follow_me"] = false
+      followed.save!
+      posts = UserFollower.posts_for(follower, current_user: follower)
+      expect(posts.pluck(:id)).to contain_exactly(post2.id)
+    end
+
+    context "when default_allow_people_to_follow_me setting is false" do
+      before do
+        SiteSetting.default_allow_people_to_follow_me = false
+      end
+
+      it "only include posts if followed user has explicitly allowed people to follow them" do
+        post1 = Fabricate(:post, user: followed)
+        post2 = Fabricate(:post, user: followed2)
+        followed.custom_fields["allow_people_to_follow_me"] = true
+        followed.save!
+        posts = UserFollower.posts_for(follower, current_user: follower)
+        expect(posts.pluck(:id)).to contain_exactly(post1.id)
+
+        followed.custom_fields["allow_people_to_follow_me"] = false
+        followed.save!
+        followed2.custom_fields["allow_people_to_follow_me"] = true
+        followed2.save!
+        posts = UserFollower.posts_for(follower, current_user: follower)
+        expect(posts.pluck(:id)).to contain_exactly(post2.id)
+      end
+    end
   end
 end

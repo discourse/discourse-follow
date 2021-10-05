@@ -11,6 +11,21 @@ export default {
       api.replaceIcon("notification.following", "user-friends");
       api.replaceIcon("notification.following_created_topic", "user-friends");
       api.replaceIcon("notification.following_replied", "user-friends");
+
+      // workaround to make core save custom fields when changing
+      // preferences
+      api.modifyClass("controller:preferences/notifications", {
+        pluginId: "discourse-follow-notification-preference",
+
+        actions: {
+          save() {
+            if (!this.saveAttrNames.includes("custom_fields")) {
+              this.saveAttrNames.push("custom_fields");
+            }
+            this._super(...arguments);
+          },
+        },
+      });
     });
   },
 };
