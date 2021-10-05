@@ -8,6 +8,7 @@ import { popupAjaxError } from "discourse/lib/ajax-error";
 export default Component.extend({
   loading: false,
   isFollowed: alias("user.is_followed"),
+  canFollow: alias("user.can_follow"),
 
   @discourseComputed("user", "currentUser")
   showButton(user, currentUser) {
@@ -30,18 +31,18 @@ export default Component.extend({
     return true;
   },
 
-  @discourseComputed("isFollowed")
-  labelKey(isFollowed) {
-    if (isFollowed) {
+  @discourseComputed("isFollowed", "canFollow")
+  labelKey(isFollowed, canFollow) {
+    if (isFollowed && canFollow) {
       return "follow.unfollow_button_label";
     } else {
       return "follow.follow_button_label";
     }
   },
 
-  @discourseComputed("isFollowed")
-  icon(isFollowed) {
-    if (isFollowed) {
+  @discourseComputed("isFollowed", "canFollow")
+  icon(isFollowed, canFollow) {
+    if (isFollowed && canFollow) {
       return "user-times";
     } else {
       return "user-plus";

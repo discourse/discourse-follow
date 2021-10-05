@@ -414,4 +414,18 @@ describe "Follow plugin notifications" do
       expect(follower.notifications.count).to eq(0)
     end
   end
+
+  context "when the followed user has disabled follows but has existing followers" do
+    it "the followers no longer receive notification for posts made by the followed user" do
+      expect(followed.followers.count).to be > 0
+      followed.custom_fields["allow_people_to_follow_me"] = false
+      followed.save!
+      create_topic(user: followed).tap do |t|
+        create_post(topic: t, user: followed)
+      end
+      followed.followers.each do |follower|
+        expect(follower.notifications.count).to eq(0)
+      end
+    end
+  end
 end

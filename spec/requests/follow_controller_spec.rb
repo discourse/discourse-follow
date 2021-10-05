@@ -115,6 +115,20 @@ describe Follow::FollowController do
       expect(response.status).to eq(404)
       expect(response.parsed_body["errors"]).to include(I18n.t("follow.user_not_found", username: "doesnotexist".inspect))
     end
+
+    it "responds with 403 if the followed user has disabled follows" do
+      user2.custom_fields["allow_people_to_follow_me"] = false
+      user2.save!
+      sign_in(user1)
+
+      put "/follow/#{user2.username}.json"
+
+      expect(response.status).to eq(403)
+      expect(response.parsed_body["errors"]).to contain_exactly(
+        I18n.t("follow.user_does_not_allow_follow", username: user2.username)
+      )
+      expect(user2.reload.followers.count).to eq(0)
+    end
   end
 
   describe "#unfollow" do

@@ -14,6 +14,8 @@ en:
         following_created_topic: '{{username}} posted "{{topic}}" - {{site_title}}'
         following_replied: '{{username}} posted in "{{topic}}" - {{site_title}}'
     user:
+      follow:
+        label: "Follow"
       follow_nav: "Follows"
       following:
         feed_link: "Follow feed"
@@ -29,6 +31,7 @@ en:
         notify_me_when_followed: "Notify me when users follow me"
         notify_me_when_followed_replies: "Notify me when someone I follow replies"
         notify_me_when_followed_creates_topic: "Notify me when someone I follow creates a topic"
+        allow_people_to_follow_me: "Allow people to follow me"
     follow:
       follow_pages_visibility:
         no-one: "No one"

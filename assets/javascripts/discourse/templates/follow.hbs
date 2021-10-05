@@ -5,7 +5,7 @@
         {{#link-to "following"}}{{i18n "user.following.label"}}{{/link-to}}
       </li>
     {{/if}}
-    {{#if model.can_see_followers}}
+    {{#if (and model.can_see_followers model.allow_people_to_follow_me)}}
       <li>
         {{#link-to "followers"}}{{i18n "user.followers.label"}}{{/link-to}}
       </li>
