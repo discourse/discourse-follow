@@ -8,9 +8,18 @@ export default {
       if (!currentUser) {
         return;
       }
-      api.replaceIcon("notification.following", "user-friends");
-      api.replaceIcon("notification.following_created_topic", "user-friends");
-      api.replaceIcon("notification.following_replied", "user-friends");
+      api.replaceIcon(
+        "notification.following",
+        "discourse-follow-new-follower"
+      );
+      api.replaceIcon(
+        "notification.following_created_topic",
+        "discourse-follow-new-topic"
+      );
+      api.replaceIcon(
+        "notification.following_replied",
+        "discourse-follow-new-reply"
+      );
 
       // workaround to make core save custom fields when changing
       // preferences
