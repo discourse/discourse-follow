@@ -1,10 +1,12 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { loadFollowPosts } from "../lib/load-follow-posts";
+import { propertyEqual } from "discourse/lib/computed";
 
 export default Controller.extend({
   canLoadMore: true,
   loading: false,
+  viewingSelf: propertyEqual("user.id", "currentUser.id"),
 
   @action
   loadMore() {

@@ -1,5 +1,10 @@
-import { acceptance, queryAll } from "discourse/tests/helpers/qunit-helpers";
+import {
+  acceptance,
+  query,
+  queryAll,
+} from "discourse/tests/helpers/qunit-helpers";
 import { test } from "qunit";
+import I18n from "I18n";
 
 acceptance("Discourse Follow - Follow Posts Feed", function (needs) {
   needs.user();
@@ -88,11 +93,16 @@ acceptance("Discourse Follow - Follow Posts Feed", function (needs) {
   });
 
   test("posts are shown", async (assert) => {
-    await visit("/u/eviltrout/activity/follow");
+    await visit("/u/eviltrout/follow/feed");
     assert.equal(
       queryAll(".user-stream .user-stream-item").length,
       3,
       "all posts from the server response are rendered"
+    );
+    assert.equal(
+      query(".user-secondary-navigation .activity-nav a.active").textContent,
+      I18n.t("user.feed.label"),
+      "feed tab is labelled correctly"
     );
   });
 });

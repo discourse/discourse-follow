@@ -22,6 +22,8 @@ Discourse::Application.routes.append do
   mount ::Follow::Engine, at: "follow"
   %w{users u}.each_with_index do |root_path, index|
     get "#{root_path}/:username/follow" => "follow/follow#index", constraints: { username: RouteFormat.username }
+    get "#{root_path}/:username/follow/feed" => "follow/follow#index", constraints: { username: RouteFormat.username }
+
     get "#{root_path}/:username/follow/following" => "follow/follow#list_following", constraints: { username: RouteFormat.username }
     get "#{root_path}/:username/follow/followers" => "follow/follow#list_followers", constraints: { username: RouteFormat.username }
   end
@@ -53,7 +55,7 @@ after_initialize do
     FollowPagesVisibility.can_see_followers_page?(user: scope.current_user, target_user: user)
   end
   add_to_serializer(:user, :can_see_network_tab) do
-    can_see_following || can_see_followers
+    user_is_current_user || can_see_following || can_see_followers
   end
 
   # UserSerializer in core inherits from UserCardSerializer.

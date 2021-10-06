@@ -6,7 +6,9 @@ export default DiscourseRoute.extend({
     const canSeeFollowers = model.can_see_followers;
     const canSeeFollowing = model.can_see_following;
 
-    if (canSeeFollowing) {
+    if (this.currentUser?.id === model.id) {
+      this.replaceWith("feed");
+    } else if (canSeeFollowing) {
       this.replaceWith("following");
     } else if (canSeeFollowers) {
       this.replaceWith("followers");

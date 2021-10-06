@@ -14,9 +14,9 @@ en:
         following_created_topic: '{{username}} posted "{{topic}}" - {{site_title}}'
         following_replied: '{{username}} posted in "{{topic}}" - {{site_title}}'
     user:
+      follow_nav: "Follows"
       follow:
         label: "Follow"
-      follow_nav: "Follows"
       following:
         feed_link: "Follow feed"
         label: "Following"
@@ -26,6 +26,10 @@ en:
         label: "Followers"
         none: "No-one is following you yet."
         none_other: "No-one is following {{username}} yet."
+      feed:
+        label: "Feed"
+        empty_feed_you: "No posts by people you follow yet."
+        empty_feed_other: "No posts by people {{username}} follows yet."
       follow_notifications_options:
         notify_followed_user_when_followed: "Notify users when I follow them"
         notify_me_when_followed: "Notify me when users follow me"
@@ -44,7 +48,3 @@ en:
         everyone: "Everyone"
       follow_button_label: "Follow"
       unfollow_button_label: "Unfollow"
-    user_activity:
-      follow:
-        title: "Follow"
-        empty_feed: "No posts by people you follow yet."
