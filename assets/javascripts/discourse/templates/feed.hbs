@@ -3,7 +3,11 @@
     {{#each model.posts as |post|}}
       {{follow-feed-post post=post}}
     {{else}}
-      <div class="alert alert-info">{{i18n "user_activity.follow.empty_feed"}}</div>
+      {{#if viewingSelf}}
+        <div class="alert alert-info">{{i18n "user.feed.empty_feed_you"}}</div>
+      {{else}}
+        <div class="alert alert-info">{{i18n "user.feed.empty_feed_other" username=user.username}}</div>
+      {{/if}}
     {{/each}}
   </div>
   {{conditional-loading-spinner condition=loading}}

@@ -12,8 +12,4 @@ export default DiscourseRoute.extend({
     controller.set("user", this.modelFor("user"));
     controller.set("canLoadMore", model.hasMore);
   },
-
-  renderTemplate() {
-    this.render("user-activity-follow");
-  },
 });

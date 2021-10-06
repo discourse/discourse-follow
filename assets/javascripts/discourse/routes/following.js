@@ -8,15 +8,6 @@ export default DiscourseRoute.extend({
 
   setupController(controller, model) {
     const user = this.modelFor("user");
-    const currentUser = controller.currentUser;
-    const displayFeedLink =
-      model.length > 0 &&
-      currentUser &&
-      (currentUser.id === user.id || currentUser.staff);
-    controller.setProperties({
-      users: model,
-      user,
-      displayFeedLink,
-    });
+    controller.setProperties({ users: model, user });
   },
 });
