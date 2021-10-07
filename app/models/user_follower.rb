@@ -2,7 +2,7 @@
 
 class UserFollower < ActiveRecord::Base
   def self.posts_for(user, current_user:, limit: nil, created_before: nil)
-    visible_post_types = [Post.types[:regular]]
+    visible_post_types = [Post.types[:regular], Post.types[:moderator_action]]
     visible_post_types << Post.types[:whisper] if current_user.staff?
 
     results = Post
@@ -13,6 +13,7 @@ class UserFollower < ActiveRecord::Base
       .where("topics.archetype != ?", Archetype.private_message)
       .where("topics.visible")
       .where("user_followers.follower_id = ?", user.id)
+      .where(action_code: nil)
       .order(created_at: :desc)
 
     results = filter_opted_out_users(results)

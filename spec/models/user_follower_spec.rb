@@ -116,6 +116,23 @@ describe UserFollower do
       expect(posts.pluck(:id)).to contain_exactly(post2.id)
     end
 
+    it "does not include small action posts" do
+      post1 = Fabricate(:post, user: followed, post_type: Post.types[:small_action])
+      post2 = Fabricate(:post, user: followed, post_type: Post.types[:small_action], action_code: "closed.enabled")
+      post3 = Fabricate(:post, user: followed, post_type: Post.types[:whisper], action_code: "assigned")
+
+      follower.update!(admin: true)
+      posts = UserFollower.posts_for(follower, current_user: follower)
+      expect(posts.pluck(:id)).to be_blank
+    end
+
+    it "includes moderator posts" do
+      post1 = Fabricate(:post, user: followed, post_type: Post.types[:moderator_action])
+
+      posts = UserFollower.posts_for(follower, current_user: follower)
+      expect(posts.pluck(:id)).to contain_exactly(post1.id)
+    end
+
     context "when default_allow_people_to_follow_me setting is false" do
       before do
         SiteSetting.default_allow_people_to_follow_me = false
