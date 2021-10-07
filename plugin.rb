@@ -38,6 +38,7 @@ after_initialize do
     ../lib/follow/notification.rb
     ../lib/follow/updater.rb
     ../lib/follow/user_extension.rb
+    ../lib/follow/notification_handler.rb
     ../app/controllers/follow/follow_controller.rb
     ../config/routes.rb
   ].each do |path|
@@ -110,128 +111,6 @@ after_initialize do
 
   on(:post_alerter_after_save_post) do |post, new_record, notified|
     next if !new_record
-    next if post.post_type == Post.types[:whisper] && post.action_code.present?
-    next if [Post.types[:regular], Post.types[:whisper]].exclude?(post.post_type)
-    next if !SiteSetting.follow_notifications_enabled
-    next if !post.user.allow_people_to_follow_me
-    topic = post.topic
-    next if !topic || topic.private_message?
-    followers = post.user.followers
-    followers = followers.where("users.id NOT IN (?)", notified.map(&:id)) if notified.present?
-    followers.each do |f|
-      next if f.bot? || f.staged?
-      next if TopicUser.where(
-        topic_id: topic.id,
-        user_id: f.id,
-        notification_level: TopicUser.notification_levels[:muted]
-      ).exists?
-
-      if post.post_number == 1
-        next if !f.notify_me_when_followed_creates_topic
-      else
-        next if !f.notify_me_when_followed_replies
-      end
-
-      guardian = Guardian.new(f)
-      next if !guardian.can_see?(post)
-
-      # if the user has received a notification for the post because they're
-      # watching the topic, category or a tag, then delete the notification so
-      # they don't end up with double notifications.
-      #
-      # the `notified` array provided by the event includes users who are
-      # notified due to a mention (directly or via a group), quote, link to a
-      # post of theirs, or reply to them directly. It does not include users
-      # who are notified because they're watching the topic, category or a tag.
-      f.notifications.where(
-        topic_id: topic.id,
-        notification_type: [
-          Notification.types[:posted],
-          Notification.types[:replied]
-        ],
-        post_number: post.post_number
-      ).destroy_all
-
-      # delete all existing follow notifications for the topic because we'll
-      # collapse them
-      f.notifications.where(
-        topic_id: topic.id,
-        notification_type: [
-          Notification.types[:following_replied],
-          Notification.types[:following_created_topic]
-        ]
-      ).destroy_all
-
-      posts_by_following = topic
-        .posts
-        .secured(guardian)
-        .where(user_id: f.following.pluck(:id))
-        .where(<<~SQL, follower_id: f.id, topic_id: topic.id)
-          post_number > COALESCE((
-            SELECT last_read_post_number FROM topic_users tu
-            WHERE tu.user_id = :follower_id AND tu.topic_id = :topic_id
-          ), 0)
-        SQL
-
-      if post.post_number == 1
-        notification_type = Notification.types[:following_created_topic]
-      else
-        notification_type = Notification.types[:following_replied]
-      end
-
-      count = posts_by_following.count
-      original_post = post
-      post = posts_by_following.order('post_number').first || post
-
-      begin
-        orig_logster_env = Thread.current[Logster::Logger::LOGSTER_ENV]
-        new_env = orig_logster_env.dup || {}
-        new_env.merge!(
-          follower_ids: followers.pluck(:id).inspect,
-          topic_id: topic.id,
-          post_user_id: post.user.id,
-          follower_id: f.id,
-          post_id: post.id,
-          post_number: post.post_number,
-          notified_size: notified&.size.inspect,
-          notified_ids: notified&.map(&:id).inspect,
-          original_post_id: original_post.id,
-          original_post_number: original_post.post_number,
-          count: count,
-          sql_query: posts_by_following.to_sql
-        )
-        Thread.current[Logster::Logger::LOGSTER_ENV] = new_env
-        Rails.logger.warn("[osama-debug-follow-plugin] notification from topic #{topic.id} to user #{f.id}")
-      ensure
-        Thread.current[Logster::Logger::LOGSTER_ENV] = orig_logster_env
-      end
-
-      display_username = post.user.username
-      if count > 1
-        I18n.with_locale(f.effective_locale) do
-          display_username = I18n.t('embed.replies', count: count)
-        end
-      end
-      notification_data = {
-        topic_title: topic.title,
-        original_post_id: original_post.id,
-        original_post_type: original_post.post_type,
-        display_username: display_username
-      }
-
-      notification = f.notifications.create!(
-        notification_type: notification_type,
-        topic_id: topic.id,
-        post_number: post.post_number,
-        data: notification_data.to_json
-      )
-      if notification&.id && !f.suspended?
-        PostAlerter.create_notification_alert(
-          user: f,
-          post: original_post,
-          notification_type: notification_type
-        )
-      end
-    end
+    Follow::NotificationHandler.new(post, notified).handle
   end
 end
