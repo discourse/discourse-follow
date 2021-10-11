@@ -17,7 +17,7 @@ class MigrateFollowerDataFromCustomFieldsToTables < ActiveRecord::Migration[6.1]
           updated_at,
           created_at
         FROM user_custom_fields
-        WHERE name = 'following'
+        WHERE name = 'following' AND TRIM(value) != '' AND user_id >= 1
       )
       ON CONFLICT DO NOTHING
     SQL
