@@ -11,7 +11,7 @@ en:
         following: "someone has started following you"
       popup:
         following: "{{username}} has started following you."
-        following_created_topic: '{{username}} posted "{{topic}}" - {{site_title}}'
+        following_created_topic: '{{username}} created "{{topic}}" - {{site_title}}'
         following_replied: '{{username}} posted in "{{topic}}" - {{site_title}}'
     user:
       follow_nav: "Follows"
