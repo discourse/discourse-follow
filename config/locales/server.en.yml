@@ -1,4 +1,8 @@
 en:
+  discourse_push_notifications:
+    popup:
+      following_created_topic: '{{username}} created "{{topic}}" - {{site_title}}'
+      following_replied: '{{username}} posted in "{{topic}}" - {{site_title}}'
   site_settings:
     discourse_follow_enabled: "Enable follow plugin."
     follow_show_statistics_on_profile: "Show follow statistics on user profiles."
