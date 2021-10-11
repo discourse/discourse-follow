@@ -1,8 +1,8 @@
 import {
   acceptance,
+  exists,
   query,
   queryAll,
-  exists,
 } from "discourse/tests/helpers/qunit-helpers";
 import { click } from "@ember/test-helpers";
 import { test } from "qunit";
