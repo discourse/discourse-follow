@@ -1,18 +1,18 @@
 en:
   js:
     notifications:
-      following: "<span>{{username}}</span> {{description}}"
+      following: "<span>%{username}</span> %{description}"
       following_description: "has started following you."
-      following_created_topic: "<span>{{username}}</span> {{description}}"
-      following_replied: "<span>{{username}}</span> {{description}}"
+      following_created_topic: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
       titles:
         following_created_topic: "new topic from someone you are following"
         following_replied: "new post from someone you are following"
         following: "someone has started following you"
       popup:
-        following: "{{username}} has started following you."
-        following_created_topic: '{{username}} created "{{topic}}" - {{site_title}}'
-        following_replied: '{{username}} posted in "{{topic}}" - {{site_title}}'
+        following: "%{username} has started following you."
+        following_created_topic: '%{username} created "%{topic}" - %{site_title}'
+        following_replied: '%{username} posted in "%{topic}" - %{site_title}'
     user:
       follow_nav: "Follows"
       follow:
@@ -21,15 +21,15 @@ en:
         feed_link: "Follow feed"
         label: "Following"
         none: "You're not following anyone yet."
-        none_other: "{{username}} is not following anyone yet."
+        none_other: "%{username} is not following anyone yet."
       followers:
         label: "Followers"
         none: "No-one is following you yet."
-        none_other: "No-one is following {{username}} yet."
+        none_other: "No-one is following %{username} yet."
       feed:
         label: "Feed"
         empty_feed_you: "No posts by people you follow yet."
-        empty_feed_other: "No posts by people {{username}} follows yet."
+        empty_feed_other: "No posts by people %{username} follows yet."
       follow_notifications_options:
         notify_followed_user_when_followed: "Notify users when I follow them"
         notify_me_when_followed: "Notify me when users follow me"

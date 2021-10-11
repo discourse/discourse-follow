@@ -5,14 +5,14 @@ he:
         title: "עוקב"
         help: "נושאים עם פוסטים ממשתמשים שאתה במעקב אחריהם"
     notifications:
-      following: "<span>{{username}}</span> {{description}}"
+      following: "<span>%{username}</span> %{description}"
       following_description: "התחיל לעקוב אחריך."
-      following_posted: "<span>{{username}}</span> {{description}}"
-      following_replied: "<span>{{username}}</span> {{description}}"
+      following_posted: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
       popup:
-        following: "{{username}} התחיל לעקוב אחריך."
-        following_posted: '{{username}} פרסם "{{topic}}" - {{site_title}}'
-        following_replied: '{{username}} הגיב ב"{{topic}}" - {{site_title}}'
+        following: "%{username} התחיל לעקוב אחריך."
+        following_posted: '%{username} פרסם "%{topic}" - %{site_title}'
+        following_replied: '%{username} הגיב ב"%{topic}" - %{site_title}'
     topics:
       none:
         following: "אין כרגע נושאים ממשתמשים שאחריהם אתה עוקב."
@@ -25,11 +25,11 @@ he:
       following:
         label: "עוקב אחרי"
         none: "אינך עוקב אחרי אף אחד."
-        none_other: "{{username}} לא עוקב אחרי אף אחד.."
+        none_other: "%{username} לא עוקב אחרי אף אחד.."
       followers:
         label: "עוקבים"
         none: "אף אחד לא עוקב אחריך."
-        none_other: "אף אחד לא עוקב אחרי {{username}}."
+        none_other: "אף אחד לא עוקב אחרי %{username}."
       follow_notifications_options:
         notify_followed_user_when_followed: "הודע למשתמשים כשאני עוקב אחריהם."
         notify_me_when_followed: "הודע לי כשמשתמשים עוקבים אחריי."

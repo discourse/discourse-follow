@@ -18,14 +18,14 @@ hu:
         title: "Követett"
         help: "témák a követett felhasználók bejegyzéseivel"
     notifications:
-      following: "<span>{{username}}</span> {{description}}"
+      following: "<span>%{username}</span> %{description}"
       following_description: "elkezdett követni téged."
-      following_posted: "<span>{{username}}</span> {{description}}"
-      following_replied: "<span>{{username}}</span> {{description}}"
+      following_posted: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
       popup:
-        following: "{{username}} elkezdett követni téged."
-        following_posted: '{{username}} közzétett "{{topic}}" - {{site_title}}'
-        following_replied: '{{username}} közzétett "{{topic}}" - {{site_title}}'
+        following: "%{username} elkezdett követni téged."
+        following_posted: '%{username} közzétett "%{topic}" - %{site_title}'
+        following_replied: '%{username} közzétett "%{topic}" - %{site_title}'
     topics:
       none:
         following: "Nincsenek témák az általad követett felhasználóktól."
@@ -52,11 +52,11 @@ hu:
       following:
         label: "Követett"
         none: "Még nem követsz senkit."
-        none_other: "{{username}} még nem követ senkit."
+        none_other: "%{username} még nem követ senkit."
       followers:
         label: "Követő"
         none: "Még senki nem követ téged."
-        none_other: "Még senki nem követi {{username}}."
+        none_other: "Még senki nem követi %{username}."
       follow_notifications_options:
         notify_followed_user_when_followed: "Értesítsd a felhasználókat, ha elkezdem követni őket."
         notify_me_when_followed: "Értesíts amikor elkezdenek követni."
