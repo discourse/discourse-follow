@@ -1,8 +1,10 @@
 import {
   acceptance,
+  exists,
   query,
   queryAll,
 } from "discourse/tests/helpers/qunit-helpers";
+import { click } from "@ember/test-helpers";
 import { test } from "qunit";
 import I18n from "I18n";
 
@@ -10,6 +12,67 @@ acceptance("Discourse Follow - Follow Posts Feed", function (needs) {
   needs.user();
 
   needs.pretender((server, helper) => {
+    server.get("/posts/by_number/65/7.json", () => {
+      return helper.response({
+        id: 141,
+        name: "Bruce Superman",
+        username: "brucesuperman",
+        avatar_template: "/letter_avatar_proxy/v4/letter/e/9f8e36/{size}.png",
+        created_at: "2021-03-18T05:16:02.137Z",
+        cooked:
+          '<h3>\n<a name="et" class="anchor" href="#et"></a>Et</h3>\n<p>Corrupti nostrum odio. Autem voluptates quia. Reiciendis possimus odit. Vel ea reprehenderit. Laborum voluptas minima.<br>\n0. Quam.</p>\n<ol>\n<li>Expedita.</li>\n<li>Natus.</li>\n<li>Ea.</li>\n<li>Debitis.</li>\n<li>Ut.</li>\n<li>Suscipit.</li>\n<li>Eaque.</li>\n</ol>',
+        post_number: 7,
+        post_type: 1,
+        updated_at: "2021-03-18T05:16:02.137Z",
+        reply_count: 0,
+        reply_to_post_number: null,
+        quote_count: 0,
+        incoming_link_count: 0,
+        reads: 5,
+        readers_count: 4,
+        score: 1,
+        yours: false,
+        topic_id: 65,
+        topic_slug: "what-is-your-favorite-ted-video",
+        display_username: "Bruce Superman",
+        primary_group_name: "partners",
+        flair_name: null,
+        flair_url: null,
+        flair_bg_color: null,
+        flair_color: null,
+        version: 1,
+        can_edit: true,
+        can_delete: true,
+        can_recover: false,
+        can_wiki: true,
+        user_title: null,
+        bookmarked: false,
+        raw:
+          "### Et\nCorrupti nostrum odio. Autem voluptates quia. Reiciendis possimus odit. Vel ea reprehenderit. Laborum voluptas minima.\n0. Quam. \n1. Expedita. \n2. Natus. \n3. Ea. \n4. Debitis. \n5. Ut. \n6. Suscipit. \n7. Eaque.",
+        actions_summary: [
+          { id: 2, can_act: true },
+          { id: 3, can_act: true },
+          { id: 4, can_act: true },
+          { id: 8, can_act: true },
+          { id: 6, can_act: true },
+          { id: 7, can_act: true },
+        ],
+        moderator: false,
+        admin: false,
+        staff: false,
+        user_id: 34,
+        hidden: false,
+        trust_level: 2,
+        deleted_at: null,
+        user_deleted: false,
+        edit_reason: null,
+        can_view_edit_history: true,
+        wiki: false,
+        reviewable_id: null,
+        reviewable_score_count: 0,
+        reviewable_score_pending_count: 0,
+      });
+    });
     server.get("/follow/posts/eviltrout", () => {
       return helper.response({
         posts: [
@@ -62,8 +125,10 @@ acceptance("Discourse Follow - Follow Posts Feed", function (needs) {
             },
           },
           {
-            excerpt: "post 3523 czcs 2224",
+            excerpt:
+              '<a name="et" class="anchor" href="#et"></a>Et\nCorrupti nostrum odio. Autem voluptates quia. Reiciendis possimus odit. Vel ea reprehenderit. Laborum voluptas minima. \n0. Quam. \n\nExpedita.\nNatus.\nEa.\nDebitis.\nUt.\nSuscipit.\nEaque.',
             category_id: 2,
+            truncated: true,
             created_at: "2021-09-30T07:17:00.170Z",
             id: 1292,
             post_number: 7,
@@ -94,8 +159,9 @@ acceptance("Discourse Follow - Follow Posts Feed", function (needs) {
 
   test("posts are shown", async (assert) => {
     await visit("/u/eviltrout/follow/feed");
+    const posts = queryAll(".user-stream .user-stream-item");
     assert.equal(
-      queryAll(".user-stream .user-stream-item").length,
+      posts.length,
       3,
       "all posts from the server response are rendered"
     );
@@ -103,6 +169,20 @@ acceptance("Discourse Follow - Follow Posts Feed", function (needs) {
       query(".user-secondary-navigation .activity-nav a.active").textContent,
       I18n.t("user.feed.label"),
       "feed tab is labelled correctly"
+    );
+  });
+
+  test("long posts excerpt", async (assert) => {
+    await visit("/u/eviltrout/follow/feed");
+    const posts = queryAll(".user-stream .user-stream-item");
+    assert.ok(
+      exists(posts[2].querySelector(".expand-item")),
+      "long posts are first rendered collapsed"
+    );
+    await click(posts[2].querySelector(".expand-item"));
+    assert.ok(
+      exists(posts[2].querySelector(".collapse-item")),
+      "long posts can be expanded"
     );
   });
 });

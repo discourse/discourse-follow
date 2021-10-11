@@ -1,6 +1,7 @@
 import Topic from "discourse/models/topic";
 import User from "discourse/models/user";
 import { ajax } from "discourse/lib/ajax";
+import EmberObject from "@ember/object";
 
 export function loadFollowPosts(username, { createdBefore } = {}) {
   const data = {};
@@ -13,7 +14,7 @@ export function loadFollowPosts(username, { createdBefore } = {}) {
       post.topic.category_id = post.category_id;
       delete post.category_id;
       post.topic = Topic.create(post.topic);
-      return post;
+      return EmberObject.create(post);
     });
     return { posts, hasMore: content.extras.has_more };
   });
