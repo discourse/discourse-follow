@@ -18,18 +18,18 @@ es:
         title: "Siguiendo"
         help: "temas con publicaciones de usuarios que estás siguiendo"
     notifications:
-      following: "<span>{{username}}</span> {{description}}"
+      following: "<span>%{username}</span> %{description}"
       following_description: "ha comenzado a seguirte."
-      following_posted: "<span>{{username}}</span> {{description}}"
-      following_replied: "<span>{{username}}</span> {{description}}"
+      following_posted: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
       titles:
         following_posted: "nuevo tema de alguien que estás siguiendo"
         following_replied: "nueva publicación de alguien que estás siguiendo"
         following: "alguien ha comenzado a seguirte"
       popup:
-        following: "{{username}} ha comenzado a seguirte."
-        following_posted: '{{username}} ha publicado "{{topic}}" - {{site_title}}'
-        following_replied: '{{username}} ha publicado en "{{topic}}" - {{site_title}}'
+        following: "%{username} ha comenzado a seguirte."
+        following_posted: '%{username} ha publicado "%{topic}" - %{site_title}'
+        following_replied: '%{username} ha publicado en "%{topic}" - %{site_title}'
     topics:
       none:
         following: "No hay temas de usuarios que estás siguiendo."
@@ -56,11 +56,11 @@ es:
       following:
         label: "Siguiendo"
         none: "Aún no sigues a nadie."
-        none_other: "{{username}} aún no sigue a nadie."
+        none_other: "%{username} aún no sigue a nadie."
       followers:
         label: "Seguidores"
         none: "Aún nadie te sigue."
-        none_other: "Aún nadie sigue a {{username}}."
+        none_other: "Aún nadie sigue a %{username}."
       follow_notifications_options:
         notify_followed_user_when_followed: "Notificar a los usuarios al seguirlos."
         notify_me_when_followed: "Notificarme cuando los usuarios me siguen."

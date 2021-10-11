@@ -18,18 +18,18 @@ ca:
         title: "Seguir"
         help: "temes amb publicacions d'usuaris que segueixes"
     notifications:
-      following: "<span>{{username}}</span> {{description}}"
+      following: "<span>%{username}</span> %{description}"
       following_description: "t'ha començat a seguir."
-      following_posted: "<span>{{username}}</span> {{description}}"
-      following_replied: "<span>{{username}}</span> {{description}}"
+      following_posted: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
       titles:
         following_posted: "nou tema d'algú que segueixes"
         following_replied: "nova publicació d'algú que segueixes"
         following: "algú t'ha començat a seguir"
       popup:
-        following: "{{username}} t'ha començat a seguir."
-        following_posted: '{{username}} ha publicat "{{topic}}" - {{site_title}}'
-        following_replied: '{{username}} ha publicat en "{{topic}}" - {{site_title}}'
+        following: "%{username} t'ha començat a seguir."
+        following_posted: '%{username} ha publicat "%{topic}" - %{site_title}'
+        following_replied: '%{username} ha publicat en "%{topic}" - %{site_title}'
     topics:
       none:
         following: "No hi ha temes d'usuaris que segueixes."
@@ -55,11 +55,11 @@ ca:
       following:
         label: "Seguint"
         none: "Encara no segueixes a ningú."
-        none_other: "{{username}} encara no segueix a ningú."
+        none_other: "%{username} encara no segueix a ningú."
       followers:
         label: "Seguidors"
         none: "Encara no et segueix ningú."
-        none_other: "Encara ningú segueix a {{username}}."
+        none_other: "Encara ningú segueix a %{username}."
       follow_notifications_options:
         notify_followed_user_when_followed: "Notifica als usuaris quan els segueixo."
         notify_me_when_followed: "Notifica'm quan els usuaris em segueixen."
