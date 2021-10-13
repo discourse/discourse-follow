@@ -1,19 +1,11 @@
 ## Discourse Follow
 
-This [Discourse](https://github.com/discourse/discourse) plugin allows you to follow other users, list the latest topics involving them and receive notifications when they post. 
+This Discourse plugin allows you to follow other users, list the latest topics involving them and receive notifications when they post.
 
-[plugin screenshot]
+Installation guide, plugin documentation, screenshots and more details can be found in the [plugin's topic](https://meta.discourse.org/t/follow-plugin/110579?u=osama) on Discourse Meta. Please submit bug reports and feature requests over there as well.
 
-<a href="https://try.thepavilion.io" target="_blank"> :desktop_computer: See an example</a>
+This plugin is an official plugin maintained by the Discourse team (CDCK, Inc).
 
-<a href="https://thepavilion.io/w/feature-request" target="_blank">:raising_hand_woman: Request a feature</a>
+### Credits
 
-<a href="https://thepavilion.io/w/bug-report" target="_blank">:bug: Report a bug</a>
-
-### Notes
-
-- Not sure how to install a plugin? [Follow the steps here](https://meta.discourse.org/t/install-plugins-in-discourse/19157). 
-
-- Make sure you check out all the site settings for this plugin by searching for "Follow" in your admin settings.
-
-The place to report bugs or request features is over at [thepavilion.io](https://thepavilion.io). It's easier for us to manage them there, than across multiple repositories.
+This plugin was originally developed by [Pavilion](https://thepavilion.io) and maintained by them until October 2021 when maintenance was transferred to the Discourse team.
