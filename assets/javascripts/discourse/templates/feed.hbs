@@ -1,14 +1,9 @@
-{{#load-more selector=".user-stream-item" action=(action "loadMore")}}
-  <div class="user-stream">
-    {{#each model.posts as |post|}}
-      {{follow-feed-post post=post}}
-    {{else}}
-      {{#if viewingSelf}}
-        <div class="alert alert-info">{{i18n "user.feed.empty_feed_you"}}</div>
-      {{else}}
-        <div class="alert alert-info">{{i18n "user.feed.empty_feed_other" username=user.username}}</div>
-      {{/if}}
-    {{/each}}
-  </div>
-  {{conditional-loading-spinner condition=loading}}
-{{/load-more}}
+{{#if model.noContent}}
+  {{#if viewingSelf}}
+    <div class="alert alert-info">{{i18n "user.feed.empty_feed_you"}}</div>
+  {{else}}
+    <div class="alert alert-info">{{i18n "user.feed.empty_feed_other" username=user.username}}</div>
+  {{/if}}
+{{else}}
+  {{follow-post-stream stream=model}}
+{{/if}}

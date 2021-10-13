@@ -1,15 +1,12 @@
 import DiscourseRoute from "discourse/routes/discourse";
-import { loadFollowPosts } from "../lib/load-follow-posts";
+import PostStream from "../models/post-stream";
 
 export default DiscourseRoute.extend({
   model() {
-    const username = this.modelFor("user").username;
-    return loadFollowPosts(username);
+    return PostStream.create({ user: this.modelFor("user") });
   },
 
-  setupController(controller, model) {
-    this._super(...arguments);
-    controller.set("user", this.modelFor("user"));
-    controller.set("canLoadMore", model.hasMore);
+  afterModel(model) {
+    return model.findItems();
   },
 });

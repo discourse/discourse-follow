@@ -186,3 +186,26 @@ acceptance("Discourse Follow - Follow Posts Feed", function (needs) {
     );
   });
 });
+
+acceptance("Discourse Follow - Empty Follow Posts Feed", function (needs) {
+  needs.user();
+
+  needs.pretender((server, helper) => {
+    server.get("/follow/posts/eviltrout", () => {
+      return helper.response({
+        posts: [],
+        __rest_serializer: "1",
+        extras: { has_more: false },
+      });
+    });
+  });
+
+  test("with empty posts feed", async (assert) => {
+    await visit("/u/eviltrout/follow/feed");
+    assert.equal(
+      query(".user-content.user-follows-tab").textContent.trim(),
+      I18n.t("user.feed.empty_feed_you"),
+      "empty posts feed notice is shown"
+    );
+  });
+});
