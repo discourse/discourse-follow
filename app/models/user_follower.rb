@@ -26,18 +26,21 @@ class UserFollower < ActiveRecord::Base
 
   def self.filter_opted_out_users(relation)
     truthy_values = sanitize_sql(["?", HasCustomFields::Helpers::CUSTOM_FIELD_TRUE])
-    relation = relation.joins(<<~SQL)
-      LEFT OUTER JOIN (
-        SELECT user_id, value IN (#{truthy_values}) AS allow_follow
-        FROM user_custom_fields
-        WHERE name = 'allow_people_to_follow_me'
-      ) users_allow_follow
-      ON users_allow_follow.user_id = users.id
-    SQL
     if SiteSetting.default_allow_people_to_follow_me
-      relation = relation.where('users_allow_follow.allow_follow IS NULL OR users_allow_follow.allow_follow')
+      relation = relation.joins(<<~SQL)
+        LEFT OUTER JOIN user_custom_fields ucf
+        ON ucf.name = 'allow_people_to_follow_me'
+          AND ucf.user_id = users.id
+          AND ucf.value NOT IN (#{truthy_values})
+      SQL
+      relation = relation.where("ucf.user_id IS NULL")
     else
-      relation = relation.where('users_allow_follow.allow_follow IS NOT NULL AND users_allow_follow.allow_follow')
+      relation = relation.joins(<<~SQL)
+        INNER JOIN user_custom_fields ucf
+        ON ucf.name = 'allow_people_to_follow_me'
+          AND ucf.user_id = users.id
+          AND ucf.value IN (#{truthy_values})
+      SQL
     end
     relation
   end
