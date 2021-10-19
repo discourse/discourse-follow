@@ -1,0 +1,56 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+sv:
+  js:
+    notifications:
+      following: "<span>%{username}</span> %{description}"
+      following_description: "har börjat följa dig."
+      following_created_topic: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
+      titles:
+        following_created_topic: "nytt ämne från någon du följer"
+        following_replied: "nytt inlägg från någon du följer"
+        following: "någon har börjat följa dig"
+      popup:
+        following: "%{username} har börjat följa dig."
+        following_created_topic: '%{username} skapade "%{topic}" - %{site_title}'
+        following_replied: '%{username} skrev inlägg i "%{topic}" - %{site_title}'
+    user:
+      follow_nav: "Följer"
+      follow:
+        label: "Följ"
+      following:
+        feed_link: "Följ flöde"
+        label: "Följer"
+        none: "Du följer inte någon ännu."
+        none_other: "%{username} följer inte någon ännu."
+      followers:
+        label: "Följare"
+        none: "Ingen följer dig än."
+        none_other: "Ingen följer %{username} ännu."
+      feed:
+        label: "Flöde"
+        empty_feed_you: "Inga inlägg av personer du följer ännu."
+        empty_feed_other: "Inga inlägg ännu av personer %{username} följer."
+      follow_notifications_options:
+        notify_followed_user_when_followed: "Meddela användare när jag följer dem"
+        notify_me_when_followed: "Meddela mig när användare följer mig"
+        notify_me_when_followed_replies: "Meddela mig när någon jag följer svarar"
+        notify_me_when_followed_creates_topic: "Meddela mig när någon jag följer skapar ett ämne"
+        allow_people_to_follow_me: "Tillåt att folk följer mig"
+    follow:
+      follow_pages_visibility:
+        no-one: "Ingen"
+        self: "Själv"
+        trust_level_4: "Förtroendenivå 4"
+        trust_level_3: "Förtroendenivå 3"
+        trust_level_2: "Förtroendenivå 2"
+        trust_level_1: "Förtroendenivå 1"
+        trust_level_0: "Förtroendenivå 0"
+        everyone: "Alla"
+      follow_button_label: "Följ"
+      unfollow_button_label: "Sluta följa"

@@ -1,0 +1,31 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+sv:
+  discourse_push_notifications:
+    popup:
+      following_created_topic: '%{username} skapade "%{topic}" - %{site_title}'
+      following_replied: '%{username} skrev inlägg i "%{topic}" - %{site_title}'
+  site_settings:
+    discourse_follow_enabled: "Aktivera insticksprogram Följare"
+    follow_show_statistics_on_profile: "Visa följestatistik på användarprofiler."
+    follow_notifications_enabled: "Aktivera alla följaviseringar."
+    follow_followers_visible: "Följares synlighet."
+    follow_following_visible: "Synlighet för följer."
+    default_notify_me_when_followed: 'Standardvärde för användarinställning <code>Meddela mig när användare följer mig</code>. Att ändra den här inställningen gäller bara användare som aldrig har ändrat sina aviseringsinställningar för följande plugin'
+    default_notify_followed_user_when_followed: 'Standardvärde för användarinställning <code>Meddela användare när jag följer dem</code>. Att ändra den här inställningen gäller bara användare som aldrig har ändrat sina aviseringsinställningar för följande plugin'
+    default_notify_me_when_followed_replies: 'Standardvärde för användarinställning <code>Meddela mig när någon jag följer svarar</code>. Att ändra den här inställningen gäller bara användare som aldrig har ändrat sina aviseringsinställningar för följande plugin'
+    default_notify_me_when_followed_creates_topic: 'Standardvärde för användarinställning<code>Meddela mig när någon jag följer skapar ett ämne</code>. Att ändra den här inställningen gäller bara användare som aldrig har ändrat sina aviseringsinställningar för följande plugin'
+    default_allow_people_to_follow_me: 'Standardvärdet för användarinställning <code>Tillåt folk att följa mig</code>. Att ändra den här inställningen gäller bara användare som aldrig har ändrat sina aviseringsinställningar för följande plugin'
+  follow:
+    user_not_found: "Kunde inte hitta användare med användarnamn %{username}"
+    user_cannot_follow_themself: "Användaren kan inte följa sig själv"
+    invalid_notification_level: "Ogiltig aviseringsnivå %{level}"
+    cannot_follow_bot: "Kan inte följa en botanvändare"
+    cannot_follow_suspended: "Det går inte att följa en avstängd användare"
+    cannot_follow_staged: "Det går inte att följa en iscensatt användare"
+    invalid_created_before_date: "Fick ett ogiltigt datum för parametern 'created_before': %{value}"
+    user_does_not_allow_follow: "%{username} tillåter inte att personer följer dem."
