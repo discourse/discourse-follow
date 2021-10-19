@@ -1,54 +1,22 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
 hu:
-  admin_js:
-    admin:
-      follow:
-        label: "Követés"
-        settings:
-          label: "Beállítások"
-        delete_notifications:
-          label: "Az összes felhasználó, követéssel kapcsolatos értesítéseinek törlése"
-          advice: "(ezt a plugin letiltása vagy eltávolítása előtt tedd meg)"
-          modal_title: "Követéssel kapcsolatos értesítések törlése"
-          modal_question: "Biztos vagy benne, hogy törölni szeretnéd az összes felhasználó, követéssel kapcsolatos értesítéseit?"
-          modal_cancel: "Mégse"
-          modal_commit: "Törlés"
   js:
-    filters:
-      following:
-        title: "Követett"
-        help: "témák a követett felhasználók bejegyzéseivel"
     notifications:
       following: "<span>%{username}</span> %{description}"
       following_description: "elkezdett követni téged."
-      following_posted: "<span>%{username}</span> %{description}"
       following_replied: "<span>%{username}</span> %{description}"
       popup:
         following: "%{username} elkezdett követni téged."
-        following_posted: '%{username} közzétett "%{topic}" - %{site_title}'
         following_replied: '%{username} közzétett "%{topic}" - %{site_title}'
-    topics:
-      none:
-        following: "Nincsenek témák az általad követett felhasználóktól."
-      bottom:
-        following: "Nincs több téma az általad követett felhasználóktól."
     user:
       follow_nav: "Közösség"
       follow:
         label: "Követés"
-      following_level:
-        regular:
-          title: "Szokásos Módon"
-          description: "Nem fogod követni ezt a Felhasználót, az Értesítések a szokásos módon lesznek. Csak akkor jelennek meg a Követett témák listájában, ha a témában olyan személy is Közzétett, akit követsz"
-        watching_first_post:
-          title: "Követés (Témák)"
-          description: "Követni fogod ezt a Felhasználót és Értesítést kapsz minden új témájáról. Csak az általa írt Témák jelennek meg a Követett témák listájában"
-        watching:
-          title: "Követés (Összes)"
-          description: "Követni fogod ezt a Felhasználót és Értesítést kapsz minden bejegyzéséről. A bejegyzéseit tartalmazó összes Téma megjelenik a Követett témák listájában"
-      following_watching:
-        label: "Követés (Összes)"
-      following_watching_first_post:
-        label: "Követés (Témák)"
       following:
         label: "Követett"
         none: "Még nem követsz senkit."
@@ -61,4 +29,3 @@ hu:
         notify_followed_user_when_followed: "Értesítsd a felhasználókat, ha elkezdem követni őket."
         notify_me_when_followed: "Értesíts amikor elkezdenek követni."
         notify_me_when_followed_replies: "Értesíts, ha akit követek, válaszol egy bejegyzésre."
-        notify_me_when_followed_posts: "Értesíts, ha akit követek, közzétesz egy bejegyzést."
