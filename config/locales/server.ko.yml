@@ -5,3 +5,5 @@
 # https://translate.discourse.org/
 
 ko:
+  site_settings:
+    discourse_follow_enabled: "팔로우 플러그인을 활성화합니다."
