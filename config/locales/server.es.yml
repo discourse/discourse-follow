@@ -5,9 +5,27 @@
 # https://translate.discourse.org/
 
 es:
+  discourse_push_notifications:
+    popup:
+      following_created_topic: '%{username} creó "%{topic}" - %{site_title}'
+      following_replied: '%{username} publicó en «%{topic}» - %{site_title}'
   site_settings:
     discourse_follow_enabled: "Habilitar el plugin de follow."
-    follow_show_statistics_on_profile: "Mostrar estadísticas en los perfiles de usuarios."
+    follow_show_statistics_on_profile: "Mostrar las estadísticas de seguimiento en los perfiles de los usuarios."
     follow_notifications_enabled: "Habilitar todas las notificaciones de seguimiento."
     follow_followers_visible: "Visibilidad de seguidores."
     follow_following_visible: "Visibilidad de siguientes."
+    default_notify_me_when_followed: 'Valor predeterminado para la <code>Notificarme cuando los usuarios me siguen</code> preferencia de usuario. El cambiar este ajuste solo se aplica a los usuarios que nunca han cambiado sus preferencias de notificaciones del plugin de follow'
+    default_notify_followed_user_when_followed: 'Valor predeterminado para la <code>Notificar a los usuarios al seguirlos</code> preferencia de usuario. El cambiar este ajuste solo se aplica a los usuarios que nunca han cambiado sus preferencias de notificaciones del plugin de follow'
+    default_notify_me_when_followed_replies: 'Valor predeterminado para la <code>Notificarme cuando alguien que sigo responde a un tema</code> preferencia de usuario. El cambiar este ajuste solo se aplica a los usuarios que nunca han cambiado sus preferencias de notificaciones del plugin de follow'
+    default_notify_me_when_followed_creates_topic: 'Valor predeterminado para la <code>Notificarme cuando alguien que sigo crea un tema</code> preferencia de usuario. El cambiar este ajuste solo se aplica a los usuarios que nunca han cambiado sus preferencias de notificaciones del plugin de follow'
+    default_allow_people_to_follow_me: 'Valor predeterminado para la <code>Permitir que la gente me siga</code> preferencia de usuario. El cambiar este ajuste solo se aplica a los usuarios que nunca han cambiado sus preferencias de notificaciones del plugin de follow'
+  follow:
+    user_not_found: "No se pudo encontrar el usuario con el nombre de usuario %{username}"
+    user_cannot_follow_themself: "El usuario no tiene permitido seguirse a sí mismo"
+    invalid_notification_level: "Nivel de notificación no válido %{level}"
+    cannot_follow_bot: "No se puede seguir a un usuario bot"
+    cannot_follow_suspended: "No se puede seguir a un usuario suspendido"
+    cannot_follow_staged: "No se puede seguir a un usuario provisional"
+    invalid_created_before_date: "Se recibió una fecha inválida para el parámetro `created_before`: %{value}"
+    user_does_not_allow_follow: "%{username} no permite que la gente le siga."

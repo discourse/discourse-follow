@@ -9,26 +9,47 @@ es:
     notifications:
       following: "<span>%{username}</span> %{description}"
       following_description: "ha comenzado a seguirte."
+      following_created_topic: "<span>%{username}</span> %{description}"
       following_replied: "<span>%{username}</span> %{description}"
       titles:
+        following_created_topic: "nuevo tema de alguien que estás siguiendo"
         following_replied: "nueva publicación de alguien que estás siguiendo"
         following: "alguien ha comenzado a seguirte"
       popup:
         following: "%{username} ha comenzado a seguirte."
-        following_replied: '%{username} ha publicado en "%{topic}" - %{site_title}'
+        following_created_topic: '%{username} creó "%{topic}" - %{site_title}'
+        following_replied: '%{username} publicó en "%{topic}" - %{site_title}'
     user:
-      follow_nav: "Red"
+      follow_nav: "Seguimientos"
       follow:
         label: "Seguir"
       following:
+        feed_link: "Feed de seguimiento"
         label: "Siguiendo"
         none: "Aún no sigues a nadie."
         none_other: "%{username} aún no sigue a nadie."
       followers:
         label: "Seguidores"
-        none: "Aún nadie te sigue."
-        none_other: "Aún nadie sigue a %{username}."
+        none: "Nadie te sigue todavía."
+        none_other: "Nadie sigue a %{username} todavía."
+      feed:
+        label: "Feed"
+        empty_feed_you: "Aún no hay publicaciones de personas a las que sigues."
+        empty_feed_other: "Aún no hay publicaciones de personas que %{username} sigue."
       follow_notifications_options:
         notify_followed_user_when_followed: "Notificar a los usuarios al seguirlos."
         notify_me_when_followed: "Notificarme cuando los usuarios me siguen."
         notify_me_when_followed_replies: "Notificarme cuando alguien que sigo responde a un tema."
+        notify_me_when_followed_creates_topic: "Notificarme cuando alguien a quien sigo crea un tema"
+        allow_people_to_follow_me: "Permitir que la gente me siga"
+    follow:
+      follow_pages_visibility:
+        no-one: "Nadie"
+        trust_level_4: "Nivel de confianza 4"
+        trust_level_3: "Nivel de confianza 3"
+        trust_level_2: "Nivel de confianza 2"
+        trust_level_1: "Nivel de confianza 1"
+        trust_level_0: "Nivel de confianza 0"
+        everyone: "Todos"
+      follow_button_label: "Seguir"
+      unfollow_button_label: "Dejar de seguir"
