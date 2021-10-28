@@ -5,9 +5,27 @@
 # https://translate.discourse.org/
 
 ca:
+  discourse_push_notifications:
+    popup:
+      following_created_topic: '%{username} ha creat "%{topic}" - %{site_title}'
+      following_replied: '%{username} ha publicat en "%{topic}" - %{site_title}'
   site_settings:
     discourse_follow_enabled: "Activar el plugin de follow."
-    follow_show_statistics_on_profile: "Mostrar estadístiques en els perfils dels usuaris."
+    follow_show_statistics_on_profile: "Mostrar les estadístiques de seguiment en els perfils dels usuaris."
     follow_notifications_enabled: "Activar totes les notificacions de seguiment."
     follow_followers_visible: "Visibilitat de seguidors."
     follow_following_visible: "Visibilitat de següents."
+    default_notify_me_when_followed: 'Valor predeterminat per al <code>Notifica''m quan els usuaris em segueixen</code> preferència d''usuari. Canviar aquest ajustament només s''aplica als usuaris que mai han canviat les seves preferències de notificacions del plugin de seguiment'
+    default_notify_followed_user_when_followed: 'Valor predeterminat per al <code>Notificar als usuaris quan els segueixo</code> preferència d''usuari. Canviar aquest ajustament només s''aplica als usuaris que mai han canviat les seves preferències de notificacions del plugin de seguiment'
+    default_notify_me_when_followed_replies: 'Valor predeterminat per al <code>Notifica''m quan algú que segueixo respon a un tema</code> preferència d''usuari. Canviar aquest ajustament només s''aplica als usuaris que mai han canviat les seves preferències de notificacions del plugin de seguiment'
+    default_notify_me_when_followed_creates_topic: 'Valor predeterminat per al <code>Notifica''m quan algú que segueixo crea un tema</code> preferència d''usuari. Canviar aquest ajustament només s''aplica als usuaris que mai han canviat les seves preferències de notificacions del plugin de seguiment'
+    default_allow_people_to_follow_me: 'Valor predeterminat per al <code>Permetre que la gent em segueixi</code> preferència d''usuari. Canviar aquest ajustament només s''aplica als usuaris que mai han canviat les seves preferències de notificacions del plugin de seguiment'
+  follow:
+    user_not_found: "No s'ha pogut trobar l'usuari amb el nom d'usuari %{username}"
+    user_cannot_follow_themself: "L'usuari no està permès seguir a si mateix"
+    invalid_notification_level: "Nivell de notificació no vàlid %{level}"
+    cannot_follow_bot: "No es pot seguir a un usuari bot"
+    cannot_follow_suspended: "No es pot seguir un usuari suspès"
+    cannot_follow_staged: "No es pot seguir un usuari provisional"
+    invalid_created_before_date: "S'ha rebut una data no vàlida per al paràmetre `created_before`: %{value}"
+    user_does_not_allow_follow: "%{username} no permet que la gent els segueixi."

@@ -9,18 +9,22 @@ ca:
     notifications:
       following: "<span>%{username}</span> %{description}"
       following_description: "t'ha començat a seguir."
+      following_created_topic: "<span>%{username}</span> %{description}"
       following_replied: "<span>%{username}</span> %{description}"
       titles:
+        following_created_topic: "nou tema d'algú que estàs seguint"
         following_replied: "nova publicació d'algú que segueixes"
         following: "algú t'ha començat a seguir"
       popup:
         following: "%{username} t'ha començat a seguir."
+        following_created_topic: '%{username} ha creat "%{topic}" - %{site_title}'
         following_replied: '%{username} ha publicat en "%{topic}" - %{site_title}'
     user:
       follow_nav: "Xarxa"
       follow:
         label: "Seguir"
       following:
+        feed_link: "Feed de seguiment"
         label: "Seguint"
         none: "Encara no segueixes a ningú."
         none_other: "%{username} encara no segueix a ningú."
@@ -28,7 +32,24 @@ ca:
         label: "Seguidors"
         none: "Encara no et segueix ningú."
         none_other: "Encara ningú segueix a %{username}."
+      feed:
+        label: "Feed"
+        empty_feed_you: "Encara no hi ha publicacions de les persones que segueixes."
+        empty_feed_other: "Encara no hi ha publicacions dels usuaris que %{username} segueix."
       follow_notifications_options:
         notify_followed_user_when_followed: "Notifica als usuaris quan els segueixo."
         notify_me_when_followed: "Notifica'm quan els usuaris em segueixen."
         notify_me_when_followed_replies: "Notifica'm quan algú que segueixo respon a un tema."
+        notify_me_when_followed_creates_topic: "Notifica'm quan algú que segueixo crea un tema."
+        allow_people_to_follow_me: "Permetre que la gent em segueixi"
+    follow:
+      follow_pages_visibility:
+        no-one: "Ningú"
+        trust_level_4: "Nivell de confiança 4"
+        trust_level_3: "Nivell de confiança 3"
+        trust_level_2: "Nivell de confiança 2"
+        trust_level_1: "Nivell de confiança 1"
+        trust_level_0: "Nivell de confiança 0"
+        everyone: "Tothom"
+      follow_button_label: "Seguir"
+      unfollow_button_label: "Deixar de seguir"
