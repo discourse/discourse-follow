@@ -5,3 +5,52 @@
 # https://translate.discourse.org/
 
 zh_CN:
+  js:
+    notifications:
+      following: "<span>%{username}</span> %{description}"
+      following_description: "开始关注您。"
+      following_created_topic: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
+      titles:
+        following_created_topic: "来自您关注的人的新主题"
+        following_replied: "来自您关注人的新帖子"
+        following: "有用户开始关注您。"
+      popup:
+        following: "%{username} 已开始关注您。"
+        following_created_topic: '%{username} 创建了新主题“%{topic}”- %{site_title}'
+        following_replied: '%{username} 在“%{topic}”中发布了帖子 - %{site_title}'
+    user:
+      follow_nav: "关注"
+      follow:
+        label: "关注"
+      following:
+        feed_link: "关注信息流"
+        label: "正在关注"
+        none: "您还没有关注任何人。"
+        none_other: "%{username} 还没有关注任何人。"
+      followers:
+        label: "关注人"
+        none: "还没有人关注你。"
+        none_other: "还没有人关注 %{username}。"
+      feed:
+        label: "信息流"
+        empty_feed_you: "您关注的人还没有发布任何帖子。"
+        empty_feed_other: "%{username} 关注的人还没有发布过帖子。"
+      follow_notifications_options:
+        notify_followed_user_when_followed: "当我关注用户时通知他们"
+        notify_me_when_followed: "当用户关注我时通知我"
+        notify_me_when_followed_replies: "当我关注的人回复时通知我"
+        notify_me_when_followed_creates_topic: "当我关注的人创建主题时通知我"
+        allow_people_to_follow_me: "允许别人关注我"
+    follow:
+      follow_pages_visibility:
+        no-one: "没有人"
+        self: "仅自己"
+        trust_level_4: "信任级别4"
+        trust_level_3: "信任级别3"
+        trust_level_2: "信任级别2"
+        trust_level_1: "信任级别1"
+        trust_level_0: "信任级别0"
+        everyone: "所有人"
+      follow_button_label: "关注"
+      unfollow_button_label: "取消关注"
