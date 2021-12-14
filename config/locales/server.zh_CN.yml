@@ -5,3 +5,27 @@
 # https://translate.discourse.org/
 
 zh_CN:
+  discourse_push_notifications:
+    popup:
+      following_created_topic: '%{username} 创建了新主题“%{topic}”- %{site_title}'
+      following_replied: '%{username} 在“%{topic}”中发布了帖子 - %{site_title}'
+  site_settings:
+    discourse_follow_enabled: "启用关注插件。"
+    follow_show_statistics_on_profile: "在用户资料页上显示关注统计信息"
+    follow_notifications_enabled: "启用所有关注通知。"
+    follow_followers_visible: "关注者可见性。"
+    follow_following_visible: "正在关注人可见性"
+    default_notify_me_when_followed: '用户首选项<code>当用户关注我时通知我</code> 的默认值。更改此设置仅适用于从未更改过关注插件的通知首选项的用户'
+    default_notify_followed_user_when_followed: '用户首选项<code>当我关注用户时通知他们</code> 的默认值。更改此设置仅适用于从未更改过关注插件的通知首选项的用户'
+    default_notify_me_when_followed_replies: '用户首选项<code>当我关注的用户回帖时通知我</code> 的默认值。更改此设置仅适用于从未更改过关注插件的通知首选项的用户'
+    default_notify_me_when_followed_creates_topic: '用户首选项<code>当我关注的用户创建新主题时通知我</code> 的默认值。更改此设置仅适用于从未更改过关注插件的通知首选项的用户'
+    default_allow_people_to_follow_me: '用户首选项<code>允许用户关注我</code> 的默认值。更改此设置仅适用于从未更改过关注插件的通知首选项的用户'
+  follow:
+    user_not_found: "找不到用户名为 %{username}的用户"
+    user_cannot_follow_themself: "用户不能关注自己"
+    invalid_notification_level: "无效的通知级别 %{level}"
+    cannot_follow_bot: "无法关注机器人用户"
+    cannot_follow_suspended: "无法关注已被封禁的用户"
+    cannot_follow_staged: "无法关注被暂存的用户"
+    invalid_created_before_date: "无效的“created_before” 日期参数： %{value}"
+    user_does_not_allow_follow: "%{username} 不允许别人关注他。"
