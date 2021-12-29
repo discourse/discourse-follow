@@ -185,4 +185,15 @@ describe ::Follow::Updater do
       expect(error.custom_message_params).to eq({ username: user2.username })
     end
   end
+
+  it "does not allow following a user who has hidden their profile" do
+    user2.user_option.update!(hide_profile_and_presence: true)
+    expect do
+      new_updater(user1, user2).watch_follow
+    end.to raise_error do |error|
+      expect(error).to be_a(Discourse::InvalidAccess)
+      expect(error.custom_message).to eq("follow.user_does_not_allow_follow")
+      expect(error.custom_message_params).to eq({ username: user2.username })
+    end
+  end
 end
