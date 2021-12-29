@@ -32,6 +32,12 @@ describe User do
       expect(followed2.followers.pluck(:id)).to contain_exactly(follower1.id, follower2.id)
     end
 
+    it "returns empty relation if the user has hidden their profile" do
+      followed1.user_option.update!(hide_profile_and_presence: true)
+      expect(followed1.followers.pluck(:id)).to be_empty
+      expect(followed2.followers.pluck(:id)).to contain_exactly(follower1.id, follower2.id)
+    end
+
     it "returns empty relation if the default_allow_people_to_follow_me setting " \
     "is false and the user has no explicit preference" do
       SiteSetting.default_allow_people_to_follow_me = false
@@ -57,6 +63,13 @@ describe User do
     it "excludes users who have disabled follows" do
       followed1.custom_fields["allow_people_to_follow_me"] = false
       followed1.save!
+
+      expect(follower1.following.pluck(:id)).to contain_exactly(followed2.id)
+      expect(follower2.following.pluck(:id)).to contain_exactly(followed2.id)
+    end
+
+    it "excludes users who have hidden their profile" do
+      followed1.user_option.update!(hide_profile_and_presence: true)
 
       expect(follower1.following.pluck(:id)).to contain_exactly(followed2.id)
       expect(follower2.following.pluck(:id)).to contain_exactly(followed2.id)
