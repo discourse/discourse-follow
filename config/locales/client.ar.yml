@@ -5,3 +5,45 @@
 # https://translate.discourse.org/
 
 ar:
+  js:
+    notifications:
+      following: "<span>%{username}</span> %{description}"
+      following_description: "بدأ في متابعتك."
+      following_created_topic: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
+      titles:
+        following_created_topic: "موضوع جديد من شخص تتابعه"
+        following_replied: "منشور جديد من شخص تتابعه"
+        following: "بدأ شخص ما في متابعتك"
+      popup:
+        following: "بدأ %{username} في متابعتك."
+        following_created_topic: 'أنشأ %{username} الموضوع "%{topic}" - %{site_title}'
+        following_replied: 'نشر %{username} في "%{topic}" - ‏%{site_title}'
+    user:
+      follow_nav: "المتابعات"
+      follow:
+        label: "متابعة"
+      following:
+        feed_link: "متابعة الموجز"
+        label: "متابَع"
+        none: "أنت لا تتابع أي شخص حتى الآن."
+        none_other: "%{username} لا يتابع أي شخص حتى الآن."
+      followers:
+        label: "المتابِعون"
+        none: "لا أحد يتابعك حتى الآن."
+        none_other: "لا أحد يتابع %{username} حتى الآن."
+      feed:
+        label: "الموجز"
+        empty_feed_you: "لا توجد منشورات من الأشخاص الذين تتابعهم حتى الآن."
+        empty_feed_other: "لا توجد منشورات من الأشخاص الذين يتابعهم %{username} حتى الآن."
+      follow_notifications_options:
+        notify_followed_user_when_followed: "إرسال إشعار إلى المستخدمين عندما أتابعهم"
+        notify_me_when_followed: "إرسال إشعار إليَّ عندما يتابعني المستخدمون"
+        notify_me_when_followed_replies: "إرسال إشعار إليَّ عندما يرد شخص ما أتابعه"
+        notify_me_when_followed_creates_topic: "إرسال إشعار إليَّ عندما ينشئ شخص ما أتابعه موضوعًا"
+        allow_people_to_follow_me: "السماح للأشخاص بمتابعتي"
+    follow:
+      follow_pages_visibility:
+        no-one: "لا أحد"
+        self: "نفسي"
+        trust_level_4: "مستوى الثقة 4"

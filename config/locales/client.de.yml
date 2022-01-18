@@ -5,3 +5,52 @@
 # https://translate.discourse.org/
 
 de:
+  js:
+    notifications:
+      following: "<span>%{username}</span> %{description}"
+      following_description: "folgt dir jetzt."
+      following_created_topic: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
+      titles:
+        following_created_topic: "neues Thema von jemandem, dem du folgst"
+        following_replied: "neuer Beitrag von jemandem, dem du folgst"
+        following: "jemand folgt dir jetzt"
+      popup:
+        following: "%{username} folgt dir jetzt."
+        following_created_topic: '%{username} hat „%{topic}“ erstellt – %{site_title}'
+        following_replied: '%{username} hat geschrieben in „%{topic}“ – %{site_title}'
+    user:
+      follow_nav: "Folgen"
+      follow:
+        label: "Folgen"
+      following:
+        feed_link: "Folgen-Feed"
+        label: "Folge ich"
+        none: "Du folgst noch niemandem."
+        none_other: "%{username} folgt noch niemandem."
+      followers:
+        label: "Follower"
+        none: "Es folgt dir noch niemand."
+        none_other: "Bislang folgt noch niemand %{username}."
+      feed:
+        label: "Feed"
+        empty_feed_you: "Noch keine Beiträge von Leuten, denen du folgst."
+        empty_feed_other: "Noch keine Beiträge von Leuten, denen %{username} folgt."
+      follow_notifications_options:
+        notify_followed_user_when_followed: "Benutzer benachrichtigen, wenn ich ihnen folge"
+        notify_me_when_followed: "Mich benachrichtigen, wenn mir Benutzer folgen"
+        notify_me_when_followed_replies: "Mich benachrichtigen, wenn jemand, dem ich folge, antwortet"
+        notify_me_when_followed_creates_topic: "Mich benachrichtigen, wenn jemand, dem ich folge, ein Thema erstellt"
+        allow_people_to_follow_me: "Erlaube anderen, mir zu folgen"
+    follow:
+      follow_pages_visibility:
+        no-one: "Niemand"
+        self: "Ich selbst"
+        trust_level_4: "Vertrauensstufe 4"
+        trust_level_3: "Vertrauensstufe 3"
+        trust_level_2: "Vertrauensstufe 2"
+        trust_level_1: "Vertrauensstufe 1"
+        trust_level_0: "Vertrauensstufe 0"
+        everyone: "Jeder"
+      follow_button_label: "Folgen"
+      unfollow_button_label: "Entfolgen"

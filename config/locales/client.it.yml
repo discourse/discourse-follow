@@ -9,23 +9,48 @@ it:
     notifications:
       following: "<span>%{username}</span> %{description}"
       following_description: "ha iniziato a seguirti."
+      following_created_topic: "<span>%{username}</span> %{description}"
       following_replied: "<span>%{username}</span> %{description}"
+      titles:
+        following_created_topic: "nuovo argomento da qualcuno che segui"
+        following_replied: "nuovo messaggio da qualcuno che segui"
+        following: "qualcuno ha iniziato a seguirti"
       popup:
         following: "%{username} ha iniziato a seguirti."
+        following_created_topic: '%{username} ha creato "%{topic}" - %{site_title}'
         following_replied: '%{username} ha risposto in "%{topic}" - %{site_title}'
     user:
-      follow_nav: "Rete"
+      follow_nav: "Segue"
       follow:
-        label: "Follow"
+        label: "Segui"
       following:
-        label: "Following"
+        feed_link: "Segui feed"
+        label: "Segui"
         none: "Non stai ancora seguendo nessuno."
         none_other: "%{username} non sta ancora seguendo nessuno."
       followers:
-        label: "Followers"
+        label: "Follower"
         none: "Nessuno ti sta ancora seguendo."
         none_other: "Nessuno sta ancora seguendo %{username}."
+      feed:
+        label: "Feed"
+        empty_feed_you: "Ancora nessun messaggio da persone che segui."
+        empty_feed_other: "Ancora nessun messaggio da persone seguite da %{username}."
       follow_notifications_options:
-        notify_followed_user_when_followed: "Notifica gli utenti se inizio a seguirli."
-        notify_me_when_followed: "Notificami se altri utenti iniziano a seguirmi."
+        notify_followed_user_when_followed: "Notifica gli utenti se inizio a seguirli"
+        notify_me_when_followed: "Notificami se altri utenti iniziano a seguirmi"
         notify_me_when_followed_replies: "Notificami se qualcuno che seguo risponde."
+        notify_me_when_followed_creates_topic: "Notificami se qualcuno che seguo crea un argomento"
+        allow_people_to_follow_me: "Consenti alle persone di seguirmi"
+    follow:
+      follow_pages_visibility:
+        no-one: "Nessuno"
+        self: "Solo io"
+        trust_level_4: "Livello di attendibilità 4"
+        trust_level_3: "Livello di attendibilità 3"
+        trust_level_2: "Livello di attendibilità 2"
+        trust_level_1: "Livello di attendibilità 1"
+        trust_level_0: "Livello di attendibilità 0"
+        everyone: "Chiunque"
+      follow_button_label: "Segui"
+      unfollow_button_label: "Smetti di seguire"

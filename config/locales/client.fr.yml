@@ -5,3 +5,52 @@
 # https://translate.discourse.org/
 
 fr:
+  js:
+    notifications:
+      following: "<span>%{username}</span> %{description}"
+      following_description: "a commencé à vous suivre."
+      following_created_topic: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
+      titles:
+        following_created_topic: "nouveau sujet d'une personne que vous suivez"
+        following_replied: "nouveau message d'une personne que vous suivez"
+        following: "quelqu'un a commencé à vous suivre"
+      popup:
+        following: "%{username} a commencé à vous suivre."
+        following_created_topic: '%{username} a créé « %{topic} » - %{site_title}'
+        following_replied: '%{username} a publié un message dans « %{topic} » - %{site_title}'
+    user:
+      follow_nav: "Suivis"
+      follow:
+        label: "Suivre"
+      following:
+        feed_link: "Fil de suivi"
+        label: "Personnes suivies"
+        none: "Vous ne suivez encore personne."
+        none_other: "%{username} ne suit encore personne."
+      followers:
+        label: "Abonnés"
+        none: "Personne ne vous suit encore."
+        none_other: "Personne ne suit %{username} pour le moment."
+      feed:
+        label: "Flux"
+        empty_feed_you: "Aucun message de personnes que vous suivez pour le moment."
+        empty_feed_other: "Aucun message de personnes que %{username} suit pour le moment."
+      follow_notifications_options:
+        notify_followed_user_when_followed: "Avertir les utilisateurs lorsque je les suis"
+        notify_me_when_followed: "M'avertir lorsque des utilisateurs me suivent"
+        notify_me_when_followed_replies: "M'avertir lorsque quelqu'un que je suis répond"
+        notify_me_when_followed_creates_topic: "M'avertir lorsqu'une personne que je suis crée un sujet"
+        allow_people_to_follow_me: "Autoriser les autres utilisateurs à me suivre"
+    follow:
+      follow_pages_visibility:
+        no-one: "Personne"
+        self: "Soi"
+        trust_level_4: "Niveau de confiance 4"
+        trust_level_3: "Niveau de confiance 3"
+        trust_level_2: "Niveau de confiance 2"
+        trust_level_1: "Niveau de confiance 1"
+        trust_level_0: "Niveau de confiance 0"
+        everyone: "Tout le monde"
+      follow_button_label: "Suivre"
+      unfollow_button_label: "Ne plus suivre"

@@ -5,3 +5,27 @@
 # https://translate.discourse.org/
 
 it:
+  discourse_push_notifications:
+    popup:
+      following_created_topic: '%{username} ha creato "%{topic}" - %{site_title}'
+      following_replied: '%{username} ha pubblicato qualcosa in "%{topic}" - %{site_title}'
+  site_settings:
+    discourse_follow_enabled: "Abilita il plug-in follow."
+    follow_show_statistics_on_profile: "Mostra le statistiche di utenti che seguono sui profili utente."
+    follow_notifications_enabled: "Abilita tutte le notifiche di utenti che seguono."
+    follow_followers_visible: "Visibilità dei follower."
+    follow_following_visible: "Visibilità di chi segui"
+    default_notify_me_when_followed: 'Valore predefinito per la preferenza utente <code>Avvisami quando gli utenti mi seguono</code>. La modifica di questa impostazione si applica solo agli utenti che non hanno mai modificato le proprie preferenze di notifica del plugin follow'
+    default_notify_followed_user_when_followed: 'Valore predefinito per la preferenza utente <code>Avvisa gli utenti che seguo</code>. La modifica di questa impostazione si applica solo agli utenti che non hanno mai modificato le proprie preferenze di notifica del plugin follow'
+    default_notify_me_when_followed_replies: 'Valore predefinito per la preferenza utente <code>Avvisami quando qualcuno che seguo risponde</code>. La modifica di questa impostazione si applica solo agli utenti che non hanno mai modificato le proprie preferenze di notifica del plugin follow'
+    default_notify_me_when_followed_creates_topic: 'Valore predefinito per la preferenza utente <code>Avvisami quando qualcuno che seguo crea un argomento</code>. La modifica di questa impostazione si applica solo agli utenti che non hanno mai modificato le proprie preferenze di notifica del plugin follow'
+    default_allow_people_to_follow_me: 'Valore predefinito per la preferenza utente <code>Consenti agli utenti di seguirmi</code>. La modifica di questa impostazione si applica solo agli utenti che non hanno mai modificato le proprie preferenze di notifica del plug-in follow'
+  follow:
+    user_not_found: "Impossibile trovare l'utente con nome utente %{username}"
+    user_cannot_follow_themself: "L'utente non è autorizzato a seguire se stesso"
+    invalid_notification_level: "Livello di notifica %{level} non valido"
+    cannot_follow_bot: "Impossibile seguire un utente bot"
+    cannot_follow_suspended: "Impossibile seguire un utente sospeso"
+    cannot_follow_staged: "Impossibile seguire un utente temporaneo"
+    invalid_created_before_date: "Ricevuta una data non valida per il parametro `created_before`: %{value}"
+    user_does_not_allow_follow: "%{username} non consente alle persone di seguirlo."

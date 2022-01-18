@@ -5,3 +5,27 @@
 # https://translate.discourse.org/
 
 fr:
+  discourse_push_notifications:
+    popup:
+      following_created_topic: '%{username} a créé « %{topic} » - %{site_title}'
+      following_replied: '%{username} a publié un message dans « %{topic} » - %{site_title}'
+  site_settings:
+    discourse_follow_enabled: "Activer l'extension de suivi."
+    follow_show_statistics_on_profile: "Afficher les statistiques de suivi sur les profils des utilisateurs."
+    follow_notifications_enabled: "Activer toutes les notifications de suivi."
+    follow_followers_visible: "Visibilité des abonnés."
+    follow_following_visible: "Visibilité du suivi."
+    default_notify_me_when_followed: 'Valeur par défaut pour la préférence utilisateur <code>M''avertir lorsque des utilisateurs me suivent</code>. La modification de ce paramètre ne s''applique qu''aux utilisateurs qui n''ont jamais modifié leurs préférences de notification de l''extension de suivi'
+    default_notify_followed_user_when_followed: 'Valeur par défaut pour la préférence utilisateur <code>Avertir les utilisateurs lorsque je les suis</code>. La modification de ce paramètre ne s''applique qu''aux utilisateurs qui n''ont jamais modifié leurs préférences de notification de l''extension de suivi'
+    default_notify_me_when_followed_replies: 'Valeur par défaut pour la préférence utilisateur <code>M''avertir lorsque quelqu''un que je suis répond</code>. La modification de ce paramètre ne s''applique qu''aux utilisateurs qui n''ont jamais modifié leurs préférences de notification de l''extension de suivi'
+    default_notify_me_when_followed_creates_topic: 'Valeur par défaut pour la préférence utilisateur <code>M''avertir lorsqu''une personne que je suis crée un sujet</code>. La modification de ce paramètre ne s''applique qu''aux utilisateurs qui n''ont jamais modifié leurs préférences de notification de l''extension de suivi'
+    default_allow_people_to_follow_me: 'Valeur par défaut pour la préférence utilisateur <code>Autoriser les autres utilisateurs à me suivre</code>. La modification de ce paramètre ne s''applique qu''aux utilisateurs qui n''ont jamais modifié leurs préférences de notification de l''extension de suivi'
+  follow:
+    user_not_found: "Impossible de trouver l'utilisateur avec le nom d'utilisateur %{username}"
+    user_cannot_follow_themself: "L'utilisateur n'est pas autorisé à se suivre lui-même"
+    invalid_notification_level: "Niveau de notification invalide %{level}"
+    cannot_follow_bot: "Impossible de suivre un utilisateur robot"
+    cannot_follow_suspended: "Impossible de suivre un utilisateur suspendu"
+    cannot_follow_staged: "Impossible de suivre un utilisateur distant"
+    invalid_created_before_date: "Réception d'une date invalide pour le paramètre « created_before » : %{value}"
+    user_does_not_allow_follow: "%{username} n'autorise pas les autres utilisateurs à le ou la suivre."

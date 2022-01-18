@@ -5,3 +5,27 @@
 # https://translate.discourse.org/
 
 de:
+  discourse_push_notifications:
+    popup:
+      following_created_topic: '%{username} hat „%{topic}“ erstellt – %{site_title}'
+      following_replied: '%{username} hat geschrieben in „%{topic}“ – %{site_title}'
+  site_settings:
+    discourse_follow_enabled: "Follow-Plug-in aktivieren."
+    follow_show_statistics_on_profile: "Follow-Statistiken auf Benutzerprofilen anzeigen."
+    follow_notifications_enabled: "Alle Follow-Benachrichtigungen aktivieren."
+    follow_followers_visible: "Sichtbarkeit der Follower."
+    follow_following_visible: "Sichtbarkeit von „Folge ich“."
+    default_notify_me_when_followed: 'Standardwert für die Benutzereinstellung <code>Mich benachrichtigen, wenn mir Benutzer folgen</code>. Das Ändern dieser Einstellung betrifft nur Benutzer, die ihre Benachrichtigungseinstellungen des Follow-Plug-ins noch nie geändert haben'
+    default_notify_followed_user_when_followed: 'Standardwert für die Benutzereinstellung <code>Benutzer benachrichtigen, wenn ich ihnen folge</code>. Das Ändern dieser Einstellung betrifft nur Benutzer, die ihre Benachrichtigungseinstellungen des Follow-Plug-ins noch nie geändert haben'
+    default_notify_me_when_followed_replies: 'Standardwert für die Benutzereinstellung <code>Mich benachrichtigen, wenn jemand, dem ich folge, antwortet</code>. Das Ändern dieser Einstellung betrifft nur Benutzer, die ihre Benachrichtigungseinstellungen des Follow-Plug-ins noch nie geändert haben'
+    default_notify_me_when_followed_creates_topic: 'Standardwert für die Benutzereinstellung <code>Mich benachrichtigen, wenn jemand, dem ich folge, ein Thema erstellt</code>. Das Ändern dieser Einstellung betrifft nur Benutzer, die ihre Benachrichtigungseinstellungen des Follow-Plug-ins noch nie geändert haben'
+    default_allow_people_to_follow_me: 'Standardwert für die Benutzereinstellung <code>Erlaube anderen, mir zu folgen</code>. Das Ändern dieser Einstellung betrifft nur Benutzer, die ihre Benachrichtigungseinstellungen des Follow-Plug-ins noch nie geändert haben'
+  follow:
+    user_not_found: "Benutzer mit Benutzername %{username} konnte nicht gefunden werden"
+    user_cannot_follow_themself: "Benutzer darf sich nicht selbst folgen"
+    invalid_notification_level: "Ungültige Benachrichtigungsstufe %{level}"
+    cannot_follow_bot: "Kann einem Bot-Benutzer nicht folgen"
+    cannot_follow_suspended: "Kann einem gesperrten Benutzer nicht folgen"
+    cannot_follow_staged: "Kann einem vorbereiteten Benutzer nicht folgen"
+    invalid_created_before_date: "Ungültiges Datum für Parameter „created_before“ erhalten: %{value}"
+    user_does_not_allow_follow: "%{username} erlaubt es anderen nicht, ihm/ihr zu folgen."
