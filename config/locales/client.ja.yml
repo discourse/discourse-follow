@@ -5,3 +5,52 @@
 # https://translate.discourse.org/
 
 ja:
+  js:
+    notifications:
+      following: "<span>%{username}</span> %{description}"
+      following_description: "があなたをフォローし始めました。"
+      following_created_topic: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
+      titles:
+        following_created_topic: "あなたがフォローしている人の新しいトピック"
+        following_replied: "あなたがフォローしている人の新しい投稿"
+        following: "誰かがあなたをフォローし始めました"
+      popup:
+        following: "%{username} があなたをフォローし始めました。"
+        following_created_topic: '%{username} が「%{topic}」を作成しました - %{site_title}'
+        following_replied: '%{username} が「%{topic}」に投稿しました - %{site_title}'
+    user:
+      follow_nav: "フォロー"
+      follow:
+        label: "フォロー"
+      following:
+        feed_link: "フィードをフォロー"
+        label: "フォロー中"
+        none: "まだ誰もフォローしていません。"
+        none_other: "%{username} はまだ誰もフォローしていません。"
+      followers:
+        label: "フォロワー"
+        none: "まだ誰もあなたをフォローしていません。"
+        none_other: "まだ誰も %{username} をフォローしていません。"
+      feed:
+        label: "フィード"
+        empty_feed_you: "あなたがフォローしている人の投稿はまだありません。"
+        empty_feed_other: "%{username} がフォローしている人の投稿はまだありません。"
+      follow_notifications_options:
+        notify_followed_user_when_followed: "フォローしたらそのユーザーに通知する"
+        notify_me_when_followed: "ユーザーが自分をフォローしたら通知する"
+        notify_me_when_followed_replies: "フォローしている人が返信したら通知する"
+        notify_me_when_followed_creates_topic: "フォローしている人がトピックを作成したら通知する"
+        allow_people_to_follow_me: "他のユーザーにフォローを許可する"
+    follow:
+      follow_pages_visibility:
+        no-one: "誰にも表示しない"
+        self: "自分"
+        trust_level_4: "信頼レベル 4"
+        trust_level_3: "信頼レベル 3"
+        trust_level_2: "信頼レベル 2"
+        trust_level_1: "信頼レベル 1"
+        trust_level_0: "信頼レベル 0"
+        everyone: "全員"
+      follow_button_label: "フォロー"
+      unfollow_button_label: "フォロー解除"

@@ -5,3 +5,27 @@
 # https://translate.discourse.org/
 
 fi:
+  discourse_push_notifications:
+    popup:
+      following_created_topic: '%{username} loi ketjun "%{topic}" – %{site_title}'
+      following_replied: '%{username} lähetti viestin ketjuun "%{topic}" – %{site_title}'
+  site_settings:
+    discourse_follow_enabled: "Ota seuraamislisäosa käyttöön."
+    follow_show_statistics_on_profile: "Näytä seuraamistilastot käyttäjäprofiileissa."
+    follow_notifications_enabled: "Ota kaikki seurantailmoitukset käyttöön."
+    follow_followers_visible: "Seuraajien näkyvyys."
+    follow_following_visible: "Seuraamisen näkyvyys."
+    default_notify_me_when_followed: '<code>Ilmoita minulle, kun käyttäjät seuraavat minua</code> -käyttäjäasetuksen oletusarvo. Tämän asetuksen muuttaminen koskee vain käyttäjiä, jotka eivät ole koskaan muuttaneet follow-lisäosan ilmoitusasetuksiaan.'
+    default_notify_followed_user_when_followed: '<code>Ilmoita käyttäjille, kun seuraan heitä</code> -käyttäjäasetuksen oletusarvo. Tämän asetuksen muuttaminen koskee vain käyttäjiä, jotka eivät ole koskaan muuttaneet follow-lisäosan ilmoitusasetuksiaan.'
+    default_notify_me_when_followed_replies: '<code>Ilmoita minulle, kun joku seuraamani vastaa</code> -käyttäjäasetuksen oletusarvo. Tämän asetuksen muuttaminen koskee vain käyttäjiä, jotka eivät ole koskaan muuttaneet follow-lisäosan ilmoitusasetuksiaan.'
+    default_notify_me_when_followed_creates_topic: '<code>Ilmoita minulle, kun joku seuraamani luo ketjun</code> -käyttäjäasetuksen oletusarvo. Tämän asetuksen muuttaminen koskee vain käyttäjiä, jotka eivät ole koskaan muuttaneet follow-lisäosan ilmoitusasetuksiaan.'
+    default_allow_people_to_follow_me: '<code>Salli ihmisten seurata minua</code> -käyttäjäasetuksen oletusarvo. Tämän asetuksen muuttaminen koskee vain käyttäjiä, jotka eivät ole koskaan muuttaneet follow-lisäosan ilmoitusasetuksiaan.'
+  follow:
+    user_not_found: "Käyttäjätunnuksella %{username} ei löydy käyttäjää"
+    user_cannot_follow_themself: "Käyttäjä ei saa seurata itseään"
+    invalid_notification_level: "Virheellinen ilmoitustaso %{level}"
+    cannot_follow_bot: "Bottikäyttäjää ei voi seurata"
+    cannot_follow_suspended: "Estettyä käyttäjää ei voi seurata"
+    cannot_follow_staged: "Vaiheistettua käyttäjää ei voi seurata"
+    invalid_created_before_date: "Virheellinen päivämäärä vastaanotettu \"created_before\"-parametrille: %{value}"
+    user_does_not_allow_follow: "%{username} ei salli ihmisten seuraavan häntä."

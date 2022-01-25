@@ -5,9 +5,27 @@
 # https://translate.discourse.org/
 
 pt_BR:
+  discourse_push_notifications:
+    popup:
+      following_created_topic: '%{username} criou "%{topic}" - %{site_title}'
+      following_replied: '%{username} postou em "%{topic}" - %{site_title}'
   site_settings:
-    discourse_follow_enabled: "Ativar o plugin de Seguidores."
-    follow_show_statistics_on_profile: "Exibir estatísticas de Seguidores nos perfis dos usuários."
-    follow_notifications_enabled: "Ativar todas as notificações de seguidores."
-    follow_followers_visible: "Visibilidade dos Seguidores."
-    follow_following_visible: "Visibilidade dos Seguidos."
+    discourse_follow_enabled: "Ativar o plugin de acompanhamento."
+    follow_show_statistics_on_profile: "Exibir estatísticas de acompanhamento nos perfis dos(as) usuários(as)."
+    follow_notifications_enabled: "Ativar todas as notificações de acompanhamento."
+    follow_followers_visible: "Visibilidade dos(as) seguidores(as)."
+    follow_following_visible: "Visibilidade dos(as) seguidos(as)."
+    default_notify_me_when_followed: 'Valor padrão para a preferência de usuário(a) <code>Notificar-me quando usuários(as) me seguirem</code>. A alteração dessa configuração se aplica apenas a usuários(as) que nunca alteraram suas preferências de notificação ou o plugin de acompanhamento'
+    default_notify_followed_user_when_followed: 'Valor padrão para a preferência de usuário(a) <code>Notificar usuários(as) quando eu seguir</code>. A alteração dessa configuração se aplica apenas a usuários(as) que nunca alteraram suas preferências de notificação ou o plugin de acompanhamento'
+    default_notify_me_when_followed_replies: 'Valor padrão para a preferência de usuário(a) <code>Notificar-me quando eu acompanhar respostas</code>. A alteração dessa configuração se aplica apenas a usuários(as) que nunca alteraram suas preferências de notificação ou o plugin de acompanhamento'
+    default_notify_me_when_followed_creates_topic: 'Valor padrão para a preferência de usuário(a) <code>Notificar-me quando eu criar um tópico</code>. A alteração dessa configuração se aplica apenas a usuários(as) que nunca alteraram suas preferências de notificação ou o plugin de acompanhamento'
+    default_allow_people_to_follow_me: 'Valor padrão para a preferência de usuário(a) <code>Permitir que me sigam</code>. A alteração dessa configuração se aplica apenas a usuários(as) que nunca alteraram suas preferências de notificação ou o plugin de acompanhamento'
+  follow:
+    user_not_found: "Não foi possível encontrar usuário(a) com o nome de usuário(a) %{username}"
+    user_cannot_follow_themself: "O(a) usuário(a) não pode seguir a si"
+    invalid_notification_level: "Nível de notificação inválido %{level}"
+    cannot_follow_bot: "Não é possível seguir um(a) usuário(a) robô"
+    cannot_follow_suspended: "Não é possível seguir um(a) usuário(a) suspenso(a)"
+    cannot_follow_staged: "Não é possível seguir um(a) usuário(a) encenado(a)"
+    invalid_created_before_date: "Data inválida recebida para o parâmetro \"created_before\": %{value}"
+    user_does_not_allow_follow: "%{username} não permite ser seguido(a)"

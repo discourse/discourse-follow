@@ -5,3 +5,27 @@
 # https://translate.discourse.org/
 
 ar:
+  discourse_push_notifications:
+    popup:
+      following_created_topic: 'أنشأ %{username} الموضوع "%{topic}" - %{site_title}'
+      following_replied: 'نشر %{username} في "%{topic}" - ‏%{site_title}'
+  site_settings:
+    discourse_follow_enabled: "تفعيل المكوِّن الإضافي للمتابعة."
+    follow_show_statistics_on_profile: "عرض إحصاءات المتابعة على الملفات التعريفية للمستخدمين."
+    follow_notifications_enabled: "تفعيل جميع إشعارات المتابعة"
+    follow_followers_visible: "رؤية المتابعين"
+    follow_following_visible: "رؤية المتابعين"
+    default_notify_me_when_followed: 'القيمة الافتراضية لتفضيل المستخدم <code>Notify me when users follow me</code>. لا ينطبق تغيير هذا الإعداد إلا على المستخدمين الذين لم يغيِّروا أبدًا تفضيلات الإشعارات الخاصة بالمكوِّن الإضافي للمتابعة'
+    default_notify_followed_user_when_followed: 'القيمة الافتراضية لتفضيل المستخدم <code>Notify me when users follow me</code>. لا ينطبق تغيير هذا الإعداد إلا على المستخدمين الذين لم يغيِّروا أبدًا تفضيلات الإشعارات الخاصة بالمكوِّن الإضافي للمتابعة'
+    default_notify_me_when_followed_replies: 'القيمة الافتراضية لتفضيل المستخدم <code>Notify me when someone I follow replies</code>. لا ينطبق تغيير هذا الإعداد إلا على المستخدمين الذين لم يغيِّروا أبدًا تفضيلات الإشعارات الخاصة بالمكوِّن الإضافي للمتابعة'
+    default_notify_me_when_followed_creates_topic: 'القيمة الافتراضية لتفضيل المستخدم <code>Notify me when someone I follow creates a topic</code>. لا ينطبق تغيير هذا الإعداد إلا على المستخدمين الذين لم يغيِّروا أبدًا تفضيلات الإشعارات الخاصة بالمكوِّن الإضافي للمتابعة'
+    default_allow_people_to_follow_me: 'القيمة الافتراضية لتفضيل المستخدم <code>Allow people to follow me</code>. لا ينطبق تغيير هذا الإعداد إلا على المستخدمين الذين لم يغيِّروا أبدًا تفضيلات الإشعارات الخاصة بالمكوِّن الإضافي للمتابعة'
+  follow:
+    user_not_found: "تعذَّر العثور على مستخدم باسم المستخدم %{username}"
+    user_cannot_follow_themself: "غير مسموح للمستخدم بمتابعة نفسه"
+    invalid_notification_level: "مستوى الإشعار %{level} غير صالح"
+    cannot_follow_bot: "لا يمكن متابعة مستخدم من برامج الروبوت"
+    cannot_follow_suspended: "لا يمكن متابعة مستخدم تم تعليقه"
+    cannot_follow_staged: "لا يمكن متابعة مستخدم مؤقت"
+    invalid_created_before_date: "تم تلقي تاريخ غير صالح للمعلمة `created_before`: %{value}"
+    user_does_not_allow_follow: "لا يسمح %{username} للأشخاص بمتابعته."
