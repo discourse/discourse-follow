@@ -5,3 +5,27 @@
 # https://translate.discourse.org/
 
 ja:
+  discourse_push_notifications:
+    popup:
+      following_created_topic: '%{username} が「%{topic}」を作成しました - %{site_title}'
+      following_replied: '%{username} が「%{topic}」に投稿しました - %{site_title}'
+  site_settings:
+    discourse_follow_enabled: "フォロープラグインを有効にします。"
+    follow_show_statistics_on_profile: "ユーザープロファイルにフォロー統計を表示します。"
+    follow_notifications_enabled: "すべてのフォロー通知を有効にします。"
+    follow_followers_visible: "フォロワーの表示状態。"
+    follow_following_visible: "フォロー中の表示状態。"
+    default_notify_me_when_followed: '「<code>ユーザーが自分をフォローしたら通知する</code>」ユーザー設定のデフォルト値。この設定の変更は、フォロープラグインの通知設定を変更したことのないユーザーのみに適用されます。'
+    default_notify_followed_user_when_followed: '「<code>フォローしたらそのユーザーに通知する</code>」ユーザー設定のデフォルト値。この設定の変更は、フォロープラグインの通知設定を変更したことのないユーザーのみに適用されます。'
+    default_notify_me_when_followed_replies: '「<code>フォローしている人が返信したら通知する</code>」ユーザー設定のデフォルト値。この設定の変更は、フォロープラグインの通知設定を変更したことのないユーザーのみに適用されます。'
+    default_notify_me_when_followed_creates_topic: '「<code>フォローしている人がトピックを作成したら通知する</code>」ユーザー設定のデフォルト値。この設定の変更は、フォロープラグインの通知設定を変更したことのないユーザーのみに適用されます。'
+    default_allow_people_to_follow_me: '「<code>他のユーザーにフォローを許可する</code>」ユーザー設定のデフォルト値。この設定の変更は、フォロープラグインの通知設定を変更したことのないユーザーのみに適用されます。'
+  follow:
+    user_not_found: "ユーザー名 %{username} のユーザーが見つかりませんでした"
+    user_cannot_follow_themself: "ユーザーは自身をフォローすることはできません"
+    invalid_notification_level: "無効な通知レベル %{level}"
+    cannot_follow_bot: "ボットユーザーをフォローできません"
+    cannot_follow_suspended: "凍結中のユーザーをフォローできません"
+    cannot_follow_staged: "ステージングユーザーをフォローできません"
+    invalid_created_before_date: "`created_before` パラメーターに無効な日付を受け取りました: %{value}"
+    user_does_not_allow_follow: "%{username} はユーザーがフォローすることを許可していません。"

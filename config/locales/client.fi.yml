@@ -5,3 +5,52 @@
 # https://translate.discourse.org/
 
 fi:
+  js:
+    notifications:
+      following: "<span>%{username}</span> %{description}"
+      following_description: "alkoi seurata sinua."
+      following_created_topic: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
+      titles:
+        following_created_topic: "uusi ketju seuraamaltasi käyttäjältä"
+        following_replied: "uusi viesti seuraamaltasi käyttäjältä"
+        following: "joku alkoi seurata sinua"
+      popup:
+        following: "%{username} alkoi seurata sinua."
+        following_created_topic: '%{username} loi ketjun "%{topic}" – %{site_title}'
+        following_replied: '%{username} lähetti viestin ketjuun "%{topic}" – %{site_title}'
+    user:
+      follow_nav: "Seuraaminen"
+      follow:
+        label: "Seuraa"
+      following:
+        feed_link: "Seuraamissyöte"
+        label: "Seurattavat"
+        none: "Et seuraa vielä ketään."
+        none_other: "%{username} ei seuraa vielä ketään."
+      followers:
+        label: "Seuraajat"
+        none: "Kukaan ei seuraa sinua vielä."
+        none_other: "Kukaan ei seuraa vielä käyttäjää %{username}."
+      feed:
+        label: "Syöte"
+        empty_feed_you: "Ei vielä viestejä seuraamiltasi ihmisiltä."
+        empty_feed_other: "Ei vielä viestejä käyttäjän %{username} seuraamilta ihmisiltä."
+      follow_notifications_options:
+        notify_followed_user_when_followed: "Ilmoita käyttäjille, kun seuraan heitä"
+        notify_me_when_followed: "Ilmoita minulle, kun käyttäjät seuraavat minua"
+        notify_me_when_followed_replies: "Ilmoita minulle, kun joku seuraamani vastaa"
+        notify_me_when_followed_creates_topic: "Ilmoita minulle, kun joku seuraamani luo ketjun"
+        allow_people_to_follow_me: "Salli ihmisten seurata minua"
+    follow:
+      follow_pages_visibility:
+        no-one: "Ei kukaan"
+        self: "Itse"
+        trust_level_4: "Luottamustaso 4"
+        trust_level_3: "Luottamustaso 3"
+        trust_level_2: "Luottamustaso 2"
+        trust_level_1: "Luottamustaso 1"
+        trust_level_0: "Luottamustaso 0"
+        everyone: "Kaikki"
+      follow_button_label: "Seuraa"
+      unfollow_button_label: "Lopeta seuraaminen"
