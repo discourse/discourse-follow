@@ -60,20 +60,33 @@ after_initialize do
   end
 
   # UserSerializer in core inherits from UserCardSerializer.
-  # we don't need to duplicate these attrs for UserSerializer
+  # we don't need to duplicate these attrs for UserSerializer.
+  #
+  # the `!options.key?(:each_serializer)` check is a temporary hack to exclude
+  # the attributes we add here from the user card serializer when multiple user
+  # objects are being serialized (e.g. the /user-cards.json route in core). If
+  # we don't do this, we end up introducing a horrible 3N+1 on the
+  # /user-cards.json route and it's not easily fixable.
+  # when serializing a single user object, the options of the serializer
+  # doesn't have a `each_serializer` key.
   add_to_serializer(:user_card, :can_follow) do
-    scope.current_user.present? && user.allow_people_to_follow_me
+    !options.key?(:each_serializer) &&
+      scope.current_user.present? &&
+      user.allow_people_to_follow_me
   end
 
   add_to_serializer(:user_card, :is_followed) do
-    scope.current_user.present? && scope.current_user.following.where(id: user.id).exists?
+    !options.key?(:each_serializer) &&
+      scope.current_user.present? &&
+      scope.current_user.following.where(id: user.id).exists?
   end
 
   add_to_serializer(:user_card, :total_followers, false) do
     object.followers.count
   end
   add_to_serializer(:user_card, :include_total_followers?) do
-    SiteSetting.discourse_follow_enabled &&
+    !options.key?(:each_serializer) &&
+      SiteSetting.discourse_follow_enabled &&
       SiteSetting.follow_show_statistics_on_profile &&
       FollowPagesVisibility.can_see_followers_page?(user: scope.current_user, target_user: object)
   end
@@ -82,7 +95,8 @@ after_initialize do
     object.following.count
   end
   add_to_serializer(:user_card, :include_total_following?) do
-    SiteSetting.discourse_follow_enabled &&
+    !options.key?(:each_serializer) &&
+      SiteSetting.discourse_follow_enabled &&
       SiteSetting.follow_show_statistics_on_profile &&
       FollowPagesVisibility.can_see_following_page?(user: scope.current_user, target_user: object)
   end
