@@ -28,4 +28,4 @@ ja:
     cannot_follow_suspended: "凍結中のユーザーをフォローできません"
     cannot_follow_staged: "ステージングユーザーをフォローできません"
     invalid_created_before_date: "`created_before` パラメーターに無効な日付を受け取りました: %{value}"
-    user_does_not_allow_follow: "%{username} はユーザーがフォローすることを許可していません。"
+    user_does_not_allow_follow: "%{username} はユーザーのフォローを許可していません。"
