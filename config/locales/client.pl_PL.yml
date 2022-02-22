@@ -5,3 +5,51 @@
 # https://translate.discourse.org/
 
 pl_PL:
+  js:
+    notifications:
+      following: "<span>%{username}</span> %{description}"
+      following_description: "zaczął Cię obserwować."
+      following_created_topic: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
+      titles:
+        following_created_topic: "nowy temat od kogoś, kogo obserwujesz"
+        following_replied: "nowy post od kogoś, kogo obserwujesz"
+        following: "ktoś zaczął Cię obserwować"
+      popup:
+        following: "%{username} zaczął Cię obserwować."
+        following_created_topic: '%{username} utworzył(a) "%{topic}" - %{site_title}'
+        following_replied: '%{username} napisał(a) w "%{topic}" - %{site_title}'
+    user:
+      follow_nav: "Obserwuje"
+      follow:
+        label: "Obserwuj"
+      following:
+        feed_link: "Kanał obserwowanych"
+        label: "Obserwuje"
+        none: "Jeszcze nikogo nie obserwujesz."
+        none_other: "%{username} jeszcze nikogo nie obserwuje."
+      followers:
+        label: "Obserwujący"
+        none: "Nikt Cię jeszcze nie obserwuje."
+        none_other: "Nikt nie obserwuje jeszcze %{username}."
+      feed:
+        label: "Kanał"
+        empty_feed_you: "Nie ma jeszcze postów osób, które obserwujesz."
+        empty_feed_other: "Brak postów od osób, które %{username} obserwuje."
+      follow_notifications_options:
+        notify_followed_user_when_followed: "Powiadamiaj użytkowników, gdy ich zaobserwuję"
+        notify_me_when_followed: "Powiadom mnie, gdy użytkownicy mnie obserwują"
+        notify_me_when_followed_replies: "Powiadom mnie, gdy ktoś, kogo śledzę, odpowiada"
+        notify_me_when_followed_creates_topic: "Powiadom mnie, gdy ktoś, kogo obserwuję, utworzy temat"
+        allow_people_to_follow_me: "Pozwól ludziom mnie obserwować"
+    follow:
+      follow_pages_visibility:
+        no-one: "Nikt"
+        trust_level_4: "Poziom zaufania 4"
+        trust_level_3: "Poziom zaufania 3"
+        trust_level_2: "Poziom zaufania 2"
+        trust_level_1: "Poziom zaufania 1"
+        trust_level_0: "Poziom zaufania 0"
+        everyone: "Wszyscy"
+      follow_button_label: "Obserwuj"
+      unfollow_button_label: "Przestań obserwować"

@@ -5,3 +5,27 @@
 # https://translate.discourse.org/
 
 pl_PL:
+  discourse_push_notifications:
+    popup:
+      following_created_topic: '%{username} utworzył(a) "%{topic}" - %{site_title}'
+      following_replied: '%{username} napisał(a) w "%{topic}" - %{site_title}'
+  site_settings:
+    discourse_follow_enabled: "Włącz wtyczkę obserwacji."
+    follow_show_statistics_on_profile: "Pokaż statystyki obserwowania w profilach użytkowników."
+    follow_notifications_enabled: "Włącz wszystkie powiadomienia o obserwacjach."
+    follow_followers_visible: "Widoczność obserwujących."
+    follow_following_visible: "Widoczność obserwowanych."
+    default_notify_me_when_followed: 'Wartość domyślna dla preferencji <code>Powiadom mnie, gdy użytkownicy mnie obserwują</code> użytkownika. Zmiana tego ustawienia dotyczy tylko użytkowników, którzy nigdy nie zmienili swoich preferencji powiadamiania we wtyczce obserwacji.'
+    default_notify_followed_user_when_followed: 'Wartość domyślna dla preferencji <code>Powiadamiaj użytkowników, gdy ich zaobserwuję</code> użytkownika. Zmiana tego ustawienia dotyczy tylko użytkowników, którzy nigdy nie zmienili swoich preferencji powiadamiania we wtyczce obserwacji.'
+    default_notify_me_when_followed_replies: 'Wartość domyślna dla preferencji <code>Powiadom mnie, gdy ktoś, kogo śledzę, odpowiada</code> użytkownika. Zmiana tego ustawienia dotyczy tylko użytkowników, którzy nigdy nie zmienili swoich preferencji powiadamiania we wtyczce obserwacji.'
+    default_notify_me_when_followed_creates_topic: 'Wartość domyślna dla preferencji <code>Powiadom mnie, gdy ktoś, kogo obserwuję, utworzy temat</code> użytkownika. Zmiana tego ustawienia dotyczy tylko użytkowników, którzy nigdy nie zmienili swoich preferencji powiadamiania we wtyczce obserwacji.'
+    default_allow_people_to_follow_me: 'Wartość domyślna dla preferencji <code>Pozwól ludziom mnie obserwować</code> użytkownika. Zmiana tego ustawienia dotyczy tylko użytkowników, którzy nigdy nie zmienili swoich preferencji powiadamiania we wtyczce obserwacji.'
+  follow:
+    user_not_found: "Nie można znaleźć użytkownika o nazwie %{username}"
+    user_cannot_follow_themself: "Użytkownik nie może obserwować samego siebie"
+    invalid_notification_level: "Nieprawidłowy poziom powiadomień %{level}"
+    cannot_follow_bot: "Nie można obserwować bota"
+    cannot_follow_suspended: "Nie można obserwować zawieszonego użytkownika"
+    cannot_follow_staged: "Nie można obserwować użytkownika etapowego"
+    invalid_created_before_date: "Otrzymano nieprawidłową datę dla parametru `created_before`: %{value}"
+    user_does_not_allow_follow: "%{username} nie pozwala na obserwowanie."
