@@ -45,6 +45,7 @@ pl_PL:
     follow:
       follow_pages_visibility:
         no-one: "Nikt"
+        self: "Tylko ja"
         trust_level_4: "Poziom zaufania 4"
         trust_level_3: "Poziom zaufania 3"
         trust_level_2: "Poziom zaufania 2"
