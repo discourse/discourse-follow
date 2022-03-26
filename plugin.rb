@@ -10,7 +10,6 @@
 enabled_site_setting :discourse_follow_enabled
 
 register_asset 'stylesheets/common/follow.scss'
-register_asset 'stylesheets/mobile/follow.scss', :mobile
 
 register_svg_icon "discourse-follow-new-reply"
 register_svg_icon "discourse-follow-new-follower"
