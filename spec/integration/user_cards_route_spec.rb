@@ -7,6 +7,7 @@ describe "Attrs added by the plugin to the UserCardSerializer" do
   fab!(:followed) { Fabricate(:user) }
 
   before do
+    SiteSetting.discourse_follow_enabled = true
     Follow::Updater.new(follower, followed).watch_follow
     sign_in(follower)
   end

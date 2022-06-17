@@ -9,6 +9,7 @@ describe User do
   fab!(:follower2) { Fabricate(:user) }
 
   before do
+    SiteSetting.discourse_follow_enabled = true
     [followed1, followed2].each do |followed|
       [follower1, follower2].each do |follower|
         Follow::Updater.new(follower, followed).watch_follow

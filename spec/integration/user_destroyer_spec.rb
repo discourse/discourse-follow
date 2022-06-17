@@ -8,6 +8,7 @@ describe "User destroyer with the follow plugin" do
   let(:user_c) { Fabricate(:user) }
 
   before do
+    SiteSetting.discourse_follow_enabled = true
     Jobs.run_immediately!
     Follow::Updater.new(user_a, user_b).watch_follow
     Follow::Updater.new(user_c, user_a).watch_follow

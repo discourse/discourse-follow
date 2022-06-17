@@ -9,6 +9,8 @@ describe Follow::FollowController do
   fab!(:tl3) { Fabricate(:user, trust_level: TrustLevel[3]) }
   fab!(:tl2) { Fabricate(:user, trust_level: TrustLevel[2]) }
 
+  before { SiteSetting.discourse_follow_enabled = true }
+
   def expect_not_allowed(user, type)
     get "/u/#{user.username}/follow/#{type}.json"
     expect(response.status).to eq(403)

@@ -12,6 +12,7 @@ describe FollowPagesVisibility do
   fab!(:tl4) { Fabricate(:user, trust_level: TrustLevel[4]) }
 
   before do
+    SiteSetting.discourse_follow_enabled = true
     Group.refresh_automatic_groups!
   end
 

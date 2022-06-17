@@ -13,6 +13,7 @@ describe UserFollower do
   fab!(:secure_category) { Fabricate(:private_category, group: group) }
 
   before do
+    SiteSetting.discourse_follow_enabled = true
     Follow::Updater.new(follower, followed).watch_follow
     Follow::Updater.new(follower, followed2).watch_follow
   end
