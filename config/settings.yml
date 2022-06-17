@@ -1,6 +1,6 @@
 plugins:
   discourse_follow_enabled:
-    default: true
+    default: false
     client: true
   follow_show_statistics_on_profile:
     default: true
