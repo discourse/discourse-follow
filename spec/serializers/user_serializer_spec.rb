@@ -7,6 +7,7 @@ describe UserSerializer do
   fab!(:followed) { Fabricate(:user) }
 
   before do
+    SiteSetting.discourse_follow_enabled = true
     ::Follow::Updater.new(follower, followed).watch_follow
   end
 

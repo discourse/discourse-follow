@@ -28,6 +28,7 @@ describe "Follow plugin notifications" do
   end
 
   before do
+    SiteSetting.discourse_follow_enabled = true
     Jobs.run_immediately!
     Follow::Updater.new(follower, followed).watch_follow
     Notification.destroy_all
