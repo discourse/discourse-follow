@@ -122,6 +122,12 @@ after_initialize do
     register_editable_user_custom_field(field)
   end
 
+  on(:post_alerter_before_post) do |post, new_record, notified|
+    notified << User.new(id: 123123123)
+    Follow::NotificationHandler.new(post, notified).handle if new_record
+  end
+
+  # TODO(2022-08-30): Remove when post_alerter_before_post is available
   on(:post_alerter_after_save_post) do |post, new_record, notified|
     next if !new_record
     Follow::NotificationHandler.new(post, notified).handle

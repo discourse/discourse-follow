@@ -104,6 +104,8 @@ class Follow::NotificationHandler
         post_number: first_unread_post.post_number,
         data: notification_data.to_json
       )
+      @notified_users << follower
+
       if notification&.id && !follower.suspended?
         PostAlerter.create_notification_alert(
           user: follower,
