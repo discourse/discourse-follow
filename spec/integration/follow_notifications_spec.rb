@@ -21,7 +21,7 @@ describe "Follow plugin notifications" do
   fab!(:normal_user) { Fabricate(:user) }
   fab!(:category) { Fabricate(:category) }
 
-  let(:topic) do
+  fab!(:topic) do
     create_topic(category: category).tap do |t|
       create_post(topic: t) # make sure there is a first post
     end
@@ -134,15 +134,12 @@ describe "Follow plugin notifications" do
 
   context "when category notification level is watching" do
     before do
-      # this will create the topic by a non-followed user and then
-      # creates a post by a followed user
-      @notification_post = create_post(topic: topic, user: followed)
-
       CategoryUser.set_notification_level_for_category(
         follower,
         CategoryUser.notification_levels[:watching],
         category.id
       )
+      @notification_post = create_post(topic: topic, user: followed)
     end
 
     it "follower receives only a notification" do
@@ -172,8 +169,8 @@ describe "Follow plugin notifications" do
       )
     end
 
-    it "follower receives 2 notifications" do
-      expect(follower.notifications.size).to eq(2)
+    it "follower receives only a notification" do
+      expect(follower.notifications.count).to eq(1)
     end
 
     it "follower receives mention notification" do
@@ -183,16 +180,6 @@ describe "Follow plugin notifications" do
       )
       expect(notification).to be_present
       expect(notification.post_number).to eq(@notification_post.post_number)
-    end
-
-    it "follower receives a notification for the 1st post in the topic because " \
-    "they watch the category" do
-      notification = follower.notifications.find_by(
-        topic_id: topic.id,
-        notification_type: Notification.types[:posted]
-      )
-      expect(notification).to be_present
-      expect(notification.post_number).to eq(1)
     end
   end
 
@@ -278,7 +265,7 @@ describe "Follow plugin notifications" do
       create_post(user: normal_user, topic: topic)
     end
 
-    it "follower receives 2 notifications" do
+    it "follower receives a notification for followed posters and one for replies" do
       expect(follower.notifications.count).to eq(2)
     end
 

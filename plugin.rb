@@ -123,7 +123,6 @@ after_initialize do
   end
 
   on(:post_alerter_before_post) do |post, new_record, notified|
-    notified << User.new(id: 123123123)
     Follow::NotificationHandler.new(post, notified).handle if new_record
   end
 
