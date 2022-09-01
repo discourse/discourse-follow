@@ -21,7 +21,7 @@ describe "Follow plugin notifications" do
   fab!(:normal_user) { Fabricate(:user) }
   fab!(:category) { Fabricate(:category) }
 
-  let(:topic) do
+  fab!(:topic) do
     create_topic(category: category).tap do |t|
       create_post(topic: t) # make sure there is a first post
     end
@@ -139,13 +139,11 @@ describe "Follow plugin notifications" do
         CategoryUser.notification_levels[:watching],
         category.id
       )
-      # this will create the topic by a non-followed user and then
-      # creates a post by a followed user
       @notification_post = create_post(topic: topic, user: followed)
     end
 
-    it "follower receives 2 notifications" do
-      expect(follower.notifications.count).to eq(2)
+    it "follower receives only a notification" do
+      expect(follower.notifications.count).to eq(1)
     end
 
     it "follower receives a notification for the post made by the followed user" do
@@ -154,24 +152,6 @@ describe "Follow plugin notifications" do
         notification_type: Notification.types[:following_replied]
       )
       follow_notification_assertions(notification, followed, @notification_post, topic)
-    end
-
-    it "follower receives a notification for the 1st post in the topic because they watch the category" do
-      notification = follower.notifications.find_by(
-        topic_id: topic.id,
-        notification_type: Notification.types[:posted]
-      )
-      expect(notification).to be_present
-      expect(notification.post_number).to eq(1)
-      data = JSON.parse(notification.data)
-      expect(data["topic_title"]).to eq(topic.title)
-      # TODO(osama): maybe it doesn't make sense for this notification to say
-      # "2 replies"?
-      # "2 replies" comes from collapsing the notifications for the 1st and 2nd
-      # posts in the topic (because follower is watching), but the 2nd post
-      # came from a followed user so there is another notification for it hence
-      # why it may not make sense to say "2 replies"
-      expect(data["display_username"]).to eq(I18n.t("embed.replies", count: 2))
     end
   end
 
@@ -189,8 +169,8 @@ describe "Follow plugin notifications" do
       )
     end
 
-    it "follower receives 2 notifications" do
-      expect(follower.notifications.size).to eq(2)
+    it "follower receives only a notification" do
+      expect(follower.notifications.count).to eq(1)
     end
 
     it "follower receives mention notification" do
@@ -200,16 +180,6 @@ describe "Follow plugin notifications" do
       )
       expect(notification).to be_present
       expect(notification.post_number).to eq(@notification_post.post_number)
-    end
-
-    it "follower receives a notification for the 1st post in the topic because " \
-    "they watch the category" do
-      notification = follower.notifications.find_by(
-        topic_id: topic.id,
-        notification_type: Notification.types[:posted]
-      )
-      expect(notification).to be_present
-      expect(notification.post_number).to eq(1)
     end
   end
 
@@ -295,7 +265,7 @@ describe "Follow plugin notifications" do
       create_post(user: normal_user, topic: topic)
     end
 
-    it "follower receives 2 notifications" do
+    it "follower receives a notification for followed posters and one for replies" do
       expect(follower.notifications.count).to eq(2)
     end
 
