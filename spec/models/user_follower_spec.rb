@@ -18,7 +18,7 @@ describe UserFollower do
     Follow::Updater.new(follower, followed2).watch_follow
   end
 
-  context ".posts_for" do
+  describe ".posts_for" do
     it "does not show posts in PMs" do
       Fabricate(:private_message_post, user: followed)
       posts = UserFollower.posts_for(follower, current_user: admin)

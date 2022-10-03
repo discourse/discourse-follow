@@ -154,9 +154,9 @@ describe ::Follow::Updater do
     # follow again
     expect do
       new_updater(user1, user2).watch_follow
-    end.to change {
+    end.not_to change {
       user2.reload.notifications.where(notification_type: Notification.types[:following]).count
-    }.by(0)
+    }
     expect(user1.following.pluck(:id)).to contain_exactly(user2.id)
     expect(user2.followers.pluck(:id)).to contain_exactly(user1.id)
     relation = user1.following_relations.find_by(user_id: user2.id)
