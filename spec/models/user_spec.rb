@@ -17,7 +17,7 @@ describe User do
     end
   end
 
-  context "#followers" do
+  describe "#followers" do
     it "returns followers" do
       expect(followed1.followers.pluck(:id)).to contain_exactly(follower1.id, follower2.id)
       expect(followed2.followers.pluck(:id)).to contain_exactly(follower1.id, follower2.id)
@@ -52,7 +52,7 @@ describe User do
     end
   end
 
-  context "#following" do
+  describe "#following" do
     it "returns followed users" do
       expect(follower1.following.pluck(:id)).to contain_exactly(followed1.id, followed2.id)
       expect(follower2.following.pluck(:id)).to contain_exactly(followed1.id, followed2.id)
