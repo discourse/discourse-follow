@@ -16,7 +16,7 @@ describe FollowPagesVisibility do
     Group.refresh_automatic_groups!
   end
 
-  context "site settings validations" do
+  describe "site settings validations" do
     it "prevent unknown values" do
       expect do
         SiteSetting.follow_following_visible = "blah"
