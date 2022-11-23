@@ -1,22 +1,50 @@
-{{#d-section pageClass="user-follow" class="user-secondary-navigation" scrollTop=false}}
-  {{#mobile-nav class="activity-nav" desktopClass="action-list follow-list nav-stacked"}}
-    {{#if (eq model.id currentUser.id)}}
-      <li>
-        {{#link-to "feed"}}{{i18n "user.feed.label"}}{{/link-to}}
-      </li>
-    {{/if}}
-    {{#if model.can_see_following}}
-      <li>
-        {{#link-to "following"}}{{i18n "user.following.label"}}{{/link-to}}
-      </li>
-    {{/if}}
-    {{#if (and model.can_see_followers model.allow_people_to_follow_me)}}
-      <li>
-        {{#link-to "followers"}}{{i18n "user.followers.label"}}{{/link-to}}
-      </li>
-    {{/if}}
-  {{/mobile-nav}}
-{{/d-section}}
+{{#if this.currentUser.redesigned_user_page_nav_enabled}}
+  <DSection @pageClass="user-follow" />
+
+  <div class="user-navigation user-navigation-secondary">
+    <HorizontalOverflowNav>
+      {{#if (eq model.id currentUser.id)}}
+        <DNavigationItem @route="feed">
+          <span>{{i18n "user.feed.label"}}</span>
+        </DNavigationItem>
+      {{/if}}
+
+      {{#if model.can_see_following}}
+        <DNavigationItem @route="following">
+          <span>{{i18n "user.following.label"}}</span>
+        </DNavigationItem>
+      {{/if}}
+
+      {{#if (and model.can_see_followers model.allow_people_to_follow_me)}}
+        <DNavigationItem @route="followers">
+          <span>{{i18n "user.followers.label"}}</span>
+        </DNavigationItem>
+      {{/if}}
+    </HorizontalOverflowNav>
+  </div>
+{{else}}
+  {{#d-section pageClass="user-follow" class="user-secondary-navigation" scrollTop=false}}
+    {{#mobile-nav class="activity-nav" desktopClass="action-list follow-list nav-stacked"}}
+      {{#if (eq model.id currentUser.id)}}
+        <li>
+          {{#link-to "feed"}}{{i18n "user.feed.label"}}{{/link-to}}
+        </li>
+      {{/if}}
+
+      {{#if model.can_see_following}}
+        <li>
+          {{#link-to "following"}}{{i18n "user.following.label"}}{{/link-to}}
+        </li>
+      {{/if}}
+
+      {{#if (and model.can_see_followers model.allow_people_to_follow_me)}}
+        <li>
+          {{#link-to "followers"}}{{i18n "user.followers.label"}}{{/link-to}}
+        </li>
+      {{/if}}
+    {{/mobile-nav}}
+  {{/d-section}}
+{{/if}}
 
 <section class="user-content user-follows-tab">
   {{outlet}}
