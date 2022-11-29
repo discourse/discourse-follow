@@ -305,8 +305,11 @@ describe "Follow plugin notifications" do
   end
 
   context "when a followed user posts a whisper" do
+    fab!(:group) { Fabricate(:group) }
+
     before do
-      SiteSetting.enable_whispers = true
+      SiteSetting.enable_whispers = true if SiteSetting.respond_to?(:enable_whispers)
+      SiteSetting.whispers_allowed_groups = "#{group.id}"
     end
 
     it "follower does not receive a notification for the whisper if they can not see it" do
@@ -315,7 +318,7 @@ describe "Follow plugin notifications" do
     end
 
     it "follower receives a notification for the whisper if they can see it" do
-      follower.update!(moderator: true)
+      group.add(follower)
       whisper_post = create_post(topic: topic, user: followed, post_type: Post.types[:whisper])
       expect(follower.notifications.count).to eq(1)
       notification = follower.notifications.find_by(
