@@ -5,3 +5,52 @@
 # https://translate.discourse.org/
 
 nl:
+  js:
+    notifications:
+      following: "<span>%{username}</span> %{description}"
+      following_description: "is je gaan volgen."
+      following_created_topic: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
+      titles:
+        following_created_topic: "nieuw topic van iemand die je volgt"
+        following_replied: "nieuwe bericht van iemand die je volgt"
+        following: "iemand is je gaan volgen"
+      popup:
+        following: "%{username} is je gaan volgen."
+        following_created_topic: '%{username} heeft ''%{topic}'' gemaakt - %{site_title}'
+        following_replied: '%{username} heeft een bericht geplaatst in ''%{topic}'' - %{site_title}'
+    user:
+      follow_nav: "Volgt"
+      follow:
+        label: "Volgen"
+      following:
+        feed_link: "Volgfeed"
+        label: "Volgend"
+        none: "Je volgt nog niemand."
+        none_other: "%{username} volgt nog niemand."
+      followers:
+        label: "Volgers"
+        none: "Niemand volgt je nog."
+        none_other: "Niemand volgt %{username} nog."
+      feed:
+        label: "Feed"
+        empty_feed_you: "Nog geen berichten van mensen die je volgt."
+        empty_feed_other: "Nog geen berichten van mensen die %{username} volgt."
+      follow_notifications_options:
+        notify_followed_user_when_followed: "Laat gebruikers weten wanneer ik ze volg"
+        notify_me_when_followed: "Laat me weten wanneer gebruikers me volgen"
+        notify_me_when_followed_replies: "Laat me weten wanneer iemand die ik volg antwoordt"
+        notify_me_when_followed_creates_topic: "Laat me weten wanneer iemand die ik volg een topic maakt"
+        allow_people_to_follow_me: "Sta mensen toe mij te volgen"
+    follow:
+      follow_pages_visibility:
+        no-one: "Niemand"
+        self: "Zelf"
+        trust_level_4: "Vertrouwensniveau 4"
+        trust_level_3: "Vertrouwensniveau 3"
+        trust_level_2: "Vertrouwensniveau 2"
+        trust_level_1: "Vertrouwensniveau 1"
+        trust_level_0: "Vertrouwensniveau 0"
+        everyone: "Iedereen"
+      follow_button_label: "Volgen"
+      unfollow_button_label: "Ontvolgen"
