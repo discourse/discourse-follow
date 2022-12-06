@@ -22,3 +22,10 @@ nl:
     default_allow_people_to_follow_me: 'Standaardwaarde voor de gebruikersvoorkeur <code>Sta mensen toe mij te volgen</code>. Het wijzigen van deze instelling is alleen van toepassing op gebruikers die hun meldingsvoorkeuren van de volgplug-in nooit hebben gewijzigd'
   follow:
     user_not_found: "Kon gebruiker met gebruikersnaam %{username} niet vinden."
+    user_cannot_follow_themself: "Gebruiker mag zichzelf niet volgen"
+    invalid_notification_level: "Ongeldig meldingsniveau %{level}"
+    cannot_follow_bot: "Kan een botgebruiker niet volgen"
+    cannot_follow_suspended: "Kan een geschorste gebruiker niet volgen"
+    cannot_follow_staged: "Kan een gefaseerde gebruiker niet volgen"
+    invalid_created_before_date: "Ongeldige datum ontvangen voor de parameter `created_before`: %{value}"
+    user_does_not_allow_follow: "%{username} staat niet toe dat mensen hem/haar volgen."
