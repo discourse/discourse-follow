@@ -45,7 +45,7 @@ fr:
     follow:
       follow_pages_visibility:
         no-one: "Personne"
-        self: "Soi"
+        self: "Vous"
         trust_level_4: "Niveau de confiance 4"
         trust_level_3: "Niveau de confiance 3"
         trust_level_2: "Niveau de confiance 2"
