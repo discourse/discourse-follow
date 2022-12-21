@@ -230,7 +230,7 @@ describe Follow::FollowController do
       expect(response_topic_ids(response)).to eq([post_1.id, post_2.id])
       expect(response.parsed_body['extras']['has_more']).to eq(true)
 
-      get "/follow/posts/#{user1.username}.json", 
+      get "/follow/posts/#{user1.username}.json",
         params: { limit: 2, created_before: post_2.created_at }
 
       expect(response.status).to eq(200)
