@@ -210,12 +210,12 @@ describe Follow::FollowController do
 
     it "indicates in the response whether or not there are more posts" do
       sign_in(user1)
-      get "/follow/posts/#{user1.username}.json", { params: { limit: 2 } }
+      get "/follow/posts/#{user1.username}.json", params: { limit: 2 }
       expect(response.status).to eq(200)
       expect(response_topic_ids(response)).to eq([post_1.id, post_2.id])
       expect(response.parsed_body['extras']['has_more']).to eq(true)
 
-      get "/follow/posts/#{user1.username}.json", { params: { limit: 5 } }
+      get "/follow/posts/#{user1.username}.json", params: { limit: 5 }
       expect(response.status).to eq(200)
       expect(response_topic_ids(response)).to eq(
         [post_1, post_2, post_3, post_4, post_5].map(&:id)
@@ -225,21 +225,21 @@ describe Follow::FollowController do
 
     it "paginates correctly" do
       sign_in(user1)
-      get "/follow/posts/#{user1.username}.json", { params: { limit: 2 } }
+      get "/follow/posts/#{user1.username}.json", params: { limit: 2 }
       expect(response.status).to eq(200)
       expect(response_topic_ids(response)).to eq([post_1.id, post_2.id])
       expect(response.parsed_body['extras']['has_more']).to eq(true)
 
-      get "/follow/posts/#{user1.username}.json", {
+      get "/follow/posts/#{user1.username}.json",
         params: { limit: 2, created_before: post_2.created_at }
-      }
+
       expect(response.status).to eq(200)
       expect(response_topic_ids(response)).to eq([post_3.id, post_4.id])
       expect(response.parsed_body['extras']['has_more']).to eq(true)
 
-      get "/follow/posts/#{user1.username}.json", {
+      get "/follow/posts/#{user1.username}.json",
         params: { limit: 2, created_before: post_4.created_at }
-      }
+
       expect(response.status).to eq(200)
       expect(response_topic_ids(response)).to eq([post_5.id])
       expect(response.parsed_body['extras']['has_more']).to eq(false)
@@ -247,9 +247,9 @@ describe Follow::FollowController do
 
     it "responds with an error if the supplied created_before date is invalid" do
       sign_in(user1)
-      get "/follow/posts/#{user1.username}.json", {
+      get "/follow/posts/#{user1.username}.json",
         params: { created_before: "sdfsfs" }
-      }
+
       expect(response.status).to eq(400)
       expect(response.parsed_body["errors"]).to contain_exactly(
         I18n.t("follow.invalid_created_before_date", value: "sdfsfs".inspect)
@@ -258,7 +258,7 @@ describe Follow::FollowController do
 
     it "serializes posts with all the attributes that the client needs" do
       sign_in(user1)
-      get "/follow/posts/#{user1.username}.json", { params: { limit: 1 } }
+      get "/follow/posts/#{user1.username}.json", params: { limit: 1 }
       expect(response.status).to eq(200)
       posts = response.parsed_body['posts']
       p = response.parsed_body['posts'][0]
