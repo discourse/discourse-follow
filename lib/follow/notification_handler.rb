@@ -51,30 +51,34 @@ class Follow::NotificationHandler
       # notified due to a mention (directly or via a group), quote, link to a
       # post of theirs, or reply to them directly. It does not include users
       # who are notified because they're watching the topic, category or a tag.
-      follower.notifications.where(
-        topic_id: topic.id,
-        notification_type: [
-          Notification.types[:posted],
-          Notification.types[:replied]
-        ],
-        post_number: post.post_number
-      ).destroy_all
+      follower
+        .notifications
+        .where(
+          topic_id: topic.id,
+          notification_type: [Notification.types[:posted], Notification.types[:replied]],
+          post_number: post.post_number,
+        )
+        .destroy_all
 
       # delete all existing follow notifications for the topic because we'll
       # collapse them
-      follower.notifications.where(
-        topic_id: topic.id,
-        notification_type: [
-          Notification.types[:following_replied],
-          Notification.types[:following_created_topic]
-        ]
-      ).destroy_all
+      follower
+        .notifications
+        .where(
+          topic_id: topic.id,
+          notification_type: [
+            Notification.types[:following_replied],
+            Notification.types[:following_created_topic],
+          ],
+        )
+        .destroy_all
 
-      posts_by_following = topic
-        .posts
-        .secured(guardian)
-        .where(user_id: follower.following.pluck(:id))
-        .where(<<~SQL, follower_id: follower.id, topic_id: topic.id)
+      posts_by_following =
+        topic
+          .posts
+          .secured(guardian)
+          .where(user_id: follower.following.pluck(:id))
+          .where(<<~SQL, follower_id: follower.id, topic_id: topic.id)
           post_number > COALESCE((
             SELECT last_read_post_number FROM topic_users tu
             WHERE tu.user_id = :follower_id AND tu.topic_id = :topic_id
@@ -82,12 +86,12 @@ class Follow::NotificationHandler
         SQL
 
       count = posts_by_following.count
-      first_unread_post = posts_by_following.order('post_number').first || post
+      first_unread_post = posts_by_following.order("post_number").first || post
 
       display_username = first_unread_post.user.username
       if count > 1
         I18n.with_locale(follower.effective_locale) do
-          display_username = I18n.t('embed.replies', count: count)
+          display_username = I18n.t("embed.replies", count: count)
         end
       end
 
@@ -95,22 +99,23 @@ class Follow::NotificationHandler
         topic_title: topic.title,
         original_post_id: post.id,
         original_post_type: post.post_type,
-        display_username: display_username
+        display_username: display_username,
       }
 
-      notification = follower.notifications.create!(
-        notification_type: notification_type,
-        topic_id: topic.id,
-        post_number: first_unread_post.post_number,
-        data: notification_data.to_json
-      )
+      notification =
+        follower.notifications.create!(
+          notification_type: notification_type,
+          topic_id: topic.id,
+          post_number: first_unread_post.post_number,
+          data: notification_data.to_json,
+        )
       @notified_users << follower
 
       if notification&.id && !follower.suspended?
         PostAlerter.create_notification_alert(
           user: follower,
           post: post,
-          notification_type: notification_type
+          notification_type: notification_type,
         )
       end
     end
@@ -122,7 +127,7 @@ class Follow::NotificationHandler
     TopicUser.exists?(
       topic_id: post.topic.id,
       user_id: user.id,
-      notification_level: TopicUser.notification_levels[:muted]
+      notification_level: TopicUser.notification_levels[:muted],
     )
   end
 
@@ -131,7 +136,7 @@ class Follow::NotificationHandler
       topic_id: post.topic.id,
       user_id: user.id,
       notification_type: notification_type,
-      post_number: post.post_number
+      post_number: post.post_number,
     )
   end
 

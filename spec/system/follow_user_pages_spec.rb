@@ -16,14 +16,14 @@ RSpec.describe "Follow user pages", type: :system, js: true do
     Follow::Updater.new(user3, user1).watch_follow
   end
 
-  describe 'when user has redesigned user page navigation enabled' do
+  describe "when user has redesigned user page navigation enabled" do
     before do
       everyone_group.add(user1)
       SiteSetting.enable_new_user_profile_nav_groups = everyone_group.name
       sign_in(user1)
     end
 
-    it 'should allow user to navigate to the follow user profile pages' do
+    it "should allow user to navigate to the follow user profile pages" do
       follow_page = PageObjects::Pages::Follow.new(user1)
       follow_page.visit
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 describe "Follow plugin notifications" do
   def follow_notification_assertions(notification, followed, post, topic)
@@ -46,9 +46,7 @@ describe "Follow plugin notifications" do
       end
     end
 
-    before do
-      create_post(topic: secure_topic, user: followed)
-    end
+    before { create_post(topic: secure_topic, user: followed) }
 
     it "follower does not receive any notifications" do
       expect(follower.notifications.count).to eq(0)
@@ -60,18 +58,19 @@ describe "Follow plugin notifications" do
       create_topic(
         user: followed,
         archetype: Archetype.private_message,
-        target_usernames: follower.username
+        target_usernames: follower.username,
       )
     end
 
-    before do
-      create_post(user: followed, topic: pm)
-    end
+    before { create_post(user: followed, topic: pm) }
 
     it "follower receives no notifications from the plugin" do
-      expect(follower.notifications.where.not(
-        notification_type: Notification.types[:private_message]
-      ).count).to eq(0)
+      expect(
+        follower
+          .notifications
+          .where.not(notification_type: Notification.types[:private_message])
+          .count,
+      ).to eq(0)
     end
   end
 
@@ -81,16 +80,17 @@ describe "Follow plugin notifications" do
         user: follower,
         topic: topic,
         last_read_post_number: 1,
-        notification_level: TopicUser.notification_levels[:watching]
+        notification_level: TopicUser.notification_levels[:watching],
       )
       @notification_post = create_post(topic: topic, user: followed)
     end
 
     it "follower receives a notification that a followed user has posted" do
-      notification = follower.notifications.find_by(
-        topic_id: topic.id,
-        notification_type: Notification.types[:following_replied]
-      )
+      notification =
+        follower.notifications.find_by(
+          topic_id: topic.id,
+          notification_type: Notification.types[:following_replied],
+        )
       follow_notification_assertions(notification, followed, @notification_post, topic)
     end
 
@@ -104,7 +104,7 @@ describe "Follow plugin notifications" do
       TopicUser.create!(
         user: follower,
         topic: topic,
-        notification_level: TopicUser.notification_levels[:muted]
+        notification_level: TopicUser.notification_levels[:muted],
       )
       create_post(topic: topic, user: followed)
     end
@@ -115,15 +115,14 @@ describe "Follow plugin notifications" do
   end
 
   context "when topic notification level is normal" do
-    before do
-      @notification_post = create_post(topic: topic, user: followed)
-    end
+    before { @notification_post = create_post(topic: topic, user: followed) }
 
     it "follower receives a notification that a followed user has posted" do
-      notification = follower.notifications.find_by(
-        topic_id: topic.id,
-        notification_type: Notification.types[:following_replied]
-      )
+      notification =
+        follower.notifications.find_by(
+          topic_id: topic.id,
+          notification_type: Notification.types[:following_replied],
+        )
       follow_notification_assertions(notification, followed, @notification_post, topic)
     end
 
@@ -137,7 +136,7 @@ describe "Follow plugin notifications" do
       CategoryUser.set_notification_level_for_category(
         follower,
         CategoryUser.notification_levels[:watching],
-        category.id
+        category.id,
       )
       @notification_post = create_post(topic: topic, user: followed)
     end
@@ -147,10 +146,11 @@ describe "Follow plugin notifications" do
     end
 
     it "follower receives a notification for the post made by the followed user" do
-      notification = follower.notifications.find_by(
-        topic_id: topic.id,
-        notification_type: Notification.types[:following_replied]
-      )
+      notification =
+        follower.notifications.find_by(
+          topic_id: topic.id,
+          notification_type: Notification.types[:following_replied],
+        )
       follow_notification_assertions(notification, followed, @notification_post, topic)
     end
   end
@@ -160,13 +160,10 @@ describe "Follow plugin notifications" do
       CategoryUser.set_notification_level_for_category(
         follower,
         CategoryUser.notification_levels[:watching],
-        category.id
+        category.id,
       )
-      @notification_post = create_post(
-        topic: topic,
-        user: followed,
-        raw: "hello @#{follower.username}"
-      )
+      @notification_post =
+        create_post(topic: topic, user: followed, raw: "hello @#{follower.username}")
     end
 
     it "follower receives only a notification" do
@@ -174,10 +171,11 @@ describe "Follow plugin notifications" do
     end
 
     it "follower receives mention notification" do
-      notification = follower.notifications.find_by(
-        topic_id: topic.id,
-        notification_type: Notification.types[:mentioned]
-      )
+      notification =
+        follower.notifications.find_by(
+          topic_id: topic.id,
+          notification_type: Notification.types[:mentioned],
+        )
       expect(notification).to be_present
       expect(notification.post_number).to eq(@notification_post.post_number)
     end
@@ -188,21 +186,19 @@ describe "Follow plugin notifications" do
       CategoryUser.set_notification_level_for_category(
         follower,
         CategoryUser.notification_levels[:watching],
-        category.id
+        category.id,
       )
       follower_post = create_post(topic: topic, user: follower)
-      @notification_post = create_post(
-        topic: topic,
-        user: followed,
-        reply_to_post_number: follower_post.post_number
-      )
+      @notification_post =
+        create_post(topic: topic, user: followed, reply_to_post_number: follower_post.post_number)
     end
 
     it "follower receives a notification about the reply" do
-      notification = follower.notifications.find_by(
-        topic: topic,
-        notification_type: Notification.types[:replied]
-      )
+      notification =
+        follower.notifications.find_by(
+          topic: topic,
+          notification_type: Notification.types[:replied],
+        )
       expect(notification).to be_present
       expect(notification.post_number).to eq(@notification_post.post_number)
       data = JSON.parse(notification.data)
@@ -230,10 +226,11 @@ describe "Follow plugin notifications" do
 
     it "notification for followed users' replies are collapsed" do
       expect(follower.notifications.count).to eq(1)
-      notification = follower.notifications.find_by(
-        topic: topic,
-        notification_type: Notification.types[:following_replied]
-      )
+      notification =
+        follower.notifications.find_by(
+          topic: topic,
+          notification_type: Notification.types[:following_replied],
+        )
       expect(notification).to be_present
       expect(notification.post_number).to eq(@collapsed_first_post.post_number)
       data = JSON.parse(notification.data)
@@ -250,17 +247,15 @@ describe "Follow plugin notifications" do
 
       follower_post = create_post(user: follower, topic: topic)
       @collapsed_follow_notification_first_post = create_post(user: followed2, topic: topic)
-      @collapsed_reply_notification_first_post = create_post(
-        user: normal_user,
-        topic: topic,
-        reply_to_post_number: follower_post.post_number
-      )
+      @collapsed_reply_notification_first_post =
+        create_post(
+          user: normal_user,
+          topic: topic,
+          reply_to_post_number: follower_post.post_number,
+        )
       create_post(user: followed3, topic: topic)
-      @collapsed_reply_notification_last_post = create_post(
-        user: followed,
-        topic: topic,
-        reply_to_post_number: follower_post.post_number
-      )
+      @collapsed_reply_notification_last_post =
+        create_post(user: followed, topic: topic, reply_to_post_number: follower_post.post_number)
       @collapsed_follow_notification_last_post = create_post(user: followed3, topic: topic)
       create_post(user: normal_user, topic: topic)
     end
@@ -270,10 +265,11 @@ describe "Follow plugin notifications" do
     end
 
     it "follower receives a notification about the posts made by the followed users" do
-      notification = follower.notifications.find_by(
-        topic: topic,
-        notification_type: Notification.types[:following_replied]
-      )
+      notification =
+        follower.notifications.find_by(
+          topic: topic,
+          notification_type: Notification.types[:following_replied],
+        )
       expect(notification).to be_present
       expect(notification.post_number).to eq(@collapsed_follow_notification_first_post.post_number)
       data = JSON.parse(notification.data)
@@ -282,10 +278,11 @@ describe "Follow plugin notifications" do
     end
 
     it "follower receives a notification about the replies to their post" do
-      notification = follower.notifications.find_by(
-        topic: topic,
-        notification_type: Notification.types[:replied]
-      )
+      notification =
+        follower.notifications.find_by(
+          topic: topic,
+          notification_type: Notification.types[:replied],
+        )
       expect(notification).to be_present
       expect(notification.post_number).to eq(@collapsed_reply_notification_first_post.post_number)
       data = JSON.parse(notification.data)
@@ -295,9 +292,7 @@ describe "Follow plugin notifications" do
   end
 
   context "when a followed user closes a topic" do
-    before do
-      topic.update_status("closed", true, followed)
-    end
+    before { topic.update_status("closed", true, followed) }
 
     it "follower does not receive a notification for the small post" do
       expect(follower.notifications.count).to eq(0)
@@ -321,10 +316,11 @@ describe "Follow plugin notifications" do
       group.add(follower)
       whisper_post = create_post(topic: topic, user: followed, post_type: Post.types[:whisper])
       expect(follower.notifications.count).to eq(1)
-      notification = follower.notifications.find_by(
-        topic: topic,
-        notification_type: Notification.types[:following_replied]
-      )
+      notification =
+        follower.notifications.find_by(
+          topic: topic,
+          notification_type: Notification.types[:following_replied],
+        )
       follow_notification_assertions(notification, followed, whisper_post, topic)
     end
   end
@@ -364,18 +360,17 @@ describe "Follow plugin notifications" do
       t = create_topic(user: followed)
       post = create_post(user: followed, topic: t) # creates 1st post
       expect(follower.notifications.count).to eq(1)
-      notification = follower.notifications.find_by(
-        topic_id: t.id,
-        notification_type: Notification.types[:following_created_topic]
-      )
+      notification =
+        follower.notifications.find_by(
+          topic_id: t.id,
+          notification_type: Notification.types[:following_created_topic],
+        )
       follow_notification_assertions(notification, followed, post, t)
     end
   end
 
   context "when follow_notifications_enabled site setting is off" do
-    before do
-      SiteSetting.follow_notifications_enabled = false
-    end
+    before { SiteSetting.follow_notifications_enabled = false }
 
     it "follower does not receive any notifications when followed user replies" do
       create_post(topic: topic, user: followed)
@@ -394,12 +389,8 @@ describe "Follow plugin notifications" do
       expect(followed.followers.count).to be > 0
       followed.custom_fields["allow_people_to_follow_me"] = false
       followed.save!
-      create_topic(user: followed).tap do |t|
-        create_post(topic: t, user: followed)
-      end
-      followed.followers.each do |follower|
-        expect(follower.notifications.count).to eq(0)
-      end
+      create_topic(user: followed).tap { |t| create_post(topic: t, user: followed) }
+      followed.followers.each { |follower| expect(follower.notifications.count).to eq(0) }
     end
   end
 
@@ -407,12 +398,8 @@ describe "Follow plugin notifications" do
     it "the followers no longer receive notification for posts made by the followed user" do
       expect(followed.followers.count).to be > 0
       followed.user_option.update!(hide_profile_and_presence: true)
-      create_topic(user: followed).tap do |t|
-        create_post(topic: t, user: followed)
-      end
-      followed.followers.each do |follower|
-        expect(follower.notifications.count).to eq(0)
-      end
+      create_topic(user: followed).tap { |t| create_post(topic: t, user: followed) }
+      followed.followers.each { |follower| expect(follower.notifications.count).to eq(0) }
     end
   end
 end

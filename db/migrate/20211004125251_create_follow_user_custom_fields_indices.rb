@@ -23,7 +23,7 @@ class CreateFollowUserCustomFieldsIndices < ActiveRecord::Migration[6.1]
         %i[name user_id],
         name: index_name_for(field),
         unique: true,
-        where: "name = '#{field}'"
+        where: "name = '#{field}'",
       )
     end
   end

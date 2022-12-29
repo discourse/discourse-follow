@@ -27,13 +27,13 @@ describe UserFollower do
 
     it "does not show posts in unlisted topics" do
       post = Fabricate(:post, user: followed)
-      post.topic.update_status('visible', false, Discourse.system_user)
+      post.topic.update_status("visible", false, Discourse.system_user)
       posts = UserFollower.posts_for(follower, current_user: admin)
       expect(posts.pluck(:id)).to be_blank
     end
 
     it "does not show posts in secured categories that current user does " \
-    "not have access to" do
+         "not have access to" do
       post = Fabricate(:post, user: followed, topic: Fabricate(:topic, category: secure_category))
       posts = UserFollower.posts_for(follower, current_user: follower)
       expect(posts.pluck(:id)).to be_blank
@@ -66,7 +66,12 @@ describe UserFollower do
     end
 
     it "shows posts in uncategorized topics" do
-      post = Fabricate(:post, user: followed, topic: Fabricate(:topic, category_id: SiteSetting.uncategorized_category_id))
+      post =
+        Fabricate(
+          :post,
+          user: followed,
+          topic: Fabricate(:topic, category_id: SiteSetting.uncategorized_category_id),
+        )
       posts = UserFollower.posts_for(follower, current_user: follower)
       expect(posts.pluck(:id)).to contain_exactly(post.id)
     end
@@ -91,9 +96,7 @@ describe UserFollower do
     end
 
     it "can limit the number of returned posts" do
-      5.times do |n|
-        Fabricate(:post, user: [followed, followed2].sample, created_at: n.hours.ago)
-      end
+      5.times { |n| Fabricate(:post, user: [followed, followed2].sample, created_at: n.hours.ago) }
       posts = UserFollower.posts_for(follower, current_user: follower, limit: 3)
       expect(posts.size).to eq(3)
       posts = UserFollower.posts_for(follower, current_user: follower, limit: 6)
@@ -127,8 +130,15 @@ describe UserFollower do
 
     it "does not include small action posts" do
       post1 = Fabricate(:post, user: followed, post_type: Post.types[:small_action])
-      post2 = Fabricate(:post, user: followed, post_type: Post.types[:small_action], action_code: "closed.enabled")
-      post3 = Fabricate(:post, user: followed, post_type: Post.types[:whisper], action_code: "assigned")
+      post2 =
+        Fabricate(
+          :post,
+          user: followed,
+          post_type: Post.types[:small_action],
+          action_code: "closed.enabled",
+        )
+      post3 =
+        Fabricate(:post, user: followed, post_type: Post.types[:whisper], action_code: "assigned")
 
       follower.update!(admin: true)
       posts = UserFollower.posts_for(follower, current_user: follower)
@@ -143,9 +153,7 @@ describe UserFollower do
     end
 
     context "when default_allow_people_to_follow_me setting is false" do
-      before do
-        SiteSetting.default_allow_people_to_follow_me = false
-      end
+      before { SiteSetting.default_allow_people_to_follow_me = false }
 
       it "only include posts if followed user has explicitly allowed people to follow them" do
         post1 = Fabricate(:post, user: followed)

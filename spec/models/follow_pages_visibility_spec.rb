@@ -18,15 +18,15 @@ describe FollowPagesVisibility do
 
   describe "site settings validations" do
     it "prevent unknown values" do
-      expect do
-        SiteSetting.follow_following_visible = "blah"
-      end.to raise_error(Discourse::InvalidParameters) do |error|
+      expect do SiteSetting.follow_following_visible = "blah" end.to raise_error(
+        Discourse::InvalidParameters,
+      ) do |error|
         expect(error.message).to include("blah")
         expect(error.message).to include("follow_following_visible")
       end
-      expect do
-        SiteSetting.follow_followers_visible = "ggg"
-      end.to raise_error(Discourse::InvalidParameters) do |error|
+      expect do SiteSetting.follow_followers_visible = "ggg" end.to raise_error(
+        Discourse::InvalidParameters,
+      ) do |error|
         expect(error.message).to include("ggg")
         expect(error.message).to include("follow_followers_visible")
       end
@@ -42,14 +42,12 @@ describe FollowPagesVisibility do
   end
 
   [
-    ["can_see_following_page?", "follow_following_visible"],
-    ["can_see_followers_page?", "follow_followers_visible"],
+    %w[can_see_following_page? follow_following_visible],
+    %w[can_see_followers_page? follow_followers_visible],
   ].each do |(method, setting)|
     describe ".#{method}" do
       context "when the follow_following_visible site setting allows everyone" do
-        before do
-          SiteSetting.public_send("#{setting}=", FollowPagesVisibility::EVERYONE)
-        end
+        before { SiteSetting.public_send("#{setting}=", FollowPagesVisibility::EVERYONE) }
 
         it "trust level 0 user is allowed to see the page" do
           expect(described_class.public_send(method, user: tl0, target_user: user)).to eq(true)
@@ -61,9 +59,7 @@ describe FollowPagesVisibility do
       end
 
       context "when the follow_following_visible site setting does not allow anyone" do
-        before do
-          SiteSetting.public_send("#{setting}=", FollowPagesVisibility::NO_ONE)
-        end
+        before { SiteSetting.public_send("#{setting}=", FollowPagesVisibility::NO_ONE) }
 
         it "admin user is not allowed to see the page" do
           expect(described_class.public_send(method, user: admin, target_user: user)).to eq(false)
@@ -79,10 +75,8 @@ describe FollowPagesVisibility do
       end
 
       context "when the follow_following_visible site setting allows users " \
-      "to see their own pages only" do
-        before do
-          SiteSetting.public_send("#{setting}=", FollowPagesVisibility::SELF)
-        end
+                "to see their own pages only" do
+        before { SiteSetting.public_send("#{setting}=", FollowPagesVisibility::SELF) }
 
         it "admin user is not allowed to see the page of other users" do
           expect(described_class.public_send(method, user: admin, target_user: user)).to eq(false)
@@ -107,10 +101,8 @@ describe FollowPagesVisibility do
       end
 
       context "when the follow_following_visible site setting allows users " \
-      "of specific trust level group" do
-        before do
-          SiteSetting.public_send("#{setting}=", "trust_level_3")
-        end
+                "of specific trust level group" do
+        before { SiteSetting.public_send("#{setting}=", "trust_level_3") }
 
         it "user in that group is allowed to see their own page" do
           expect(described_class.public_send(method, user: tl4, target_user: tl4)).to eq(true)

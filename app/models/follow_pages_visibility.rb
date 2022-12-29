@@ -11,18 +11,17 @@ class FollowPagesVisibility < EnumSiteSetting
     end
 
     def values
-      @values ||= [
-        NO_ONE,
-        SELF,
-        "trust_level_4",
-        "trust_level_3",
-        "trust_level_2",
-        "trust_level_1",
-        "trust_level_0",
-        EVERYONE
-      ].map do |v|
-        { name: "follow.follow_pages_visibility.#{v}", value: v }
-      end
+      @values ||=
+        [
+          NO_ONE,
+          SELF,
+          "trust_level_4",
+          "trust_level_3",
+          "trust_level_2",
+          "trust_level_1",
+          "trust_level_0",
+          EVERYONE,
+        ].map { |v| { name: "follow.follow_pages_visibility.#{v}", value: v } }
     end
 
     def translate_names?
