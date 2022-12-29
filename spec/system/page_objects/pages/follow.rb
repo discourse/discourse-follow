@@ -3,7 +3,7 @@
 module PageObjects
   module Pages
     class Follow < PageObjects::Pages::Base
-      CONTENT_CLASS = '.user-follows-tab'
+      CONTENT_CLASS = ".user-follows-tab"
 
       def initialize(user)
         super()
@@ -12,7 +12,7 @@ module PageObjects
 
       def visit
         page.visit("/u/#{@user.username}")
-        click_on I18n.t('js.user.follow_nav')
+        click_on I18n.t("js.user.follow_nav")
         self
       end
 
@@ -27,16 +27,12 @@ module PageObjects
       end
 
       def has_follower?(user)
-        within(CONTENT_CLASS) do
-          page.has_content?(user.username)
-        end
+        within(CONTENT_CLASS) { page.has_content?(user.username) }
       end
       alias_method :has_following?, :has_follower?
 
       def has_following_topic?(topic)
-        within(CONTENT_CLASS) do
-          page.has_content?(topic.title)
-        end
+        within(CONTENT_CLASS) { page.has_content?(topic.title) }
       end
     end
   end

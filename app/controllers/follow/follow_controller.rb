@@ -50,11 +50,12 @@ class Follow::FollowController < ApplicationController
     if val = params[:created_before].presence
       created_before = validate_date(val)
       if created_before.nil?
-        return render json: {
-          errors: [
-            I18n.t("follow.invalid_created_before_date", value: val.inspect)
-          ]
-        }, status: 400
+        return(
+          render json: {
+                   errors: [I18n.t("follow.invalid_created_before_date", value: val.inspect)],
+                 },
+                 status: 400
+        )
       end
     end
 
@@ -62,9 +63,11 @@ class Follow::FollowController < ApplicationController
     render_serialized(
       posts,
       FollowPostSerializer,
-      root: 'posts',
-      extras: { has_more: has_more },
-      rest_serializer: true
+      root: "posts",
+      extras: {
+        has_more: has_more,
+      },
+      rest_serializer: true,
     )
   end
 
@@ -75,14 +78,10 @@ class Follow::FollowController < ApplicationController
     return if user.blank?
 
     if type == FOLLOWERS
-      if !can_see_followers?(user)
-        raise Discourse::InvalidAccess.new
-      end
+      raise Discourse::InvalidAccess.new if !can_see_followers?(user)
       users = user.followers.to_a
     elsif type == FOLLOWING
-      if !can_see_following?(user)
-        raise Discourse::InvalidAccess.new
-      end
+      raise Discourse::InvalidAccess.new if !can_see_following?(user)
       users = user.following.to_a
     else
       raise Discourse::InvalidParameters.new
@@ -104,17 +103,16 @@ class Follow::FollowController < ApplicationController
     user = User.find_by_username(params.require(:username))
     if user.blank?
       render json: {
-        errors: [I18n.t("follow.user_not_found", username: params[:username].inspect)]
-      }, status: 404
+               errors: [I18n.t("follow.user_not_found", username: params[:username].inspect)],
+             },
+             status: 404
       return nil
     end
     user
   end
 
   def ensure_can_see_feed!(target_user)
-    if target_user.id != current_user.id && !current_user.staff?
-      raise Discourse::InvalidAccess.new
-    end
+    raise Discourse::InvalidAccess.new if target_user.id != current_user.id && !current_user.staff?
   end
 
   def validate_date(value)
@@ -124,12 +122,13 @@ class Follow::FollowController < ApplicationController
   end
 
   def find_posts_feed(target_user, limit, created_before)
-    posts = UserFollower.posts_for(
-      target_user,
-      current_user: current_user,
-      limit: limit + 1,
-      created_before: created_before
-    ).to_a
+    posts =
+      UserFollower.posts_for(
+        target_user,
+        current_user: current_user,
+        limit: limit + 1,
+        created_before: created_before,
+      ).to_a
 
     has_more = false
     if posts.size == limit + 1

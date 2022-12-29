@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 describe "Attrs added by the plugin to the UserCardSerializer" do
   fab!(:follower) { Fabricate(:user) }

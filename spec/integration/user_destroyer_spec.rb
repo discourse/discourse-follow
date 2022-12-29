@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 describe "User destroyer with the follow plugin" do
   let(:user_a) { Fabricate(:user) }

@@ -40,7 +40,7 @@ describe User do
     end
 
     it "returns empty relation if the default_allow_people_to_follow_me setting " \
-    "is false and the user has no explicit preference" do
+         "is false and the user has no explicit preference" do
       SiteSetting.default_allow_people_to_follow_me = false
       expect(followed1.followers.pluck(:id)).to be_empty
       expect(followed2.followers.pluck(:id)).to be_empty
@@ -77,7 +77,7 @@ describe User do
     end
 
     it "excludes users who do not have an explicit preference and the " \
-    "default_allow_people_to_follow_me setting is false" do
+         "default_allow_people_to_follow_me setting is false" do
       SiteSetting.default_allow_people_to_follow_me = false
       expect(follower1.following.pluck(:id)).to be_empty
       expect(follower2.following.pluck(:id)).to be_empty

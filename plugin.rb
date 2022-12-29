@@ -9,22 +9,34 @@
 
 enabled_site_setting :discourse_follow_enabled
 
-register_asset 'stylesheets/common/follow.scss'
+register_asset "stylesheets/common/follow.scss"
 
 register_svg_icon "discourse-follow-new-reply"
 register_svg_icon "discourse-follow-new-follower"
 register_svg_icon "discourse-follow-new-topic"
 
-load File.expand_path('../lib/follow/engine.rb', __FILE__)
+load File.expand_path("../lib/follow/engine.rb", __FILE__)
 
 Discourse::Application.routes.append do
   mount ::Follow::Engine, at: "follow"
-  %w{users u}.each_with_index do |root_path, index|
-    get "#{root_path}/:username/follow" => "follow/follow#index", constraints: { username: RouteFormat.username }
-    get "#{root_path}/:username/follow/feed" => "follow/follow#index", constraints: { username: RouteFormat.username }
+  %w[users u].each_with_index do |root_path, index|
+    get "#{root_path}/:username/follow" => "follow/follow#index",
+        :constraints => {
+          username: RouteFormat.username,
+        }
+    get "#{root_path}/:username/follow/feed" => "follow/follow#index",
+        :constraints => {
+          username: RouteFormat.username,
+        }
 
-    get "#{root_path}/:username/follow/following" => "follow/follow#list_following", constraints: { username: RouteFormat.username }
-    get "#{root_path}/:username/follow/followers" => "follow/follow#list_followers", constraints: { username: RouteFormat.username }
+    get "#{root_path}/:username/follow/following" => "follow/follow#list_following",
+        :constraints => {
+          username: RouteFormat.username,
+        }
+    get "#{root_path}/:username/follow/followers" => "follow/follow#list_followers",
+        :constraints => {
+          username: RouteFormat.username,
+        }
   end
 end
 
@@ -40,13 +52,9 @@ after_initialize do
     ../lib/follow/notification_handler.rb
     ../app/controllers/follow/follow_controller.rb
     ../config/routes.rb
-  ].each do |path|
-    load File.expand_path(path, __FILE__)
-  end
+  ].each { |path| load File.expand_path(path, __FILE__) }
 
-  reloadable_patch do |plugin|
-    User.class_eval { prepend Follow::UserExtension }
-  end
+  reloadable_patch { |plugin| User.class_eval { prepend Follow::UserExtension } }
 
   add_to_serializer(:user, :can_see_following) do
     FollowPagesVisibility.can_see_following_page?(user: scope.current_user, target_user: user)
@@ -69,33 +77,24 @@ after_initialize do
   # when serializing a single user object, the options of the serializer
   # doesn't have a `each_serializer` key.
   add_to_serializer(:user_card, :can_follow) do
-    !options.key?(:each_serializer) &&
-      scope.current_user.present? &&
-      user.allow_people_to_follow_me
+    !options.key?(:each_serializer) && scope.current_user.present? && user.allow_people_to_follow_me
   end
 
   add_to_serializer(:user_card, :is_followed) do
-    !options.key?(:each_serializer) &&
-      scope.current_user.present? &&
+    !options.key?(:each_serializer) && scope.current_user.present? &&
       scope.current_user.following.where(id: user.id).exists?
   end
 
-  add_to_serializer(:user_card, :total_followers, false) do
-    object.followers.count
-  end
+  add_to_serializer(:user_card, :total_followers, false) { object.followers.count }
   add_to_serializer(:user_card, :include_total_followers?) do
-    !options.key?(:each_serializer) &&
-      SiteSetting.discourse_follow_enabled &&
+    !options.key?(:each_serializer) && SiteSetting.discourse_follow_enabled &&
       SiteSetting.follow_show_statistics_on_profile &&
       FollowPagesVisibility.can_see_followers_page?(user: scope.current_user, target_user: object)
   end
 
-  add_to_serializer(:user_card, :total_following, false) do
-    object.following.count
-  end
+  add_to_serializer(:user_card, :total_following, false) { object.following.count }
   add_to_serializer(:user_card, :include_total_following?) do
-    !options.key?(:each_serializer) &&
-      SiteSetting.discourse_follow_enabled &&
+    !options.key?(:each_serializer) && SiteSetting.discourse_follow_enabled &&
       SiteSetting.follow_show_statistics_on_profile &&
       FollowPagesVisibility.can_see_following_page?(user: scope.current_user, target_user: object)
   end

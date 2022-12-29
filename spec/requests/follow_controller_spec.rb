@@ -34,7 +34,7 @@ describe Follow::FollowController do
     response.parsed_body["posts"].map { |t| t["id"] }
   end
 
-  ["followers", "following"].each do |type|
+  %w[followers following].each do |type|
     describe "#list_#{type}" do
       before do
         ::Follow::Updater.new(user1, user2).watch_follow
@@ -42,9 +42,7 @@ describe Follow::FollowController do
       end
 
       context "when follow_#{type}_visible setting is set to no-one" do
-        before do
-          SiteSetting.public_send("follow_#{type}_visible=", FollowPagesVisibility::NO_ONE)
-        end
+        before { SiteSetting.public_send("follow_#{type}_visible=", FollowPagesVisibility::NO_ONE) }
 
         it "tl4 users cannot see other users pages" do
           sign_in(tl4)
@@ -115,7 +113,9 @@ describe Follow::FollowController do
 
       put "/follow/doesnotexist.json"
       expect(response.status).to eq(404)
-      expect(response.parsed_body["errors"]).to include(I18n.t("follow.user_not_found", username: "doesnotexist".inspect))
+      expect(response.parsed_body["errors"]).to include(
+        I18n.t("follow.user_not_found", username: "doesnotexist".inspect),
+      )
     end
 
     it "responds with 403 if the followed user has disabled follows" do
@@ -127,7 +127,7 @@ describe Follow::FollowController do
 
       expect(response.status).to eq(403)
       expect(response.parsed_body["errors"]).to contain_exactly(
-        I18n.t("follow.user_does_not_allow_follow", username: user2.username)
+        I18n.t("follow.user_does_not_allow_follow", username: user2.username),
       )
       expect(user2.reload.followers.count).to eq(0)
     end
@@ -150,7 +150,9 @@ describe Follow::FollowController do
       sign_in(user1)
       delete "/follow/doesnotexist.json"
       expect(response.status).to eq(404)
-      expect(response.parsed_body["errors"]).to include(I18n.t("follow.user_not_found", username: "doesnotexist".inspect))
+      expect(response.parsed_body["errors"]).to include(
+        I18n.t("follow.user_not_found", username: "doesnotexist".inspect),
+      )
     end
   end
 
@@ -186,26 +188,20 @@ describe Follow::FollowController do
       sign_in(mod)
       get "/follow/posts/#{user1.username}.json"
       expect(response.status).to eq(200)
-      expect(response_topic_ids(response)).to eq(
-        [post_1, post_2, post_3, post_4, post_5].map(&:id)
-      )
+      expect(response_topic_ids(response)).to eq([post_1, post_2, post_3, post_4, post_5].map(&:id))
 
       admin = Fabricate(:admin)
       sign_in(admin)
       get "/follow/posts/#{user1.username}.json"
       expect(response.status).to eq(200)
-      expect(response_topic_ids(response)).to eq(
-        [post_1, post_2, post_3, post_4, post_5].map(&:id)
-      )
+      expect(response_topic_ids(response)).to eq([post_1, post_2, post_3, post_4, post_5].map(&:id))
     end
 
     it "allows users to see their own follow posts feed" do
       sign_in(user1)
       get "/follow/posts/#{user1.username}.json"
       expect(response.status).to eq(200)
-      expect(response_topic_ids(response)).to eq(
-        [post_1, post_2, post_3, post_4, post_5].map(&:id)
-      )
+      expect(response_topic_ids(response)).to eq([post_1, post_2, post_3, post_4, post_5].map(&:id))
     end
 
     it "indicates in the response whether or not there are more posts" do
@@ -213,14 +209,12 @@ describe Follow::FollowController do
       get "/follow/posts/#{user1.username}.json", params: { limit: 2 }
       expect(response.status).to eq(200)
       expect(response_topic_ids(response)).to eq([post_1.id, post_2.id])
-      expect(response.parsed_body['extras']['has_more']).to eq(true)
+      expect(response.parsed_body["extras"]["has_more"]).to eq(true)
 
       get "/follow/posts/#{user1.username}.json", params: { limit: 5 }
       expect(response.status).to eq(200)
-      expect(response_topic_ids(response)).to eq(
-        [post_1, post_2, post_3, post_4, post_5].map(&:id)
-      )
-      expect(response.parsed_body['extras']['has_more']).to eq(false)
+      expect(response_topic_ids(response)).to eq([post_1, post_2, post_3, post_4, post_5].map(&:id))
+      expect(response.parsed_body["extras"]["has_more"]).to eq(false)
     end
 
     it "paginates correctly" do
@@ -228,31 +222,36 @@ describe Follow::FollowController do
       get "/follow/posts/#{user1.username}.json", params: { limit: 2 }
       expect(response.status).to eq(200)
       expect(response_topic_ids(response)).to eq([post_1.id, post_2.id])
-      expect(response.parsed_body['extras']['has_more']).to eq(true)
+      expect(response.parsed_body["extras"]["has_more"]).to eq(true)
 
       get "/follow/posts/#{user1.username}.json",
-        params: { limit: 2, created_before: post_2.created_at }
+          params: {
+            limit: 2,
+            created_before: post_2.created_at,
+          }
 
       expect(response.status).to eq(200)
       expect(response_topic_ids(response)).to eq([post_3.id, post_4.id])
-      expect(response.parsed_body['extras']['has_more']).to eq(true)
+      expect(response.parsed_body["extras"]["has_more"]).to eq(true)
 
       get "/follow/posts/#{user1.username}.json",
-        params: { limit: 2, created_before: post_4.created_at }
+          params: {
+            limit: 2,
+            created_before: post_4.created_at,
+          }
 
       expect(response.status).to eq(200)
       expect(response_topic_ids(response)).to eq([post_5.id])
-      expect(response.parsed_body['extras']['has_more']).to eq(false)
+      expect(response.parsed_body["extras"]["has_more"]).to eq(false)
     end
 
     it "responds with an error if the supplied created_before date is invalid" do
       sign_in(user1)
-      get "/follow/posts/#{user1.username}.json",
-        params: { created_before: "sdfsfs" }
+      get "/follow/posts/#{user1.username}.json", params: { created_before: "sdfsfs" }
 
       expect(response.status).to eq(400)
       expect(response.parsed_body["errors"]).to contain_exactly(
-        I18n.t("follow.invalid_created_before_date", value: "sdfsfs".inspect)
+        I18n.t("follow.invalid_created_before_date", value: "sdfsfs".inspect),
       )
     end
 
@@ -260,8 +259,8 @@ describe Follow::FollowController do
       sign_in(user1)
       get "/follow/posts/#{user1.username}.json", params: { limit: 1 }
       expect(response.status).to eq(200)
-      posts = response.parsed_body['posts']
-      p = response.parsed_body['posts'][0]
+      posts = response.parsed_body["posts"]
+      p = response.parsed_body["posts"][0]
       expect(p["excerpt"]).to be_present
       expect(p["category_id"]).to eq(post_1.topic.category.id)
       expect(p["created_at"]).to eq(post_1.created_at.iso8601(3))
