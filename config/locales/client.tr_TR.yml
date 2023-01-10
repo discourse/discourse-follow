@@ -5,3 +5,52 @@
 # https://translate.discourse.org/
 
 tr_TR:
+  js:
+    notifications:
+      following: "<span>%{username}</span> %{description}"
+      following_description: "sizi takip etmeye başladı."
+      following_created_topic: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
+      titles:
+        following_created_topic: "takip ettiğiniz birinden yeni konu"
+        following_replied: "takip ettiğiniz birinden yeni gönderi"
+        following: "biri sizi takip etmeye başladı"
+      popup:
+        following: "%{username} sizi takip etmeye başladı."
+        following_created_topic: '%{username} "%{topic}" adlı bir konu oluşturdu - %{site_title}'
+        following_replied: '%{username}, "%{topic}" konusuna gönderi yaptı - %{site_title}'
+    user:
+      follow_nav: "Takip ediyor"
+      follow:
+        label: "Takip et"
+      following:
+        feed_link: "Akışı takip et"
+        label: "Takip ediliyor"
+        none: "Henüz kimseyi takip etmiyorsunuz."
+        none_other: "%{username} henüz kimseyi takip etmiyor."
+      followers:
+        label: "Takipçiler"
+        none: "Henüz kimse sizi takip etmiyor."
+        none_other: "Henüz kimse %{username} adlı kullanıcıyı takip etmiyor."
+      feed:
+        label: "Akış"
+        empty_feed_you: "Takip ettiğiniz kişilerden henüz gönderi yok."
+        empty_feed_other: "Henüz %{username} adlı kullanıcının takip ettiği kişilerden gönderi yok."
+      follow_notifications_options:
+        notify_followed_user_when_followed: "Takip ettiğimde kullanıcıları bilgilendir"
+        notify_me_when_followed: "Kullanıcılar beni takip ettiğinde bana bildir"
+        notify_me_when_followed_replies: "Takip ettiğim biri yanıt verdiğinde bana bildir"
+        notify_me_when_followed_creates_topic: "Takip ettiğim biri bir konu oluşturduğunda bana bildir"
+        allow_people_to_follow_me: "Kişilerin beni takip etmesine izin ver"
+    follow:
+      follow_pages_visibility:
+        no-one: "Kimse"
+        self: "Kendim"
+        trust_level_4: "Güven Seviyesi 4"
+        trust_level_3: "Güven Seviyesi 3"
+        trust_level_2: "Güven Seviyesi 2"
+        trust_level_1: "Güven Seviyesi 1"
+        trust_level_0: "Güven Seviyesi 0"
+        everyone: "Herkes"
+      follow_button_label: "Takip et"
+      unfollow_button_label: "Takibi bırak"
