@@ -5,3 +5,27 @@
 # https://translate.discourse.org/
 
 tr_TR:
+  discourse_push_notifications:
+    popup:
+      following_created_topic: '%{username} "%{topic}" adlı bir konu oluşturdu - %{site_title}'
+      following_replied: '%{username}, "%{topic}" konusuna gönderi yaptı - %{site_title}'
+  site_settings:
+    discourse_follow_enabled: "Takip eklentisini etkinleştirin."
+    follow_show_statistics_on_profile: "Kullanıcı profillerinde takip istatistiklerini gösterin."
+    follow_notifications_enabled: "Tüm takip bildirimlerini etkinleştirin."
+    follow_followers_visible: "Takipçi görünürlüğü."
+    follow_following_visible: "Takip ediliyor görünürlüğü."
+    default_notify_me_when_followed: '<code>Kullanıcılar beni takip ettiğinde bana bildir</code> kullanıcı tercihi için varsayılan değer. Bu ayarın değiştirilmesi yalnızca takip eklentisinin bildirim tercihlerini hiç değiştirmemiş kullanıcılar için geçerlidir'
+    default_notify_followed_user_when_followed: '<code>Kullanıcıları takip ettiğimde onlara bildir</code> kullanıcı tercihi için varsayılan değer. Bu ayarın değiştirilmesi yalnızca takip eklentisinin bildirim tercihlerini hiç değiştirmemiş kullanıcılar için geçerlidir'
+    default_notify_me_when_followed_replies: '<code>Takip ettiğim biri yanıt verdiğinde bana bildir</code> kullanıcı tercihi için varsayılan değer. Bu ayarın değiştirilmesi yalnızca takip eklentisinin bildirim tercihlerini hiç değiştirmemiş kullanıcılar için geçerlidir'
+    default_notify_me_when_followed_creates_topic: '<code>Takip ettiğim biri konu oluşturduğunda bana bildir</code> kullanıcı tercihi için varsayılan değer. Bu ayarın değiştirilmesi yalnızca takip eklentisinin bildirim tercihlerini hiç değiştirmemiş kullanıcılar için geçerlidir'
+    default_allow_people_to_follow_me: '<code>Kişilerin beni takip etmesine izin ver</code> kullanıcı tercihi için varsayılan değer. Bu ayarın değiştirilmesi yalnızca takip eklentisinin bildirim tercihlerini hiç değiştirmemiş kullanıcılar için geçerlidir'
+  follow:
+    user_not_found: "Kullanıcı adı %{username} olan kullanıcı bulunamadı"
+    user_cannot_follow_themself: "Kullanıcının kendisini takip etmesine izin verilmez"
+    invalid_notification_level: "Geçersiz bildirim seviyesi %{level}"
+    cannot_follow_bot: "Bir bot kullanıcısı takip edilemez"
+    cannot_follow_suspended: "Askıya alınmış bir kullanıcı takip edilemez"
+    cannot_follow_staged: "Aşamalı bir kullanıcı takip edilemez"
+    invalid_created_before_date: "\"created_before\" parametresi için geçersiz bir tarih alındı: %{value}"
+    user_does_not_allow_follow: "%{username} kişilerin kendisini takip etmelerine izin vermiyor."
