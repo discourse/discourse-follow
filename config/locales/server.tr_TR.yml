@@ -7,8 +7,8 @@
 tr_TR:
   discourse_push_notifications:
     popup:
-      following_created_topic: '%{username} "%{topic}" adlı bir konu oluşturdu - %{site_title}'
-      following_replied: '%{username}, "%{topic}" konusuna gönderi yaptı - %{site_title}'
+      following_created_topic: '%{username} "%{topic}" başlıklı bir konu oluşturdu - %{site_title}'
+      following_replied: '%{username}, "%{topic}" başlıklı konuya gönderi yaptı - %{site_title}'
   site_settings:
     discourse_follow_enabled: "Takip eklentisini etkinleştirin."
     follow_show_statistics_on_profile: "Kullanıcı profillerinde takip istatistiklerini gösterin."
