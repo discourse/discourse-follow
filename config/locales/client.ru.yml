@@ -13,19 +13,19 @@ ru:
       following_replied: "<span>%{username}</span> %{description}"
       titles:
         following_created_topic: "новая тема от того, на кого вы подписаны"
-        following_replied: "новая публикация от кого-то, на кого вы подписаны"
+        following_replied: "новая запись от того, на кого вы подписаны"
         following: "кто-то подписался на вас"
       popup:
         following: "%{username} подписался(-ась) на вас."
-        following_created_topic: '%{username} создаёт тему "%{topic}" - %{site_title}'
-        following_replied: '%{username} написал(-а) в теме "%{topic}" - %{site_title}'
+        following_created_topic: '%{username} создал(а) тему «%{topic}» — %{site_title}'
+        following_replied: '%{username} написал(а) в теме «%{topic}» — %{site_title}'
     user:
-      follow_nav: "Подписан(-а)"
+      follow_nav: "Подписан(а)"
       follow:
         label: "Подписаться"
       following:
         feed_link: "Лента новостей по подпискам"
-        label: "Подписан(-а) на"
+        label: "Подписан(а) на"
         none: "Вы пока ни на кого не подписаны."
         none_other: "%{username} пока ни на кого не подписан(-а)."
       followers:
