@@ -1,3 +1,3 @@
 import UserStream from "discourse/components/user-stream";
 
-export default UserStream;
+export default class FollowPostStream extends UserStream {}
