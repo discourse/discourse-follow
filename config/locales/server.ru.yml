@@ -5,3 +5,7 @@
 # https://translate.discourse.org/
 
 ru:
+  discourse_push_notifications:
+    popup:
+      following_created_topic: '%{username} создал(а) тему «%{topic}» — %{site_title}'
+      following_replied: '%{username} написал(а) в теме «%{topic}» — %{site_title}'

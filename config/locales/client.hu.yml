@@ -9,6 +9,7 @@ hu:
     notifications:
       following: "<span>%{username}</span> %{description}"
       following_description: "elkezdett követni téged."
+      following_created_topic: "<span>%{username}</span>%{description}"
       following_replied: "<span>%{username}</span> %{description}"
       popup:
         following: "%{username} elkezdett követni téged."
@@ -29,3 +30,7 @@ hu:
         notify_followed_user_when_followed: "Értesítsd a felhasználókat, ha elkezdem követni őket."
         notify_me_when_followed: "Értesíts amikor elkezdenek követni."
         notify_me_when_followed_replies: "Értesíts, ha akit követek, válaszol egy bejegyzésre."
+    follow:
+      follow_pages_visibility:
+        everyone: "Mindenki"
+      follow_button_label: "Követés"

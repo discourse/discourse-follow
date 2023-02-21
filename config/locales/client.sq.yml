@@ -5,3 +5,10 @@
 # https://translate.discourse.org/
 
 sq:
+  js:
+    notifications:
+      popup:
+        following_replied: '%{username} postoi në "%{topic}" - %{site_title}'
+    follow:
+      follow_pages_visibility:
+        everyone: "Të gjithë"

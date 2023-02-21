@@ -5,3 +5,6 @@
 # https://translate.discourse.org/
 
 th:
+  discourse_push_notifications:
+    popup:
+      following_replied: '%{username} โพสท์ใน "%{topic}" - %{site_title}'

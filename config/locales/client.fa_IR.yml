@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 fa_IR:
+  js:
+    notifications:
+      following: "<span>%{username}</span> %{description}"
+      following_created_topic: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
+      popup:
+        following_replied: '%{username} در "%{topic}" - %{site_title} مطلبی نوشت'
+    follow:
+      follow_pages_visibility:
+        everyone: "همه"

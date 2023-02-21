@@ -5,3 +5,10 @@
 # https://translate.discourse.org/
 
 sk:
+  js:
+    notifications:
+      popup:
+        following_replied: '%{username} prispel v "%{topic}" - %{site_title}'
+    follow:
+      follow_pages_visibility:
+        everyone: "Každý"

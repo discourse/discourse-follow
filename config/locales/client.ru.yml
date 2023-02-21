@@ -34,3 +34,7 @@ ru:
         none_other: "Никто не подписан на %{username}."
       feed:
         label: "Лента"
+    follow:
+      follow_pages_visibility:
+        everyone: "Все"
+      follow_button_label: "Подписаться"
