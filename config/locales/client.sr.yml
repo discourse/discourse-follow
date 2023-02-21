@@ -5,3 +5,7 @@
 # https://translate.discourse.org/
 
 sr:
+  js:
+    follow:
+      follow_pages_visibility:
+        everyone: "Svi"

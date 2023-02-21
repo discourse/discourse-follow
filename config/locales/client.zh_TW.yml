@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 zh_TW:
+  js:
+    notifications:
+      following: "<span>%{username}</span> %{description}"
+      following_created_topic: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
+      popup:
+        following_replied: '%{username} 在"%{topic}" 中發文 - %{site_title}'
+    follow:
+      follow_pages_visibility:
+        everyone: "所有使用者"

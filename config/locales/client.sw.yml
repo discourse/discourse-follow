@@ -5,3 +5,7 @@
 # https://translate.discourse.org/
 
 sw:
+  js:
+    follow:
+      follow_pages_visibility:
+        everyone: "Kila Mtu"

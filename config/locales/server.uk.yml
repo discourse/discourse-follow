@@ -5,3 +5,6 @@
 # https://translate.discourse.org/
 
 uk:
+  discourse_push_notifications:
+    popup:
+      following_replied: '%{username} опублікував в "%{topic}" - %{site_title}'

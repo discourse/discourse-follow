@@ -5,5 +5,8 @@
 # https://translate.discourse.org/
 
 ko:
+  discourse_push_notifications:
+    popup:
+      following_replied: '"%{topic}"에서 %{username}님이 글을 게시하였습니다 - %{site_title}'
   site_settings:
     discourse_follow_enabled: "팔로우 플러그인을 활성화합니다."

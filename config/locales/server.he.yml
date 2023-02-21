@@ -5,6 +5,9 @@
 # https://translate.discourse.org/
 
 he:
+  discourse_push_notifications:
+    popup:
+      following_replied: '%{username} הגיב ב"%{topic}" - %{site_title}'
   site_settings:
     discourse_follow_enabled: "הפעל את תוסף המעקב."
     follow_show_statistics_on_profile: "הצג סטטיסטיקות מעקב בפרופילים של משתמשים."

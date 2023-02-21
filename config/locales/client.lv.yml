@@ -5,3 +5,10 @@
 # https://translate.discourse.org/
 
 lv:
+  js:
+    notifications:
+      popup:
+        following_replied: '%{username} ierakstīja "%{topic}" - %{site_title}'
+    follow:
+      follow_pages_visibility:
+        everyone: "Ikviens"

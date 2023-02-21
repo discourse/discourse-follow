@@ -17,6 +17,7 @@ ko:
         following: "누군가 당신을 팔로우하기 시작했습니다"
       popup:
         following: "%{username}님이 당신을 팔로우하기 시작했습니다."
+        following_replied: '"%{topic}"에서 %{username}님이 글을 게시하였습니다 - %{site_title}'
     user:
       follow_nav: "팔로우"
       follow:

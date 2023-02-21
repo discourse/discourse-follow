@@ -5,3 +5,7 @@
 # https://translate.discourse.org/
 
 id:
+  js:
+    follow:
+      follow_pages_visibility:
+        everyone: "Semua orang"

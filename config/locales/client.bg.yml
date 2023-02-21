@@ -5,3 +5,10 @@
 # https://translate.discourse.org/
 
 bg:
+  js:
+    notifications:
+      popup:
+        following_replied: '%{username} публикува в "%{topic}" - %{site_title}'
+    follow:
+      follow_pages_visibility:
+        everyone: "Всички"

@@ -9,6 +9,7 @@ he:
     notifications:
       following: "<span>%{username}</span> %{description}"
       following_description: "התחיל לעקוב אחריך."
+      following_created_topic: "<span>%{username}</span> %{description}"
       following_replied: "<span>%{username}</span> %{description}"
       popup:
         following: "%{username} התחיל לעקוב אחריך."
@@ -29,3 +30,7 @@ he:
         notify_followed_user_when_followed: "להודיע למשתמשים כשהחלתי מעקב אחריהם."
         notify_me_when_followed: "הודע לי כשמשתמשים עוקבים אחריי."
         notify_me_when_followed_replies: "הודע לי כשמישהו שאני עוקב אחריו מגיב."
+    follow:
+      follow_pages_visibility:
+        everyone: "כולם"
+      follow_button_label: "עקוב"

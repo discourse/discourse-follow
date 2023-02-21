@@ -5,6 +5,9 @@
 # https://translate.discourse.org/
 
 hu:
+  discourse_push_notifications:
+    popup:
+      following_replied: '%{username} bejegyzést tett itt: „%{topic}” – %{site_title}'
   site_settings:
     discourse_follow_enabled: "Követő plugin engedélyezése"
     follow_show_statistics_on_profile: "Követési statisztika megjelenítése a felhasználói profilban"
