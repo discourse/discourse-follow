@@ -34,7 +34,23 @@ ru:
         none_other: "Никто не подписан на %{username}."
       feed:
         label: "Лента"
+        empty_feed_you: "Записей от пользователей, на которых вы подписаны, пока что нет."
+        empty_feed_other: "Записей от пользователей в подписках %{username} пока что нет."
+      follow_notifications_options:
+        notify_followed_user_when_followed: "Уведомлять пользователей, когда я на них подписываюсь"
+        notify_me_when_followed: "Уведомлять, когда подписываются на меня"
+        notify_me_when_followed_replies: "Уведомлять, когда кто-то из моих подписок отвечает"
+        notify_me_when_followed_creates_topic: "Уведомлять, когда кто-то из моих подписок создает тему"
+        allow_people_to_follow_me: "Разрешить подписываться на меня"
     follow:
       follow_pages_visibility:
+        no-one: "Никто"
+        self: "Только я"
+        trust_level_4: "Уровень доверия 4"
+        trust_level_3: "Уровень доверия 3"
+        trust_level_2: "Уровень доверия 2"
+        trust_level_1: "Уровень доверия 1"
+        trust_level_0: "Уровень доверия 0"
         everyone: "Все"
       follow_button_label: "Подписаться"
+      unfollow_button_label: "Отписаться"
