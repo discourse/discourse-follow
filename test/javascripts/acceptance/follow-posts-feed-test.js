@@ -47,8 +47,7 @@ acceptance("Discourse Follow - Follow Posts Feed", function (needs) {
         can_wiki: true,
         user_title: null,
         bookmarked: false,
-        raw:
-          "### Et\nCorrupti nostrum odio. Autem voluptates quia. Reiciendis possimus odit. Vel ea reprehenderit. Laborum voluptas minima.\n0. Quam. \n1. Expedita. \n2. Natus. \n3. Ea. \n4. Debitis. \n5. Ut. \n6. Suscipit. \n7. Eaque.",
+        raw: "### Et\nCorrupti nostrum odio. Autem voluptates quia. Reiciendis possimus odit. Vel ea reprehenderit. Laborum voluptas minima.\n0. Quam. \n1. Expedita. \n2. Natus. \n3. Ea. \n4. Debitis. \n5. Ut. \n6. Suscipit. \n7. Eaque.",
         actions_summary: [
           { id: 2, can_act: true },
           { id: 3, can_act: true },
