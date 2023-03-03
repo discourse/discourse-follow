@@ -4,6 +4,9 @@
       {{user-info user=user}}
     {{/each}}
   {{else}}
-    <div class="alert alert-info">{{i18n noneMessage username=user.username}}</div>
+    <div class="alert alert-info">{{i18n
+        noneMessage
+        username=user.username
+      }}</div>
   {{/if}}
 </div>
