@@ -2,7 +2,10 @@
   {{#if viewingSelf}}
     <div class="alert alert-info">{{i18n "user.feed.empty_feed_you"}}</div>
   {{else}}
-    <div class="alert alert-info">{{i18n "user.feed.empty_feed_other" username=user.username}}</div>
+    <div class="alert alert-info">{{i18n
+        "user.feed.empty_feed_other"
+        username=user.username
+      }}</div>
   {{/if}}
 {{else}}
   {{follow-post-stream stream=model}}

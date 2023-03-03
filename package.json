@@ -1,10 +1,10 @@
 {
-  "name": "discourse-plugin-name",
-  "version": "0.0.1",
-  "repository": "TODO",
+  "name": "discourse-follow",
+  "version": "1.0.0",
+  "repository": "https://github.com/discourse/discourse-follow",
   "author": "Discourse",
   "license": "MIT",
   "devDependencies": {
-    "eslint-config-discourse": "^1.1.8"
+    "eslint-config-discourse": "^3.4.0"
   }
 }
