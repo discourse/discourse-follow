@@ -165,7 +165,7 @@ acceptance("Discourse Follow - Follow Posts Feed", function (needs) {
       "all posts from the server response are rendered"
     );
     assert.equal(
-      query(".user-secondary-navigation .activity-nav a.active").textContent,
+      query(".user-navigation-secondary  a.active").textContent.trim(),
       I18n.t("user.feed.label"),
       "feed tab is labelled correctly"
     );
