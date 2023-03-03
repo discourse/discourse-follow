@@ -4,8 +4,7 @@
 # about: Discourse Follow
 # version: 1.0
 # authors: Angus McLeod, Robert Barrow, CDCK Inc
-# url: https://github.com/paviliondev/discourse-follow
-# transpile_js: true
+# url: https://github.com/discourse/discourse-follow
 
 enabled_site_setting :discourse_follow_enabled
 

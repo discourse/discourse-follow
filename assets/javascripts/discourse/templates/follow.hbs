@@ -23,8 +23,15 @@
     </HorizontalOverflowNav>
   </div>
 {{else}}
-  {{#d-section pageClass="user-follow" class="user-secondary-navigation" scrollTop=false}}
-    {{#mobile-nav class="activity-nav" desktopClass="action-list follow-list nav-stacked"}}
+  {{#d-section
+    pageClass="user-follow"
+    class="user-secondary-navigation"
+    scrollTop=false
+  }}
+    {{#mobile-nav
+      class="activity-nav"
+      desktopClass="action-list follow-list nav-stacked"
+    }}
       {{#if (eq model.id currentUser.id)}}
         <li>
           {{#link-to "feed"}}{{i18n "user.feed.label"}}{{/link-to}}
