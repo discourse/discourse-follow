@@ -2,8 +2,7 @@ import discourseComputed, { on } from "discourse-common/utils/decorators";
 import RestModel from "discourse/models/rest";
 import { reads } from "@ember/object/computed";
 import { Promise } from "rsvp";
-import Topic from "discourse/models/topic";
-import User from "discourse/models/user";
+import Category from "discourse/models/category";
 import { ajax } from "discourse/lib/ajax";
 import EmberObject from "@ember/object";
 
@@ -40,17 +39,29 @@ export default RestModel.extend({
     }
     return ajax(`/follow/posts/${this.user.username}`, { data })
       .then((content) => {
-        const posts = content.posts.map((post) => {
-          post.user = User.create(post.user);
-          post.topic.category_id = post.category_id;
-          delete post.category_id;
-          post.topic = Topic.create(post.topic);
-          return EmberObject.create(post);
+        const streamItems = content.posts.map((post) => {
+          return EmberObject.create({
+            title: post.topic.title,
+            postUrl: post.url,
+            created_at: post.created_at,
+            category: Category.findById(post.category_id),
+            topic_id: post.topic.id,
+            post_id: post.id,
+            post_number: post.post_number,
+
+            username: post.user.username,
+            name: post.user.name,
+            avatar_template: post.user.avatar_template,
+            user_id: post.user.id,
+
+            excerpt: post.excerpt,
+            truncated: post.truncated,
+          });
         });
-        return { posts, hasMore: content.extras.has_more };
+        return { posts: streamItems, hasMore: content.extras.has_more };
       })
-      .then(({ posts, hasMore }) => {
-        this.content.addObjects(posts);
+      .then(({ posts: streamItems, hasMore }) => {
+        this.content.addObjects(streamItems);
         this.set("itemsLoaded", this.content.length);
         this.set("canLoadMore", hasMore);
       })

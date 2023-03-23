@@ -1,5 +1,8 @@
-import Component from "@ember/component";
+import Component from "@glimmer/component";
+import getURL from "discourse-common/lib/get-url";
 
-export default Component.extend({
-  classNames: ["user-stream-item", "item"],
-});
+export default class DiscourseReactionsReactionPost extends Component {
+  get postUrl() {
+    return getURL(this.args.post.url);
+  }
+}
