@@ -84,19 +84,25 @@ after_initialize do
       scope.current_user.following.where(id: user.id).exists?
   end
 
-  add_to_serializer(:user_card, :total_followers, false) { object.followers.count }
-  add_to_serializer(:user_card, :include_total_followers?) do
-    !options.key?(:each_serializer) && SiteSetting.discourse_follow_enabled &&
-      SiteSetting.follow_show_statistics_on_profile &&
-      FollowPagesVisibility.can_see_followers_page?(user: scope.current_user, target_user: object)
-  end
+  add_to_serializer(
+    :user_card,
+    :total_followers,
+    include_condition: -> do
+      !options.key?(:each_serializer) && SiteSetting.discourse_follow_enabled &&
+        SiteSetting.follow_show_statistics_on_profile &&
+        FollowPagesVisibility.can_see_followers_page?(user: scope.current_user, target_user: object)
+    end,
+  ) { object.followers.count }
 
-  add_to_serializer(:user_card, :total_following, false) { object.following.count }
-  add_to_serializer(:user_card, :include_total_following?) do
-    !options.key?(:each_serializer) && SiteSetting.discourse_follow_enabled &&
-      SiteSetting.follow_show_statistics_on_profile &&
-      FollowPagesVisibility.can_see_following_page?(user: scope.current_user, target_user: object)
-  end
+  add_to_serializer(
+    :user_card,
+    :total_following,
+    include_condition: -> do
+      !options.key?(:each_serializer) && SiteSetting.discourse_follow_enabled &&
+        SiteSetting.follow_show_statistics_on_profile &&
+        FollowPagesVisibility.can_see_following_page?(user: scope.current_user, target_user: object)
+    end,
+  ) { object.following.count }
 
   %i[
     notify_me_when_followed
