@@ -1,7 +1,7 @@
 <div class="follow-users">
   {{#if hasUsers}}
     {{#each users as |user|}}
-      {{user-info user=user}}
+      <UserInfo @user={{user}} />
     {{/each}}
   {{else}}
     <div class="alert alert-info">{{i18n
