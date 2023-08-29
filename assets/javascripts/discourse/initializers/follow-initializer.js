@@ -1,4 +1,6 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
+import { userPath } from "discourse/lib/url";
+import I18n from "I18n";
 
 export default {
   name: "follow-plugin-initializer",
@@ -20,6 +22,35 @@ export default {
         "notification.following_replied",
         "discourse-follow-new-reply"
       );
+
+      if (api.registerNotificationTypeRenderer) {
+        api.registerNotificationTypeRenderer(
+          "following",
+          (NotificationTypeBase) => {
+            return class extends NotificationTypeBase {
+              get linkTitle() {
+                return I18n.t("notifications.titles.following");
+              }
+
+              get linkHref() {
+                return userPath(this.notification.data.display_username);
+              }
+
+              get icon() {
+                return "discourse-follow-new-follower";
+              }
+
+              get label() {
+                return this.notification.data.display_username;
+              }
+
+              get description() {
+                return I18n.t("notifications.following_description", {});
+              }
+            };
+          }
+        );
+      }
 
       // workaround to make core save custom fields when changing
       // preferences
