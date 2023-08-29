@@ -1,5 +1,6 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { userPath } from "discourse/lib/url";
+import I18n from "I18n";
 
 export default {
   name: "follow-plugin-initializer",

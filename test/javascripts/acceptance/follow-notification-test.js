@@ -1,7 +1,7 @@
 import I18n from "I18n";
 import { test } from "qunit";
 import { visit } from "@ember/test-helpers";
-import { acceptance, queryAll } from "discourse/tests/helpers/qunit-helpers";
+import { acceptance } from "discourse/tests/helpers/qunit-helpers";
 
 acceptance("Discourse Follow - notification", function (needs) {
   needs.user();
