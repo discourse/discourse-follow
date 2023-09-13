@@ -1,19 +1,22 @@
 import DiscourseRoute from "discourse/routes/discourse";
+import { inject as service } from "@ember/service";
 
-export default DiscourseRoute.extend({
+export default class FollowIndexRoute extends DiscourseRoute {
+  @service router;
+
   beforeModel() {
     const model = this.modelFor("user");
     const canSeeFollowers = model.can_see_followers;
     const canSeeFollowing = model.can_see_following;
 
     if (this.currentUser?.id === model.id) {
-      this.replaceWith("feed");
+      this.router.replaceWith("feed");
     } else if (canSeeFollowing) {
-      this.replaceWith("following");
+      this.router.replaceWith("following");
     } else if (canSeeFollowers) {
-      this.replaceWith("followers");
+      this.router.replaceWith("followers");
     } else {
-      this.replaceWith("user");
+      this.router.replaceWith("user");
     }
-  },
-});
+  }
+}
