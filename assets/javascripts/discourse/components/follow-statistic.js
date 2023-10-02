@@ -15,7 +15,8 @@ export default Component.extend({
       let parent = this.get("isCard")
         ? ".card-content .metadata"
         : ".user-main .secondary dl";
-      this.$().prependTo(parent);
+      const parentElement = document.querySelector(parent);
+      parentElement.prepend(this.element);
     });
   },
 
