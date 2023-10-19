@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 # name: discourse-follow
-# about: Discourse Follow
+# about: Allows users to follow other users, list the latest topics involving them, and receive notifications when they post.
+# meta_topic_id: 110579
 # version: 1.0
 # authors: Angus McLeod, Robert Barrow, CDCK Inc
 # url: https://github.com/discourse/discourse-follow
