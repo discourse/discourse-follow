@@ -21,6 +21,7 @@ acceptance("Discourse Follow - notification", function (needs) {
             data: {
               display_username: "steaky",
             },
+            created_at: "2023-12-06 21:39:57.412408",
           },
         ],
         total_rows_notifications: 1,
@@ -31,11 +32,20 @@ acceptance("Discourse Follow - notification", function (needs) {
   test("shows follow notification", async (assert) => {
     await visit("/u/eviltrout/notifications");
 
-    const notification = document.querySelector(".notifications .item");
+    const notification = document.querySelector(
+      ".user-notifications-list .notification"
+    );
+
     assert.strictEqual(
-      notification.textContent,
-      "steaky has started following you.",
-      "shows the user that has followed you"
+      notification.querySelector(".item-label").textContent.trim(),
+      "steaky",
+      "Renders username"
+    );
+
+    assert.strictEqual(
+      notification.querySelector(".item-description").textContent.trim(),
+      "has started following you.",
+      "Renders description"
     );
 
     assert.ok(
