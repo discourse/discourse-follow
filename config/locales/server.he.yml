@@ -14,3 +14,11 @@ he:
     follow_notifications_enabled: "הפעל את כל התראות המעקב."
     follow_followers_visible: "נראות העוקבים."
     follow_following_visible: "נראות הנעקבים."
+  follow:
+    user_not_found: "לא ניתן למצוא משתמש בשם %{username}"
+    user_cannot_follow_themself: "משתמש לא רשאי לעקוב אחרי עצמו"
+    invalid_notification_level: "דרגת ההתראה %{level} שגויה"
+    cannot_follow_bot: "לא ניתן לעקוב אחר משתמש בוט"
+    cannot_follow_suspended: "לא ניתן לעקוב אחר משתמש בהשעיה"
+    cannot_follow_staged: "לא ניתן לעקוב אחר משתמש מבוים"
+    invalid_created_before_date: "התקבל תאריך שגוי עבור המשתנה ‚created_before’‏ (נוצר לפני): %{value}"
