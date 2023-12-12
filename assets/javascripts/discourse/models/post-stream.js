@@ -1,10 +1,10 @@
-import discourseComputed, { on } from "discourse-common/utils/decorators";
-import RestModel from "discourse/models/rest";
+import EmberObject from "@ember/object";
 import { reads } from "@ember/object/computed";
 import { Promise } from "rsvp";
-import Category from "discourse/models/category";
 import { ajax } from "discourse/lib/ajax";
-import EmberObject from "@ember/object";
+import Category from "discourse/models/category";
+import RestModel from "discourse/models/rest";
+import discourseComputed, { on } from "discourse-common/utils/decorators";
 
 // this class implements an interface similar to the `UserStream` class in core
 // (app/models/user-stream.js) so we can use it with the `{{user-stream}}`

@@ -1,9 +1,9 @@
 import Component from "@ember/component";
-import discourseComputed from "discourse-common/utils/decorators";
 import { action } from "@ember/object";
 import { alias } from "@ember/object/computed";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
+import discourseComputed from "discourse-common/utils/decorators";
 
 export default Component.extend({
   loading: false,

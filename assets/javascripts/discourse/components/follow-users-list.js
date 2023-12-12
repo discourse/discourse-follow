@@ -1,7 +1,7 @@
 import Component from "@ember/component";
-import discourseComputed from "discourse-common/utils/decorators";
-import { propertyEqual } from "discourse/lib/computed";
 import { notEmpty } from "@ember/object/computed";
+import { propertyEqual } from "discourse/lib/computed";
+import discourseComputed from "discourse-common/utils/decorators";
 
 export default Component.extend({
   hasUsers: notEmpty("users"),
