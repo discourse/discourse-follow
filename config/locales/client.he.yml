@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 he:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_follow: "Discourse מעקב"
   js:
     notifications:
       following: "<span>%{username}</span> %{description}"
@@ -19,6 +24,7 @@ he:
       follow:
         label: "עקוב"
       following:
+        feed_link: "ערוץ עדכוני מעקב"
         label: "עוקב אחרי"
         none: "אין לך כלום ברשימת המעקב."
         none_other: "%{username} לא עוקב אחרי אף אחד.."
@@ -26,11 +32,22 @@ he:
         label: "עוקבים"
         none: "אף אחד לא עוקב אחריך."
         none_other: "אף אחד לא עוקב אחרי %{username}."
+      feed:
+        label: "ערוץ עדכונים"
       follow_notifications_options:
         notify_followed_user_when_followed: "להודיע למשתמשים כשהחלתי מעקב אחריהם."
         notify_me_when_followed: "הודע לי כשמשתמשים עוקבים אחריי."
         notify_me_when_followed_replies: "הודע לי כשמישהו שאני עוקב אחריו מגיב."
+        allow_people_to_follow_me: "לאפשר לאנשים לעקוב אחרי"
     follow:
       follow_pages_visibility:
+        no-one: "אף אחד"
+        self: "עצמי"
+        trust_level_4: "דרגת אמון 4"
+        trust_level_3: "דרגת אמון 3"
+        trust_level_2: "דרגת אמון 2"
+        trust_level_1: "דרגת אמון 1"
+        trust_level_0: "דרגת אמון 0"
         everyone: "כולם"
       follow_button_label: "עקוב"
+      unfollow_button_label: "ביטול מעקב"
