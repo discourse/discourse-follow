@@ -1,6 +1,6 @@
 import Component from "@ember/component";
+import { schedule } from "@ember/runloop";
 import discourseComputed from "discourse-common/utils/decorators";
-import { scheduleOnce } from "@ember/runloop";
 
 export default Component.extend({
   classNames: "follow-statistic",
@@ -11,7 +11,8 @@ export default Component.extend({
   },
 
   didInsertElement() {
-    scheduleOnce("afterRender", () => {
+    this._super(...arguments);
+    schedule("afterRender", () => {
       let parent = this.get("isCard")
         ? ".card-content .metadata"
         : ".user-main .secondary dl";
