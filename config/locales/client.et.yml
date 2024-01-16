@@ -5,13 +5,57 @@
 # https://translate.discourse.org/
 
 et:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_follow: "Discourse jälgimine"
   js:
     notifications:
       following: "<span>%{username}</span> %{description}"
+      following_description: "on hakanud sind jälgima."
       following_created_topic: "<span>%{username}</span> %{description}"
       following_replied: "<span>%{username}</span> %{description}"
+      titles:
+        following_created_topic: "uus teema kelleltki, keda jälgite."
+        following_replied: "uus postitus kelleltki, keda sa jälgid"
+        following: "Keegi on hakanud sind jälgima"
       popup:
+        following: "%{username} on hakanud sind jälgima."
+        following_created_topic: '%{username} lõi "%{topic}" - %{site_title}'
         following_replied: '%{username} postitas teemasse "%{topic}" - %{site_title}'
+    user:
+      follow_nav: "Jälgib"
+      follow:
+        label: "Jälgi"
+      following:
+        feed_link: "Jälgi voogu"
+        label: "Jälgin"
+        none: "Sa ei jälgi veel kedagi."
+        none_other: "%{username} ei jälgi veel kedagi."
+      followers:
+        label: "Jälgijad"
+        none: "Keegi ei jälgi sind veel."
+        none_other: "Keegi ei jälgi veel %{username}."
+      feed:
+        label: "Voog"
+        empty_feed_you: "Pole veel ühtegi postitust inimestelt, keda sa jälgid."
+        empty_feed_other: "Pole veel ühtegi postitust inimestelt, keda %{username} jälgib."
+      follow_notifications_options:
+        notify_followed_user_when_followed: "Teavita kasutajaid, kui ma neid jälgin"
+        notify_me_when_followed: "Teavita mind, kui kasutajad mind jälgima hakkavad."
+        notify_me_when_followed_replies: "Teavita mind, kui keegi, keda ma jälgin, vastab"
+        notify_me_when_followed_creates_topic: "Anna mulle teada, kui keegi, keda jälgin, loob teema"
+        allow_people_to_follow_me: "Luba inimestel mind jälgida"
     follow:
       follow_pages_visibility:
+        no-one: "Mitte keegi"
+        self: "Minu"
+        trust_level_4: "Usaldustase 4"
+        trust_level_3: "Usaldustase 3"
+        trust_level_2: "Usaldustase 2"
+        trust_level_1: "Usaldustase 1"
+        trust_level_0: "Usaldustase 0"
         everyone: "Kõik"
+      follow_button_label: "Jälgi"
+      unfollow_button_label: "Lõpeta jälgimine"

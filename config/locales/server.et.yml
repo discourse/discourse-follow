@@ -7,4 +7,16 @@
 et:
   discourse_push_notifications:
     popup:
+      following_created_topic: '%{username} lõi "%{topic}" - %{site_title}'
       following_replied: '%{username} postitas teemasse "%{topic}" - %{site_title}'
+  site_settings:
+    discourse_follow_enabled: "Luba jälgimise plugin"
+    follow_show_statistics_on_profile: "Näita jälgimisstatistikat kasutajaprofiililidel"
+    follow_notifications_enabled: "Luba kõik jälgimismärguanded."
+    follow_followers_visible: "Jälgijate nähtavus."
+  follow:
+    user_cannot_follow_themself: "Kasutajal ei ole lubatud ennast jälgida"
+    invalid_notification_level: "Kehtetu teavituse tase %{level}"
+    cannot_follow_bot: "Ei saa jälgida bot-kasutajat"
+    cannot_follow_suspended: "Peatatud kasutajat ei saa jälgida"
+    user_does_not_allow_follow: "%{username} ei luba inimestel ennast jälgida."
