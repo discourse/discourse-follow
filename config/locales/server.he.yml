@@ -7,6 +7,7 @@
 he:
   discourse_push_notifications:
     popup:
+      following_created_topic: '„%{topic}” נוצר על ידי %{username}‏ - %{site_title}'
       following_replied: '%{username} הגיב ב"%{topic}" - %{site_title}'
   site_settings:
     discourse_follow_enabled: "הפעל את תוסף המעקב."
@@ -14,6 +15,11 @@ he:
     follow_notifications_enabled: "הפעל את כל התראות המעקב."
     follow_followers_visible: "נראות העוקבים."
     follow_following_visible: "נראות הנעקבים."
+    default_notify_me_when_followed: 'ערך ברירת מחדל להעדפת המשתמש <code>להודיע לי כשמשתמשים עוקבים אחרי</code>. שינוי ההגדרה הזאת משפיע רק על משתמשים שמעולם לא שינוי את העדפות ההתראה שלהם בתוסף המעקב.'
+    default_notify_followed_user_when_followed: 'ערך ברירת מחדל להעדפת המשתמש <code>להודיע לשמשתמשים עם הוספתם לרשימת המעקב שלי</code>. שינוי ההגדרה הזאת משפיע רק על משתמשים שמעולם לא שינוי את העדפות ההתראה שלהם בתוסף המעקב.'
+    default_notify_me_when_followed_replies: 'ערך ברירת מחדל להעדפת המשתמש <code>להודיע לי כשמשתמשים מרשימת המעקב שלי מגיבים</code>. שינוי ההגדרה הזאת משפיע רק על משתמשים שמעולם לא שינוי את העדפות ההתראה שלהם בתוסף המעקב.'
+    default_notify_me_when_followed_creates_topic: 'ערך ברירת מחדל להעדפת המשתמש <code>להודיע לי כשמשתמשים מרשימת המעקב שלי יוצרים נושא</code>. שינוי ההגדרה הזאת משפיע רק על משתמשים שמעולם לא שינוי את העדפות ההתראה שלהם בתוסף המעקב.'
+    default_allow_people_to_follow_me: 'ערך ברירת מחדל להעדפת המשתמש <code>לאפשר לאנשים לעקוב אחריי</code>. שינוי ההגדרה הזאת משפיע רק על משתמשים שמעולם לא שינוי את העדפות ההתראה שלהם בתוסף המעקב.'
   follow:
     user_not_found: "לא ניתן למצוא משתמש בשם %{username}"
     user_cannot_follow_themself: "משתמש לא רשאי לעקוב אחרי עצמו"
@@ -22,3 +28,4 @@ he:
     cannot_follow_suspended: "לא ניתן לעקוב אחר משתמש בהשעיה"
     cannot_follow_staged: "לא ניתן לעקוב אחר משתמש מבוים"
     invalid_created_before_date: "התקבל תאריך שגוי עבור המשתנה ‚created_before’‏ (נוצר לפני): %{value}"
+    user_does_not_allow_follow: "אין הרשאה מצד %{username} להוספה שלהם לרשימת מעקב."
