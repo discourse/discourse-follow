@@ -16,8 +16,13 @@ he:
       following_description: "התחיל לעקוב אחריך."
       following_created_topic: "<span>%{username}</span> %{description}"
       following_replied: "<span>%{username}</span> %{description}"
+      titles:
+        following_created_topic: "נושא חדש ממישהו ברשימת המעקב שלך"
+        following_replied: "פוסט חדש ממישהו ברשימת המעקב שלך"
+        following: "מישהו התחיל לעקוב אחריך"
       popup:
         following: "%{username} התחיל לעקוב אחריך."
+        following_created_topic: '„%{topic}” נוצר על ידי %{username}‏ - %{site_title}'
         following_replied: '%{username} הגיב ב"%{topic}" - %{site_title}'
     user:
       follow_nav: "עוקבים ונעקבים"
@@ -34,10 +39,13 @@ he:
         none_other: "אף אחד לא עוקב אחרי %{username}."
       feed:
         label: "ערוץ עדכונים"
+        empty_feed_you: "אין פוסטים מאת אנשים ברשימת המעקב שלך."
+        empty_feed_other: "אין פוסטים מאת אנשים ברשימת המעקב של %{username}."
       follow_notifications_options:
         notify_followed_user_when_followed: "להודיע למשתמשים כשהחלתי מעקב אחריהם."
         notify_me_when_followed: "הודע לי כשמשתמשים עוקבים אחריי."
         notify_me_when_followed_replies: "הודע לי כשמישהו שאני עוקב אחריו מגיב."
+        notify_me_when_followed_creates_topic: "להודיע לי כשמישהו מרשימת המעקב שלי יוצר נושא"
         allow_people_to_follow_me: "לאפשר לאנשים לעקוב אחרי"
     follow:
       follow_pages_visibility:
