@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 pt_BR:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_follow: "Discourse Follow"
   js:
     notifications:
       following: "<span>%{username}</span> %{description}"
