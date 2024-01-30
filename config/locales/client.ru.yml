@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 ru:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_follow: "Плагин Discourse «Подписка»"
   js:
     notifications:
       following: "<span>%{username}</span> %{description}"

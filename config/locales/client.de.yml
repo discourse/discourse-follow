@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 de:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_follow: "Discourse – Folgen"
   js:
     notifications:
       following: "<span>%{username}</span> %{description}"
