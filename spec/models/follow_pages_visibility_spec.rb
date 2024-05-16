@@ -3,8 +3,8 @@
 require "rails_helper"
 
 describe FollowPagesVisibility do
-  fab!(:user) { Fabricate(:user) }
-  fab!(:admin) { Fabricate(:admin) }
+  fab!(:user)
+  fab!(:admin)
   fab!(:tl0) { Fabricate(:user, trust_level: TrustLevel[0]) }
   fab!(:tl1) { Fabricate(:user, trust_level: TrustLevel[1]) }
   fab!(:tl2) { Fabricate(:user, trust_level: TrustLevel[2]) }

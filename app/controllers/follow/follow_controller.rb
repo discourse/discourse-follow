@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Follow::FollowController < ApplicationController
+  requires_plugin Follow::PLUGIN_NAME
+
   FOLLOWING ||= :following
   FOLLOWERS ||= :followers
 
