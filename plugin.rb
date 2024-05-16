@@ -15,7 +15,7 @@ register_svg_icon "discourse-follow-new-reply"
 register_svg_icon "discourse-follow-new-follower"
 register_svg_icon "discourse-follow-new-topic"
 
-load File.expand_path("../lib/follow/engine.rb", __FILE__)
+require_relative "lib/follow/engine"
 
 Discourse::Application.routes.append do
   mount ::Follow::Engine, at: "follow"
@@ -40,21 +40,23 @@ Discourse::Application.routes.append do
   end
 end
 
+module ::Follow
+  PLUGIN_NAME = "discourse-follow"
+end
+
 after_initialize do
   Notification.types[:following] = 800
   Notification.types[:following_created_topic] = 801
   Notification.types[:following_replied] = 802
 
-  %w[
-    ../lib/follow/notification.rb
-    ../lib/follow/updater.rb
-    ../lib/follow/user_extension.rb
-    ../lib/follow/notification_handler.rb
-    ../app/controllers/follow/follow_controller.rb
-    ../config/routes.rb
-  ].each { |path| load File.expand_path(path, __FILE__) }
+  require_relative "lib/follow/notification"
+  require_relative "lib/follow/updater"
+  require_relative "lib/follow/user_extension"
+  require_relative "lib/follow/notification_handler"
+  require_relative "app/controllers/follow/follow_controller"
+  require_relative "config/routes"
 
-  reloadable_patch { |plugin| User.class_eval { prepend Follow::UserExtension } }
+  reloadable_patch { |plugin| User.prepend(Follow::UserExtension) }
 
   add_to_serializer(:user, :can_see_following) do
     FollowPagesVisibility.can_see_following_page?(user: scope.current_user, target_user: user)

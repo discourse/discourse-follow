@@ -3,13 +3,13 @@
 require "rails_helper"
 
 describe UserFollower do
-  fab!(:admin) { Fabricate(:admin) }
+  fab!(:admin)
   fab!(:follower) { Fabricate(:user) }
   fab!(:not_followed) { Fabricate(:user) }
   fab!(:followed) { Fabricate(:user) }
   fab!(:followed2) { Fabricate(:user) }
 
-  fab!(:group) { Fabricate(:group) }
+  fab!(:group)
   fab!(:secure_category) { Fabricate(:private_category, group: group) }
 
   before do

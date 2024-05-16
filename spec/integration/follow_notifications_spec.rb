@@ -19,7 +19,7 @@ describe "Follow plugin notifications" do
   fab!(:followed2) { Fabricate(:user) }
   fab!(:followed3) { Fabricate(:user) }
   fab!(:normal_user) { Fabricate(:user) }
-  fab!(:category) { Fabricate(:category) }
+  fab!(:category)
 
   fab!(:topic) do
     create_topic(category: category).tap do |t|
@@ -300,7 +300,7 @@ describe "Follow plugin notifications" do
   end
 
   context "when a followed user posts a whisper" do
-    fab!(:group) { Fabricate(:group) }
+    fab!(:group)
 
     before do
       SiteSetting.enable_whispers = true if SiteSetting.respond_to?(:enable_whispers)
