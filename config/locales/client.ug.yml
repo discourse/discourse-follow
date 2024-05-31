@@ -4,14 +4,14 @@
 # To work with us on translations, join this project:
 # https://translate.discourse.org/
 
-sk:
+ug:
   js:
     notifications:
       following: "<span>%{username}</span> %{description}"
       following_created_topic: "<span>%{username}</span> %{description}"
       following_replied: "<span>%{username}</span> %{description}"
       popup:
-        following_replied: '%{username} prispel v "%{topic}" - %{site_title}'
+        following_replied: '%{username} «%{topic}» - %{site_title} غا يوللىدى'
     follow:
       follow_pages_visibility:
-        everyone: "Každý"
+        everyone: "ھەممەيلەن"
