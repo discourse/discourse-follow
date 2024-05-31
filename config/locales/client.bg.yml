@@ -7,6 +7,9 @@
 bg:
   js:
     notifications:
+      following: "<span>%{username}</span> %{description}"
+      following_created_topic: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
       popup:
         following_replied: '%{username} публикува в "%{topic}" - %{site_title}'
     follow:

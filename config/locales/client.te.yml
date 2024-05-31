@@ -6,6 +6,12 @@
 
 te:
   js:
+    notifications:
+      following: "<span>%{username}</span> %{description}"
+      following_created_topic: "<span>%{username}</span> %{description}"
+      following_replied: "<span>%{username}</span> %{description}"
+      popup:
+        following_replied: '%{username} "%{topic}"- %{site_title}లో పోస్ట్ చేసారు'
     follow:
       follow_pages_visibility:
         everyone: "అందరూ"

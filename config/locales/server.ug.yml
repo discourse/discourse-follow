@@ -4,7 +4,7 @@
 # To work with us on translations, join this project:
 # https://translate.discourse.org/
 
-te:
+ug:
   discourse_push_notifications:
     popup:
-      following_replied: '%{username} "%{topic}"- %{site_title}లో పోస్ట్ చేసారు'
+      following_replied: '%{username} «%{topic}» - %{site_title} غا يوللىدى'
