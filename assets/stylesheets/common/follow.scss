@@ -5,9 +5,9 @@
 }
 
 .follow-statistics-user-card {
-  .value {
-    padding-left: 5px;
-  }
+  // ignores the wrapping div so the contents appear as siblings
+  // along other metadata in the usercard
+  display: contents;
 }
 
 .user-follows-tab .feed-link {

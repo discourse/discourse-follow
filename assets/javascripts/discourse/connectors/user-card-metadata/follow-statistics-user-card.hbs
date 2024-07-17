@@ -1,8 +1,12 @@
 {{#if user.total_following}}
-  <span>{{i18n "user.following.label"}}</span>
-  <span class="value">{{user.total_following}}</span>
+  <div class="metadata__following">
+    <span>{{i18n "user.following.label"}}</span>
+    <span class="value">{{user.total_following}}</span>
+  </div>
 {{/if}}
 {{#if user.total_followers}}
-  <span>{{i18n "user.followers.label"}}</span>
-  <span class="value">{{user.total_followers}}</span>
+  <div class="metadata__followers">
+    <span>{{i18n "user.followers.label"}}</span>
+    <span class="value">{{user.total_followers}}</span>
+  </div>
 {{/if}}
