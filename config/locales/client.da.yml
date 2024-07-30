@@ -5,13 +5,54 @@
 # https://translate.discourse.org/
 
 da:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_follow: "Discourse Følg"
   js:
     notifications:
       following: "<span>%{username}</span> %{description}"
+      following_description: "er begyndt at følge dig."
       following_created_topic: "<span>%{username}</span> %{description}"
       following_replied: "<span>%{username}</span> %{description}"
+      titles:
+        following_created_topic: "nyt emne fra en du følger"
+        following_replied: "nyt indlæg fra en du følger"
+        following: "nogen er begyndt at følge dig"
       popup:
+        following: "%{username} er begyndt at følge dig."
         following_replied: '%{username} skrev i "%{topic}" - %{site_title}'
+    user:
+      follow_nav: "Følger"
+      follow:
+        label: "Følg"
+      following:
+        label: "Følger"
+        none: "Du følger ikke nogen endnu."
+        none_other: "%{username} følger ikke nogen endnu."
+      followers:
+        label: "Følgere"
+        none: "Ingen følger dig endnu."
+        none_other: "Ingen følger %{username} endnu."
+      feed:
+        empty_feed_you: "Ingen indlæg fra personer, du følger endnu."
+        empty_feed_other: "Ingen indlæg fra personer %{username} følger endnu."
+      follow_notifications_options:
+        notify_followed_user_when_followed: "Giv brugerne besked, når jeg følger dem"
+        notify_me_when_followed: "Giv mig besked, når brugere følger mig"
+        notify_me_when_followed_replies: "Giv mig besked, når nogen, jeg følger, svarer"
+        notify_me_when_followed_creates_topic: "Giv mig besked, når en, jeg følger, opretter et emne"
+        allow_people_to_follow_me: "Tillad folk at følge mig"
     follow:
       follow_pages_visibility:
+        no-one: "Ingen"
+        self: "Selv"
+        trust_level_4: "Tillidsniveau 4"
+        trust_level_3: "Tillidsniveau 3"
+        trust_level_2: "Tillidsniveau 2"
+        trust_level_1: "Tillidsniveau 1"
+        trust_level_0: "Tillidsniveau 0"
         everyone: "Alle"
+      follow_button_label: "Følg"
+      unfollow_button_label: "Følg ikke længere"
