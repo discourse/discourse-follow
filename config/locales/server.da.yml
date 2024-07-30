@@ -8,3 +8,5 @@ da:
   discourse_push_notifications:
     popup:
       following_replied: '%{username} skrev i "%{topic}" - %{site_title}'
+  site_settings:
+    discourse_follow_enabled: "Aktiver følg plugin."
