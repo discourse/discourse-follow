@@ -1,14 +1,7 @@
 {{#if model.total_following}}
-  {{follow-statistic
-    label="user.following.label"
-    total=model.total_following
-    context="profile"
-  }}
+  {{follow-statistic label="user.following.label" total=model.total_following}}
 {{/if}}
+
 {{#if model.total_followers}}
-  {{follow-statistic
-    label="user.followers.label"
-    total=model.total_followers
-    context="profile"
-  }}
+  {{follow-statistic label="user.followers.label" total=model.total_followers}}
 {{/if}}
