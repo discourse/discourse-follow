@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UserFollower < ActiveRecord::Base
-  def self.posts_for(user, current_user:, limit: nil, created_before: nil)
+  def self.posts_for(user, current_user:, limit: nil, created_before: nil, created_after: nil)
     visible_post_types = [Post.types[:regular], Post.types[:moderator_action]]
     visible_post_types << Post.types[:whisper] if current_user.staff?
 
@@ -21,6 +21,7 @@ class UserFollower < ActiveRecord::Base
     results = Guardian.new(current_user).filter_allowed_categories(results)
     results = results.limit(limit) if limit
     results = results.where("posts.created_at < ?", created_before) if created_before
+    results = results.where("posts.created_at > ?", created_after) if created_after
 
     results
   end

@@ -25,6 +25,22 @@ describe UserFollower do
       expect(posts.pluck(:id)).to be_blank
     end
 
+    it "filters with created_before" do
+      Fabricate(:post, user: followed, topic: Fabricate(:topic), created_at: 1.day.ago)
+      post_2 = Fabricate(:post, user: followed, topic: Fabricate(:topic), created_at: 2.day.ago)
+
+      posts = UserFollower.posts_for(follower, current_user: admin, created_before: 25.hours.ago)
+      expect(posts).to contain_exactly(post_2)
+    end
+
+    it "filters with created_after" do
+      Fabricate(:post, user: followed, topic: Fabricate(:topic), created_at: 2.day.ago)
+      post_2 = Fabricate(:post, user: followed, topic: Fabricate(:topic), created_at: 1.day.ago)
+
+      posts = UserFollower.posts_for(follower, current_user: admin, created_after: 25.hours.ago)
+      expect(posts).to contain_exactly(post_2)
+    end
+
     it "does not show posts in unlisted topics" do
       post = Fabricate(:post, user: followed)
       post.topic.update_status("visible", false, Discourse.system_user)
