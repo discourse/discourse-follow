@@ -5,8 +5,7 @@ module Follow::UserExtension
     base.has_many :follower_relations, class_name: "UserFollower", dependent: :delete_all
     base.has_many :followers,
                   ->(user) do
-                    if !user.allow_people_to_follow_me ||
-                         user.user_option&.hide_profile_and_presence
+                    if !user.allow_people_to_follow_me || user.user_option&.hide_profile
                       where("1=0")
                     end
                   end,

@@ -34,7 +34,7 @@ describe User do
     end
 
     it "returns empty relation if the user has hidden their profile" do
-      followed1.user_option.update!(hide_profile_and_presence: true)
+      followed1.user_option.update!(hide_profile: true)
       expect(followed1.followers.pluck(:id)).to be_empty
       expect(followed2.followers.pluck(:id)).to contain_exactly(follower1.id, follower2.id)
     end
@@ -70,7 +70,7 @@ describe User do
     end
 
     it "excludes users who have hidden their profile" do
-      followed1.user_option.update!(hide_profile_and_presence: true)
+      followed1.user_option.update!(hide_profile: true)
 
       expect(follower1.following.pluck(:id)).to contain_exactly(followed2.id)
       expect(follower2.following.pluck(:id)).to contain_exactly(followed2.id)

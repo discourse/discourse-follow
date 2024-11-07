@@ -45,7 +45,7 @@ class UserFollower < ActiveRecord::Base
       SQL
     end
     relation.joins("LEFT OUTER JOIN user_options uo ON uo.user_id = users.id").where(
-      "uo.user_id IS NULL OR NOT uo.hide_profile_and_presence",
+      "uo.user_id IS NULL OR NOT uo.hide_profile",
     )
   end
 
