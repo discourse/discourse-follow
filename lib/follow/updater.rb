@@ -52,7 +52,7 @@ class Follow::Updater
             )
     end
 
-    if @target.user_option&.hide_profile_and_presence
+    if @target.user_option&.hide_profile
       raise Discourse::InvalidAccess.new(
               nil,
               nil,

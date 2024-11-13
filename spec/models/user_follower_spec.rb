@@ -139,7 +139,7 @@ describe UserFollower do
     it "does not include posts from followed users who have hidden their profile" do
       post1 = Fabricate(:post, user: followed)
       post2 = Fabricate(:post, user: followed2)
-      followed.user_option.update!(hide_profile_and_presence: true)
+      followed.user_option.update!(hide_profile: true)
       posts = UserFollower.posts_for(follower, current_user: follower)
       expect(posts.pluck(:id)).to contain_exactly(post2.id)
     end

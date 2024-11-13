@@ -397,7 +397,7 @@ describe "Follow plugin notifications" do
   context "when the followed user has hidden profile but has existing followers" do
     it "the followers no longer receive notification for posts made by the followed user" do
       expect(followed.followers.count).to be > 0
-      followed.user_option.update!(hide_profile_and_presence: true)
+      followed.user_option.update!(hide_profile: true)
       create_topic(user: followed).tap { |t| create_post(topic: t, user: followed) }
       followed.followers.each { |follower| expect(follower.notifications.count).to eq(0) }
     end

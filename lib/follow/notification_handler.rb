@@ -13,7 +13,7 @@ class Follow::NotificationHandler
     return if [Post.types[:regular], Post.types[:whisper]].exclude?(post.post_type)
     return if !SiteSetting.follow_notifications_enabled
     return if !post.user.allow_people_to_follow_me
-    return if post.user.user_option&.hide_profile_and_presence
+    return if post.user.user_option&.hide_profile
 
     topic = post.topic
     return if !topic || topic.private_message?
