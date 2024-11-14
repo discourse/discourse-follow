@@ -15,46 +15,16 @@ register_svg_icon "discourse-follow-new-reply"
 register_svg_icon "discourse-follow-new-follower"
 register_svg_icon "discourse-follow-new-topic"
 
-require_relative "lib/follow/engine"
-
-Discourse::Application.routes.append do
-  mount ::Follow::Engine, at: "follow"
-  %w[users u].each_with_index do |root_path, index|
-    get "#{root_path}/:username/follow" => "follow/follow#index",
-        :constraints => {
-          username: RouteFormat.username,
-        }
-    get "#{root_path}/:username/follow/feed" => "follow/follow#index",
-        :constraints => {
-          username: RouteFormat.username,
-        }
-
-    get "#{root_path}/:username/follow/following" => "follow/follow#list_following",
-        :constraints => {
-          username: RouteFormat.username,
-        }
-    get "#{root_path}/:username/follow/followers" => "follow/follow#list_followers",
-        :constraints => {
-          username: RouteFormat.username,
-        }
-  end
-end
-
 module ::Follow
   PLUGIN_NAME = "discourse-follow"
 end
+
+require_relative "lib/follow/engine"
 
 after_initialize do
   Notification.types[:following] = 800
   Notification.types[:following_created_topic] = 801
   Notification.types[:following_replied] = 802
-
-  require_relative "lib/follow/notification"
-  require_relative "lib/follow/updater"
-  require_relative "lib/follow/user_extension"
-  require_relative "lib/follow/notification_handler"
-  require_relative "app/controllers/follow/follow_controller"
-  require_relative "config/routes"
 
   reloadable_patch { |plugin| User.prepend(Follow::UserExtension) }
 
