@@ -3,8 +3,8 @@
 class Follow::FollowController < ApplicationController
   requires_plugin Follow::PLUGIN_NAME
 
-  FOLLOWING ||= :following
-  FOLLOWERS ||= :followers
+  FOLLOWING = :following
+  FOLLOWERS = :followers
 
   def index
   end
