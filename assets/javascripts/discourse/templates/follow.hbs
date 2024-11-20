@@ -2,19 +2,21 @@
 
 <div class="user-navigation user-navigation-secondary">
   <HorizontalOverflowNav>
-    {{#if (eq model.id currentUser.id)}}
+    {{#if (eq this.model.id this.currentUser.id)}}
       <DNavigationItem @route="feed">
         <span>{{i18n "user.feed.label"}}</span>
       </DNavigationItem>
     {{/if}}
 
-    {{#if model.can_see_following}}
+    {{#if this.model.can_see_following}}
       <DNavigationItem @route="following">
         <span>{{i18n "user.following.label"}}</span>
       </DNavigationItem>
     {{/if}}
 
-    {{#if (and model.can_see_followers model.allow_people_to_follow_me)}}
+    {{#if
+      (and this.model.can_see_followers this.model.allow_people_to_follow_me)
+    }}
       <DNavigationItem @route="followers">
         <span>{{i18n "user.followers.label"}}</span>
       </DNavigationItem>

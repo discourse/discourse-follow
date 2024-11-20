@@ -4,27 +4,27 @@
   <div class="controls">
     {{preference-checkbox
       labelKey="user.follow_notifications_options.allow_people_to_follow_me"
-      checked=user.allow_people_to_follow_me
+      checked=this.user.allow_people_to_follow_me
     }}
 
     {{preference-checkbox
       labelKey="user.follow_notifications_options.notify_me_when_followed"
-      checked=user.notify_me_when_followed
+      checked=this.user.notify_me_when_followed
     }}
 
     {{preference-checkbox
       labelKey="user.follow_notifications_options.notify_followed_user_when_followed"
-      checked=user.notify_followed_user_when_followed
+      checked=this.user.notify_followed_user_when_followed
     }}
 
     {{preference-checkbox
       labelKey="user.follow_notifications_options.notify_me_when_followed_replies"
-      checked=user.notify_me_when_followed_replies
+      checked=this.user.notify_me_when_followed_replies
     }}
 
     {{preference-checkbox
       labelKey="user.follow_notifications_options.notify_me_when_followed_creates_topic"
-      checked=user.notify_me_when_followed_creates_topic
+      checked=this.user.notify_me_when_followed_creates_topic
     }}
   </div>
 </div>

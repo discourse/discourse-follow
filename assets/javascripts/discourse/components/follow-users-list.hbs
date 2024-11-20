@@ -1,12 +1,12 @@
 <div class="follow-users">
-  {{#if hasUsers}}
-    {{#each users as |user|}}
+  {{#if this.hasUsers}}
+    {{#each this.users as |user|}}
       {{user-info user=user}}
     {{/each}}
   {{else}}
     <div class="alert alert-info">{{i18n
-        noneMessage
-        username=user.username
+        this.noneMessage
+        username=this.user.username
       }}</div>
   {{/if}}
 </div>
