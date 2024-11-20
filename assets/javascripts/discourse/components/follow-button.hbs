@@ -1,8 +1,8 @@
-{{#if (and showButton canFollow)}}
+{{#if (and this.showButton this.canFollow)}}
   <DButton
-    @label={{labelKey}}
-    @icon={{icon}}
-    @disabled={{loading}}
+    @label={{this.labelKey}}
+    @icon={{this.icon}}
+    @disabled={{this.loading}}
     @action={{action "toggleFollow"}}
   />
 {{/if}}
