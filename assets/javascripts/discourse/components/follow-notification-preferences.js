@@ -1,5 +1,5 @@
 import Component from "@ember/component";
-import { observes } from "discourse-common/utils/decorators";
+import { observes } from "@ember-decorators/object";
 
 const preferences = [
   "notify_me_when_followed",
@@ -9,7 +9,7 @@ const preferences = [
   "allow_people_to_follow_me",
 ];
 
-export default Component.extend({
+export default class FollowNotificationPreferences extends Component {
   @observes(...preferences.map((p) => `user.${p}`))
   _updatePreferences() {
     if (!this.user.custom_fields) {
@@ -18,5 +18,5 @@ export default Component.extend({
     preferences.forEach((p) => {
       this.user.set(`custom_fields.${p}`, this.user[p]);
     });
-  },
-});
+  }
+}

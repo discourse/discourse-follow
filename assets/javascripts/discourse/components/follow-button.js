@@ -5,10 +5,11 @@ import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 import discourseComputed from "discourse-common/utils/decorators";
 
-export default Component.extend({
-  loading: false,
-  isFollowed: alias("user.is_followed"),
-  canFollow: alias("user.can_follow"),
+export default class FollowButton extends Component {
+  loading = false;
+
+  @alias("user.is_followed") isFollowed;
+  @alias("user.can_follow") canFollow;
 
   @discourseComputed("user", "currentUser")
   showButton(user, currentUser) {
@@ -29,7 +30,7 @@ export default Component.extend({
       return false;
     }
     return true;
-  },
+  }
 
   @discourseComputed("isFollowed", "canFollow")
   labelKey(isFollowed, canFollow) {
@@ -38,7 +39,7 @@ export default Component.extend({
     } else {
       return "follow.follow_button_label";
     }
-  },
+  }
 
   @discourseComputed("isFollowed", "canFollow")
   icon(isFollowed, canFollow) {
@@ -47,7 +48,7 @@ export default Component.extend({
     } else {
       return "user-plus";
     }
-  },
+  }
 
   @action
   toggleFollow() {
@@ -61,5 +62,5 @@ export default Component.extend({
       .finally(() => {
         this.set("loading", false);
       });
-  },
-});
+  }
+}
