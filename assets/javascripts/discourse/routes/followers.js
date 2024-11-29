@@ -2,7 +2,7 @@ import { ajax } from "discourse/lib/ajax";
 import DiscourseRoute from "discourse/routes/discourse";
 
 export default class Followers extends DiscourseRoute {
-  model /*params*/() {
+  model() {
     return ajax(`/u/${this.paramsFor("user").username}/follow/followers`);
   }
 
