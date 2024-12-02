@@ -1,31 +1,32 @@
 import EmberObject from "@ember/object";
 import { reads } from "@ember/object/computed";
+import { on } from "@ember-decorators/object";
 import { Promise } from "rsvp";
 import { ajax } from "discourse/lib/ajax";
 import Category from "discourse/models/category";
 import RestModel from "discourse/models/rest";
-import discourseComputed, { on } from "discourse-common/utils/decorators";
+import discourseComputed from "discourse-common/utils/decorators";
 
 // this class implements an interface similar to the `UserStream` class in core
 // (app/models/user-stream.js) so we can use it with the `{{user-stream}}`
 // component (in core as well) which expects a `UserStream` instance.
 
-export default RestModel.extend({
-  loading: false,
-  itemsLoaded: 0,
-  canLoadMore: true,
+export default class PostStream extends RestModel {
+  loading = false;
+  itemsLoaded = 0;
+  canLoadMore = true;
 
-  lastPostCreatedAt: reads("content.lastObject.created_at"),
+  @reads("content.lastObject.created_at") lastPostCreatedAt;
 
   @on("init")
   _initialize() {
     this.set("content", []);
-  },
+  }
 
   @discourseComputed("loading", "content.length")
   noContent(loading, length) {
     return !loading && length === 0;
-  },
+  }
 
   findItems() {
     if (!this.canLoadMore || this.loading) {
@@ -68,5 +69,5 @@ export default RestModel.extend({
       .finally(() => {
         this.set("loading", false);
       });
-  },
-});
+  }
+}
