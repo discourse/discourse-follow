@@ -44,7 +44,7 @@ export default class FollowButton extends Component {
   @discourseComputed("isFollowed", "canFollow")
   icon(isFollowed, canFollow) {
     if (isFollowed && canFollow) {
-      return "user-times";
+      return "user-xmark";
     } else {
       return "user-plus";
     }
