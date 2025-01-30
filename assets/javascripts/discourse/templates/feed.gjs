@@ -37,6 +37,7 @@ export default RouteTemplate(
         {{/if}}
       {{else}}
         <PostList
+          @urlPath="postUrl"
           @posts={{@model.content}}
           @fetchMorePosts={{this.loadMore}}
           @additionalItemClasses="follow-stream-item"
