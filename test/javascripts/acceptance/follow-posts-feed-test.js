@@ -158,7 +158,7 @@ acceptance("Discourse Follow - Follow Posts Feed", function (needs) {
 
   test("posts are shown", async (assert) => {
     await visit("/u/eviltrout/follow/feed");
-    const posts = queryAll(".user-follows-tab .user-stream-item");
+    const posts = queryAll(".follow-stream .follow-stream-item");
     assert.equal(
       posts.length,
       3,
@@ -173,7 +173,7 @@ acceptance("Discourse Follow - Follow Posts Feed", function (needs) {
 
   test("long posts excerpt", async (assert) => {
     await visit("/u/eviltrout/follow/feed");
-    const posts = queryAll(".user-follows-tab .user-stream-item");
+    const posts = queryAll(".follow-stream .follow-stream-item");
     assert.ok(
       exists(posts[2].querySelector(".expand-item")),
       "long posts are first rendered collapsed"
