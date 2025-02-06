@@ -6,7 +6,7 @@ import {
   query,
   queryAll,
 } from "discourse/tests/helpers/qunit-helpers";
-import I18n from "I18n";
+import { i18n } from "discourse-i18n";
 
 acceptance("Discourse Follow - Follow Posts Feed", function (needs) {
   needs.user();
@@ -166,7 +166,7 @@ acceptance("Discourse Follow - Follow Posts Feed", function (needs) {
     );
     assert.equal(
       query(".user-navigation-secondary  a.active").textContent.trim(),
-      I18n.t("user.feed.label"),
+      i18n("user.feed.label"),
       "feed tab is labelled correctly"
     );
   });
@@ -203,7 +203,7 @@ acceptance("Discourse Follow - Empty Follow Posts Feed", function (needs) {
     await visit("/u/eviltrout/follow/feed");
     assert.equal(
       query(".user-content.user-follows-tab").textContent.trim(),
-      I18n.t("user.feed.empty_feed_you"),
+      i18n("user.feed.empty_feed_you"),
       "empty posts feed notice is shown"
     );
   });

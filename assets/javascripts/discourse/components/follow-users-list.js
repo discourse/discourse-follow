@@ -1,7 +1,7 @@
 import Component from "@ember/component";
 import { notEmpty } from "@ember/object/computed";
 import { propertyEqual } from "discourse/lib/computed";
-import discourseComputed from "discourse-common/utils/decorators";
+import discourseComputed from "discourse/lib/decorators";
 
 export default class FollowUsersList extends Component {
   @notEmpty("users") hasUsers;

@@ -1,6 +1,6 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { userPath } from "discourse/lib/url";
-import I18n from "I18n";
+import { i18n } from "discourse-i18n";
 
 export default {
   name: "follow-plugin-initializer",
@@ -29,7 +29,7 @@ export default {
           (NotificationTypeBase) => {
             return class extends NotificationTypeBase {
               get linkTitle() {
-                return I18n.t("notifications.titles.following");
+                return i18n("notifications.titles.following");
               }
 
               get linkHref() {
@@ -45,7 +45,7 @@ export default {
               }
 
               get description() {
-                return I18n.t("notifications.following_description", {});
+                return i18n("notifications.following_description", {});
               }
             };
           }
