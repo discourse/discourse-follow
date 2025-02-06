@@ -1,7 +1,7 @@
 import { visit } from "@ember/test-helpers";
 import { test } from "qunit";
 import { acceptance } from "discourse/tests/helpers/qunit-helpers";
-import I18n from "I18n";
+import { i18n } from "discourse-i18n";
 
 acceptance("Discourse Follow - notification", function (needs) {
   needs.user();
@@ -55,7 +55,7 @@ acceptance("Discourse Follow - notification", function (needs) {
 
     assert.strictEqual(
       notification.querySelector("a").title,
-      I18n.t("notifications.titles.following"),
+      i18n("notifications.titles.following"),
       "displays the right title"
     );
   });

@@ -3,9 +3,9 @@ import { reads } from "@ember/object/computed";
 import { on } from "@ember-decorators/object";
 import { Promise } from "rsvp";
 import { ajax } from "discourse/lib/ajax";
+import discourseComputed from "discourse/lib/decorators";
 import Category from "discourse/models/category";
 import RestModel from "discourse/models/rest";
-import discourseComputed from "discourse-common/utils/decorators";
 
 // this class implements an interface similar to the `UserStream` class in core
 // (app/models/user-stream.js) so we can use it with the `{{user-stream}}`
