@@ -1,10 +1,4 @@
-# WARNING: Never edit this file.
-# It will be overwritten when translations are pulled from Crowdin.
-#
-# To work with us on translations, join this project:
-# https://translate.discourse.org/
-
-tr_TR:
+tr:
   discourse_push_notifications:
     popup:
       following_created_topic: '%{username} "%{topic}" başlıklı bir konu oluşturdu - %{site_title}'
