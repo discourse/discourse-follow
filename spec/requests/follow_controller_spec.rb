@@ -341,7 +341,7 @@ describe Follow::FollowController do
       get "/filter", params: { q: "following-feed:#{user1.username}", format: :json }
       expect(response.status).to eq(200)
       topic_ids_from_filter = response.parsed_body["topic_list"]["topics"].map { |t| t["id"] }.uniq
-      
+
       expect(topic_ids_from_filter).to match_array(user1_interacted_topics)
     end
   end
