@@ -183,7 +183,7 @@ describe Follow::FollowController do
       expect(response.status).to eq(403)
     end
 
-    it "allows staff users to acess the follow posts feed of other users" do
+    it "allows staff users to access the follow posts feed of other users" do
       mod = Fabricate(:moderator)
       sign_in(mod)
       get "/follow/posts/#{user1.username}.json"
@@ -279,6 +279,70 @@ describe Follow::FollowController do
       expect(p["topic"]["fancy_title"]).to eq(post_1.topic.fancy_title)
       expect(p["topic"]["slug"]).to eq(post_1.topic.slug)
       expect(p["topic"]["posts_count"]).to eq(post_1.topic.posts_count)
+    end
+  end
+
+  describe "#filter" do
+    before do
+      ::Follow::Updater.new(user1, user2).watch_follow
+      ::Follow::Updater.new(user1, tl3).watch_follow
+    end
+
+    fab!(:post_5) { Fabricate(:post, user: user2, created_at: 20.hours.ago) }
+    fab!(:post_4) { Fabricate(:post, user: user2, created_at: 10.hours.ago) }
+    fab!(:post_3) { Fabricate(:post, user: user2, created_at: 5.hours.ago) }
+    fab!(:post_2) { Fabricate(:post, user: tl3, created_at: 3.hours.ago) }
+    fab!(:post_1) { Fabricate(:post, user: user2, topic: post_3.topic, created_at: 2.hours.ago) }
+    fab!(:post_by_unfollowed_user) { Fabricate(:post) }
+
+    it "allows users to see their own follow posts feed" do
+      sign_in(user1)
+      get "/follow/posts/#{user1.username}.json"
+      expect(response.status).to eq(200)
+      topic_ids_from_api = response.parsed_body["posts"].map { |t| t["topic_id"] }.uniq
+
+      get "/filter", params: { q: "following-feed:#{user1.username}", format: :json }
+      expect(response.status).to eq(200)
+      topic_ids_from_filter = response.parsed_body["topic_list"]["topics"].map { |t| t["id"] }.uniq
+
+      expect(topic_ids_from_api).to match_array(topic_ids_from_filter)
+    end
+
+    it "should not allow users to see other users follow posts feed" do
+      sign_in(user2)
+      get "/follow/posts/#{user1.username}.json"
+      expect(response.status).to eq(403)
+
+      get "/filter", params: { q: "following-feed:#{user1.username}", format: :json }
+      expect(response.parsed_body["topic_list"]["topics"]).to eq([])
+    end
+
+    it "allows staff users to access the follow posts feed of other users" do
+      user1_interacted_topics = [
+        post_1.topic.id,
+        post_2.topic.id,
+        post_3.topic.id,
+        post_4.topic.id,
+        post_5.topic.id,
+      ].uniq
+
+      mod = Fabricate(:moderator)
+      sign_in(mod)
+
+      get "/filter", params: { q: "following-feed:#{user1.username}", format: :json }
+      expect(response.status).to eq(200)
+      topic_ids_from_filter = response.parsed_body["topic_list"]["topics"].map { |t| t["id"] }.uniq
+
+      expect(topic_ids_from_filter).to match_array(user1_interacted_topics)
+
+      admin = Fabricate(:admin)
+      sign_in(admin)
+
+      get "/filter", params: { q: "following-feed:#{user1.username}", format: :json }
+      expect(response.status).to eq(200)
+      topic_ids_from_filter = response.parsed_body["topic_list"]["topics"].map { |t| t["id"] }.uniq
+      
+      expect(topic_ids_from_filter).to match_array(user1_interacted_topics)
     end
   end
 end
