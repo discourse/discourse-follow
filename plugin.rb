@@ -115,7 +115,8 @@ after_initialize do
     next scope if user.nil?
     next scope.none if user.id != guardian.user.id && !guardian.user.staff?
 
-    topic_ids = UserFollower.posts_for(user, current_user: guardian.user).map { |p| p.topic_id }
+    topic_ids = UserFollower.topics_for(user, current_user: guardian.user).pluck(:id)
+
     scope.where("topics.id IN (?)", topic_ids)
   end
 

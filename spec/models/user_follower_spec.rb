@@ -188,4 +188,71 @@ describe UserFollower do
       end
     end
   end
+
+  describe ".topics_for" do
+    it "does not show topics in PMs" do
+      Fabricate(:private_message_topic, user: followed)
+      topics = UserFollower.topics_for(follower, current_user: admin)
+      expect(topics.pluck(:id)).to be_blank
+    end
+
+    it "filters with created_before" do
+      topic_1 = Fabricate(:topic, user: followed, created_at: 1.day.ago)
+      topic_2 = Fabricate(:topic, user: followed, created_at: 2.day.ago)
+
+      topics = UserFollower.topics_for(follower, current_user: admin, created_before: 25.hours.ago)
+      expect(topics).to contain_exactly(topic_2)
+    end
+
+    it "filters with created_after" do
+      Fabricate(:topic, user: followed, created_at: 2.day.ago)
+      topic_2 = Fabricate(:topic, user: followed, created_at: 1.day.ago)
+
+      topics = UserFollower.topics_for(follower, current_user: admin, created_after: 25.hours.ago)
+      expect(topics).to contain_exactly(topic_2)
+    end
+
+    it "does not show unlisted topics" do
+      topic = Fabricate(:topic, user: followed)
+      topic.update_status("visible", false, Discourse.system_user)
+      topics = UserFollower.topics_for(follower, current_user: admin)
+      expect(topics.pluck(:id)).to be_blank
+    end
+
+    it "does not show topics in secured categories that current user does " \
+         "not have access to" do
+      Fabricate(:topic, user: followed, category: secure_category)
+      topics = UserFollower.topics_for(follower, current_user: follower)
+      expect(topics.pluck(:id)).to be_blank
+    end
+
+    it "does not show deleted topics" do
+      topic = Fabricate(:topic, user: followed)
+      topic.update!(deleted_at: 1.minute.ago)
+      topics = UserFollower.topics_for(follower, current_user: admin)
+      expect(topics.pluck(:id)).to be_blank
+    end
+
+    describe "it behaves like posts_for" do
+      it "brings topics the same way as posts_for" do
+        Fabricate(:post, user: followed)
+        topics = UserFollower.topics_for(follower, current_user: admin)
+        topic_ids_from_posts_for =
+          UserFollower.posts_for(follower, current_user: admin).map(&:topic_id)
+
+        expect(topics.pluck(:id)).to contain_exactly(*topic_ids_from_posts_for)
+      end
+
+      it "does not show repeated topics" do
+        topic = Fabricate(:topic, user: followed)
+        Fabricate.times(3, :post, user: followed, topic: topic)
+
+        topics = UserFollower.topics_for(follower, current_user: admin)
+        expect(topics.size).to eq(1)
+
+        posts = UserFollower.posts_for(follower, current_user: admin)
+        expect(posts.size).to eq(3)
+      end
+    end
+  end
 end

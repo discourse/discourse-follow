@@ -26,6 +26,26 @@ class UserFollower < ActiveRecord::Base
     results
   end
 
+  def self.topics_for(user, current_user:, limit: nil, created_before: nil, created_after: nil)
+    results =
+      Topic
+        .joins(:user)
+        .joins("INNER JOIN user_followers ON user_followers.user_id = users.id")
+        .preload(:user, :category)
+        .where("user_followers.follower_id = ?", user.id)
+        .where("topics.archetype != ?", Archetype.private_message)
+        .where("topics.visible")
+        .order(created_at: :desc)
+
+    results = filter_opted_out_users(results)
+    results = Guardian.new(current_user).filter_allowed_categories(results)
+    results = results.limit(limit) if limit
+    results = results.where("topics.created_at < ?", created_before) if created_before
+    results = results.where("topics.created_at > ?", created_after) if created_after
+
+    results
+  end
+
   def self.filter_opted_out_users(relation)
     truthy_values = sanitize_sql(["?", HasCustomFields::Helpers::CUSTOM_FIELD_TRUE])
     if SiteSetting.default_allow_people_to_follow_me
