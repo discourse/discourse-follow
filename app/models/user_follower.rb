@@ -33,8 +33,8 @@ class UserFollower < ActiveRecord::Base
         .joins("INNER JOIN user_followers ON user_followers.user_id = users.id")
         .preload(:user, :category)
         .where("user_followers.follower_id = ?", user.id)
-        .where("topics.archetype != ?", Archetype.private_message)
-        .where("topics.visible")
+        .listable_topics
+        .visible
         .order(created_at: :desc)
 
     results = filter_opted_out_users(results)
