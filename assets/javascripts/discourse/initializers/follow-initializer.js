@@ -1,3 +1,4 @@
+import { action } from "@ember/object";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { userPath } from "discourse/lib/url";
 import { i18n } from "discourse-i18n";
@@ -54,18 +55,19 @@ export default {
 
       // workaround to make core save custom fields when changing
       // preferences
-      api.modifyClass("controller:preferences/notifications", {
-        pluginId: "discourse-follow-notification-preference",
-
-        actions: {
-          save() {
-            if (!this.saveAttrNames.includes("custom_fields")) {
-              this.saveAttrNames.push("custom_fields");
+      api.modifyClass(
+        "controller:preferences/notifications",
+        (Superclass) =>
+          class extends Superclass {
+            @action
+            save() {
+              if (!this.saveAttrNames.includes("custom_fields")) {
+                this.saveAttrNames.push("custom_fields");
+              }
+              super.save();
             }
-            this._super(...arguments);
-          },
-        },
-      });
+          }
+      );
     });
   },
 };
