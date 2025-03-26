@@ -2,29 +2,34 @@
   <label class="control-label">{{i18n "user.follow.label"}}</label>
 
   <div class="controls">
-    {{preference-checkbox
-      labelKey="user.follow_notifications_options.allow_people_to_follow_me"
-      checked=this.user.allow_people_to_follow_me
-    }}
+    <PreferenceCheckbox
+      @labelKey="user.follow_notifications_options.allow_people_to_follow_me"
+      @checked={{this.user.allow_people_to_follow_me}}
+      class="pref-allow-people-to-follow-me"
+    />
 
-    {{preference-checkbox
-      labelKey="user.follow_notifications_options.notify_me_when_followed"
-      checked=this.user.notify_me_when_followed
-    }}
+    <PreferenceCheckbox
+      @labelKey="user.follow_notifications_options.notify_me_when_followed"
+      @checked={{this.user.notify_me_when_followed}}
+      class="pref-notify-me-when-followed"
+    />
 
-    {{preference-checkbox
-      labelKey="user.follow_notifications_options.notify_followed_user_when_followed"
-      checked=this.user.notify_followed_user_when_followed
-    }}
+    <PreferenceCheckbox
+      @labelKey="user.follow_notifications_options.notify_followed_user_when_followed"
+      @checked={{this.user.notify_followed_user_when_followed}}
+      class="pref-notify-followed-user-when-followed"
+    />
 
-    {{preference-checkbox
-      labelKey="user.follow_notifications_options.notify_me_when_followed_replies"
-      checked=this.user.notify_me_when_followed_replies
-    }}
+    <PreferenceCheckbox
+      @labelKey="user.follow_notifications_options.notify_me_when_followed_replies"
+      @checked={{this.user.notify_me_when_followed_replies}}
+      class="pref-notify-me-when-followed-replies"
+    />
 
-    {{preference-checkbox
-      labelKey="user.follow_notifications_options.notify_me_when_followed_creates_topic"
-      checked=this.user.notify_me_when_followed_creates_topic
-    }}
+    <PreferenceCheckbox
+      @labelKey="user.follow_notifications_options.notify_me_when_followed_creates_topic"
+      @checked={{this.user.notify_me_when_followed_creates_topic}}
+      class="pref-notify-me-when-followed-creates-topic"
+    />
   </div>
 </div>
