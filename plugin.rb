@@ -108,4 +108,17 @@ after_initialize do
     next if !new_record
     Follow::NotificationHandler.new(post, notified).handle
   end
+
+  filter_following_topics = ->(scope, username, guardian) do
+    user = User.find_by(username: username)
+
+    next scope if user.nil?
+    next scope.none if user.id != guardian.user.id && !guardian.user.staff?
+
+    topic_ids = UserFollower.topics_for(user, current_user: guardian.user).pluck(:id)
+
+    scope.where("topics.id IN (?)", topic_ids)
+  end
+
+  add_filter_custom_filter("following-feed", &filter_following_topics)
 end
