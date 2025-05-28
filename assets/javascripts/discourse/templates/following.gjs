@@ -1,12 +1,8 @@
 import RouteTemplate from "ember-route-template";
-import followUsersList from "../components/follow-users-list";
+import FollowUsersList from "../components/follow-users-list";
 
 export default RouteTemplate(
   <template>
-    {{followUsersList
-      users=@controller.users
-      type="following"
-      user=@controller.user
-    }}
+    <FollowUsersList @users={{@controller.users}} @type="following" @user={{@controller.user}} />
   </template>
 );

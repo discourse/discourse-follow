@@ -1,6 +1,6 @@
 import Component from "@ember/component";
 import { notEmpty } from "@ember/object/computed";
-import userInfo from "discourse/components/user-info";
+import UserInfo from "discourse/components/user-info";
 import { propertyEqual } from "discourse/lib/computed";
 import discourseComputed from "discourse/lib/decorators";
 import { i18n } from "discourse-i18n";
@@ -19,7 +19,7 @@ export default class FollowUsersList extends Component {
     <div class="follow-users">
       {{#if this.hasUsers}}
         {{#each this.users as |user|}}
-          {{userInfo user=user}}
+          <UserInfo @user={{user}} />
         {{/each}}
       {{else}}
         <div class="alert alert-info">{{i18n

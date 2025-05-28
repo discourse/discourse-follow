@@ -1,6 +1,6 @@
 import Component from "@ember/component";
 import { classNames, tagName } from "@ember-decorators/component";
-import followNotificationPreferences from "../../components/follow-notification-preferences";
+import FollowNotificationPreferences from "../../components/follow-notification-preferences";
 
 @tagName("div")
 @classNames(
@@ -12,5 +12,5 @@ export default class FollowNotificationPreferencesContainer extends Component {
     return context.siteSettings.follow_notifications_enabled;
   }
 
-  <template>{{followNotificationPreferences user=this.model}}</template>
+  <template><FollowNotificationPreferences @user={{this.model}} /></template>
 }
