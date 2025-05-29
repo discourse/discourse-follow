@@ -3,6 +3,10 @@ import FollowUsersList from "../components/follow-users-list";
 
 export default RouteTemplate(
   <template>
-    <FollowUsersList @users={{@controller.users}} @type="following" @user={{@controller.user}} />
+    <FollowUsersList
+      @users={{@controller.users}}
+      @type="following"
+      @user={{@controller.user}}
+    />
   </template>
 );

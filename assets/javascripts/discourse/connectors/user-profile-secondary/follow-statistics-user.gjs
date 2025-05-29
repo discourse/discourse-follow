@@ -11,11 +11,17 @@ export default class FollowStatisticsUser extends Component {
 
   <template>
     {{#if this.model.total_following}}
-      <FollowStatistic @label="user.following.label" @total={{this.model.total_following}} />
+      <FollowStatistic
+        @label="user.following.label"
+        @total={{this.model.total_following}}
+      />
     {{/if}}
 
     {{#if this.model.total_followers}}
-      <FollowStatistic @label="user.followers.label" @total={{this.model.total_followers}} />
+      <FollowStatistic
+        @label="user.followers.label"
+        @total={{this.model.total_followers}}
+      />
     {{/if}}
   </template>
 }
