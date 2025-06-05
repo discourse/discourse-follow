@@ -1,6 +1,8 @@
 import Component from "@ember/component";
 import { action } from "@ember/object";
 import { alias } from "@ember/object/computed";
+import { and } from "truth-helpers";
+import DButton from "discourse/components/d-button";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 import discourseComputed from "discourse/lib/decorators";
@@ -63,4 +65,15 @@ export default class FollowButton extends Component {
         this.set("loading", false);
       });
   }
+
+  <template>
+    {{#if (and this.showButton this.canFollow)}}
+      <DButton
+        @label={{this.labelKey}}
+        @icon={{this.icon}}
+        @disabled={{this.loading}}
+        @action={{action "toggleFollow"}}
+      />
+    {{/if}}
+  </template>
 }
