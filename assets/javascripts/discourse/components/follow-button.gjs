@@ -72,7 +72,7 @@ export default class FollowButton extends Component {
         @label={{this.labelKey}}
         @icon={{this.icon}}
         @disabled={{this.loading}}
-        @action={{action "toggleFollow"}}
+        @action={{this.toggleFollow}}
       />
     {{/if}}
   </template>
