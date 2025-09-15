@@ -7,4 +7,20 @@
 pt:
   discourse_push_notifications:
     popup:
+      following_created_topic: '%{username} criou "%{topic}" - %{site_title}'
       following_replied: '%{username} publicou em "%{topic}" - %{site_title}'
+  site_settings:
+    discourse_follow_enabled: "Ativar plug-in de seguir."
+    follow_show_statistics_on_profile: "Mostre as estatísticas de seguir nos perfis de utilizador."
+    follow_notifications_enabled: "Ative todas as notificações de seguir."
+    follow_followers_visible: "Visibilidade dos seguidores."
+    follow_following_visible: "Visibilidade de seguir."
+  follow:
+    user_not_found: "Não foi possível encontrar o utilizador com o nome %{username}"
+    user_cannot_follow_themself: "O utilizador não está autorizado para seguir a si mesmo."
+    invalid_notification_level: "Nível de notificação inválido %{level}"
+    cannot_follow_bot: "Não pode seguir um utilizador robô"
+    cannot_follow_suspended: "Não pode seguir um utilizador suspenso"
+    cannot_follow_staged: "Não pode seguir um utilizador ''staged''"
+    invalid_created_before_date: "Recebeu uma data inválida para o parâmetro 'created_before': %{value}"
+    user_does_not_allow_follow: "%{username} não permite que as pessoas o sigam."
