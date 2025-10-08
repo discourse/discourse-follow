@@ -3,8 +3,8 @@
 require "rails_helper"
 
 describe "Attrs added by the plugin to the UserCardSerializer" do
-  fab!(:follower) { Fabricate(:user) }
-  fab!(:followed) { Fabricate(:user) }
+  fab!(:follower, :user)
+  fab!(:followed, :user)
 
   before do
     SiteSetting.discourse_follow_enabled = true

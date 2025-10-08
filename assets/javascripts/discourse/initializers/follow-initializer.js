@@ -6,7 +6,7 @@ import { i18n } from "discourse-i18n";
 export default {
   name: "follow-plugin-initializer",
   initialize(/*container*/) {
-    withPluginApi("0.8.10", (api) => {
+    withPluginApi((api) => {
       const currentUser = api.getCurrentUser();
       if (!currentUser) {
         return;
