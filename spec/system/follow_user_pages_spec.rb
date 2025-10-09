@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe "Follow user pages", type: :system, js: true do
-  fab!(:user1) { Fabricate(:user) }
-  fab!(:user2) { Fabricate(:user) }
-  fab!(:user3) { Fabricate(:user) }
+  fab!(:user1, :user)
+  fab!(:user2, :user)
+  fab!(:user3, :user)
   fab!(:user2_post) { Fabricate(:post, user: user2) }
   let(:everyone_group) { Group[:everyone] }
 

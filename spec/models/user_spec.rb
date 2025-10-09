@@ -3,10 +3,10 @@
 require "rails_helper"
 
 describe User do
-  fab!(:followed1) { Fabricate(:user) }
-  fab!(:followed2) { Fabricate(:user) }
-  fab!(:follower1) { Fabricate(:user) }
-  fab!(:follower2) { Fabricate(:user) }
+  fab!(:followed1, :user)
+  fab!(:followed2, :user)
+  fab!(:follower1, :user)
+  fab!(:follower2, :user)
 
   before do
     SiteSetting.discourse_follow_enabled = true

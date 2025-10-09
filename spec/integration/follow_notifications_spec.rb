@@ -14,11 +14,11 @@ describe "Follow plugin notifications" do
     expect(data["original_post_type"]).to eq(post.post_type)
   end
 
-  fab!(:follower) { Fabricate(:user) }
-  fab!(:followed) { Fabricate(:admin) }
-  fab!(:followed2) { Fabricate(:user) }
-  fab!(:followed3) { Fabricate(:user) }
-  fab!(:normal_user) { Fabricate(:user) }
+  fab!(:follower, :user)
+  fab!(:followed, :admin)
+  fab!(:followed2, :user)
+  fab!(:followed3, :user)
+  fab!(:normal_user, :user)
   fab!(:category)
 
   fab!(:topic) do

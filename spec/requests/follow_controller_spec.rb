@@ -3,8 +3,8 @@
 require "rails_helper"
 
 describe Follow::FollowController do
-  fab!(:user1) { Fabricate(:user) }
-  fab!(:user2) { Fabricate(:user) }
+  fab!(:user1, :user)
+  fab!(:user2, :user)
   fab!(:tl4) { Fabricate(:user, trust_level: TrustLevel[4]) }
   fab!(:tl3) { Fabricate(:user, trust_level: TrustLevel[3]) }
   fab!(:tl2) { Fabricate(:user, trust_level: TrustLevel[2]) }
@@ -167,7 +167,7 @@ describe Follow::FollowController do
     fab!(:post_3) { Fabricate(:post, user: user2, created_at: 5.hours.ago) }
     fab!(:post_2) { Fabricate(:post, user: tl3, created_at: 3.hours.ago) }
     fab!(:post_1) { Fabricate(:post, user: user2, topic: post_3.topic, created_at: 2.hours.ago) }
-    fab!(:post_by_unfollowed_user) { Fabricate(:post) }
+    fab!(:post_by_unfollowed_user, :post)
 
     it "does not allow non-staff users to access the follow posts feed of other users" do
       sign_in(user1)
@@ -293,7 +293,7 @@ describe Follow::FollowController do
     fab!(:post_3) { Fabricate(:post, user: user2, created_at: 5.hours.ago) }
     fab!(:post_2) { Fabricate(:post, user: tl3, created_at: 3.hours.ago) }
     fab!(:post_1) { Fabricate(:post, user: user2, topic: post_3.topic, created_at: 2.hours.ago) }
-    fab!(:post_by_unfollowed_user) { Fabricate(:post) }
+    fab!(:post_by_unfollowed_user, :post)
 
     it "allows users to see their own follow posts feed" do
       sign_in(user1)

@@ -9,9 +9,9 @@ describe ::Follow::Updater do
     ::Follow::Updater.new(follower, target)
   end
 
-  fab!(:user1) { Fabricate(:user) }
-  fab!(:user2) { Fabricate(:user) }
-  fab!(:user3) { Fabricate(:user) }
+  fab!(:user1, :user)
+  fab!(:user2, :user)
+  fab!(:user3, :user)
 
   it "does not allow following a bot user" do
     expect do new_updater(user1, Discourse.system_user).watch_follow end.to raise_error do |error|

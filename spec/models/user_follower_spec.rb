@@ -4,10 +4,10 @@ require "rails_helper"
 
 describe UserFollower do
   fab!(:admin)
-  fab!(:follower) { Fabricate(:user) }
-  fab!(:not_followed) { Fabricate(:user) }
-  fab!(:followed) { Fabricate(:user) }
-  fab!(:followed2) { Fabricate(:user) }
+  fab!(:follower, :user)
+  fab!(:not_followed, :user)
+  fab!(:followed, :user)
+  fab!(:followed2, :user)
 
   fab!(:group)
   fab!(:secure_category) { Fabricate(:private_category, group: group) }
@@ -27,14 +27,14 @@ describe UserFollower do
 
     it "filters with created_before" do
       Fabricate(:post, user: followed, topic: Fabricate(:topic), created_at: 1.day.ago)
-      post_2 = Fabricate(:post, user: followed, topic: Fabricate(:topic), created_at: 2.day.ago)
+      post_2 = Fabricate(:post, user: followed, topic: Fabricate(:topic), created_at: 2.days.ago)
 
       posts = UserFollower.posts_for(follower, current_user: admin, created_before: 25.hours.ago)
       expect(posts).to contain_exactly(post_2)
     end
 
     it "filters with created_after" do
-      Fabricate(:post, user: followed, topic: Fabricate(:topic), created_at: 2.day.ago)
+      Fabricate(:post, user: followed, topic: Fabricate(:topic), created_at: 2.days.ago)
       post_2 = Fabricate(:post, user: followed, topic: Fabricate(:topic), created_at: 1.day.ago)
 
       posts = UserFollower.posts_for(follower, current_user: admin, created_after: 25.hours.ago)
@@ -121,7 +121,7 @@ describe UserFollower do
 
     it "orders returned posts in reversed chronological order" do
       post1 = Fabricate(:post, user: followed, created_at: 3.hours.ago)
-      post2 = Fabricate(:post, user: followed, created_at: 1.hours.ago)
+      post2 = Fabricate(:post, user: followed, created_at: 1.hour.ago)
       post3 = Fabricate(:post, user: followed, created_at: 9.hours.ago)
       posts = UserFollower.posts_for(follower, current_user: follower, limit: 3)
       expect(posts.pluck(:id)).to eq([post2.id, post1.id, post3.id])
@@ -198,14 +198,14 @@ describe UserFollower do
 
     it "filters with created_before" do
       topic_1 = Fabricate(:topic, user: followed, created_at: 1.day.ago)
-      topic_2 = Fabricate(:topic, user: followed, created_at: 2.day.ago)
+      topic_2 = Fabricate(:topic, user: followed, created_at: 2.days.ago)
 
       topics = UserFollower.topics_for(follower, current_user: admin, created_before: 25.hours.ago)
       expect(topics).to contain_exactly(topic_2)
     end
 
     it "filters with created_after" do
-      Fabricate(:topic, user: followed, created_at: 2.day.ago)
+      Fabricate(:topic, user: followed, created_at: 2.days.ago)
       topic_2 = Fabricate(:topic, user: followed, created_at: 1.day.ago)
 
       topics = UserFollower.topics_for(follower, current_user: admin, created_after: 25.hours.ago)

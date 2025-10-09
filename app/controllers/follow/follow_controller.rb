@@ -56,7 +56,7 @@ class Follow::FollowController < ApplicationController
           render json: {
                    errors: [I18n.t("follow.invalid_created_before_date", value: val.inspect)],
                  },
-                 status: 400
+                 status: :bad_request
         )
       end
     end
@@ -107,7 +107,7 @@ class Follow::FollowController < ApplicationController
       render json: {
                errors: [I18n.t("follow.user_not_found", username: params[:username].inspect)],
              },
-             status: 404
+             status: :not_found
       return nil
     end
     user
