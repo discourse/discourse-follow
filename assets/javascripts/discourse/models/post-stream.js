@@ -19,7 +19,7 @@ export default class PostStream extends RestModel {
 
   @dependentKeyCompat
   get lastPostCreatedAt() {
-    return this.content.at(-1).created_at;
+    return this.content.at(-1)?.created_at;
   }
 
   @dependentKeyCompat
