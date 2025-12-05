@@ -82,20 +82,14 @@ describe "Follow plugin notifications" do
         last_read_post_number: 1,
         notification_level: TopicUser.notification_levels[:watching],
       )
-      @notification_post = create_post(topic: topic, user: followed)
     end
 
-    it "follower receives a notification that a followed user has posted" do
-      notification =
-        follower.notifications.find_by(
-          topic_id: topic.id,
-          notification_type: Notification.types[:following_replied],
-        )
-      follow_notification_assertions(notification, followed, @notification_post, topic)
-    end
-
-    it "follower receives only 1 notification for the post" do
-      expect(follower.notifications.count).to eq(1)
+    it "follower receives only a watching notification" do
+      expect { create_post(topic: topic, user: followed) }.to change {
+        follower.notifications.count
+      }.by(1).and change {
+              follower.notifications.where(notification_type: Notification.types[:posted]).count
+            }.by(1)
     end
   end
 
@@ -138,20 +132,17 @@ describe "Follow plugin notifications" do
         CategoryUser.notification_levels[:watching],
         category.id,
       )
-      @notification_post = create_post(topic: topic, user: followed)
     end
 
-    it "follower receives only a notification" do
-      expect(follower.notifications.count).to eq(1)
-    end
-
-    it "follower receives a notification for the post made by the followed user" do
-      notification =
-        follower.notifications.find_by(
-          topic_id: topic.id,
-          notification_type: Notification.types[:following_replied],
-        )
-      follow_notification_assertions(notification, followed, @notification_post, topic)
+    it "follower receives only a watching notification" do
+      expect { create_post(topic: topic, user: followed) }.to change {
+        follower.notifications.count
+      }.by(1).and change {
+              follower
+                .notifications
+                .where(notification_type: Notification.types[:watching_category_or_tag])
+                .count
+            }.by(1)
     end
   end
 
