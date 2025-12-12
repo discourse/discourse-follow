@@ -1,5 +1,6 @@
 import { action } from "@ember/object";
 import { withPluginApi } from "discourse/lib/plugin-api";
+import { VALUE_TRANSFORMERS } from "discourse/lib/transformer/registry";
 import { userPath } from "discourse/lib/url";
 import { i18n } from "discourse-i18n";
 
@@ -53,21 +54,33 @@ export default {
         );
       }
 
-      // workaround to make core save custom fields when changing
-      // preferences
-      api.modifyClass(
-        "controller:preferences/notifications",
-        (Superclass) =>
-          class extends Superclass {
-            @action
-            save() {
-              if (!this.saveAttrNames.includes("custom_fields")) {
-                this.saveAttrNames.push("custom_fields");
-              }
-              super.save();
+      // Add custom_fields to the notifications page save attributes
+      if (VALUE_TRANSFORMERS.includes("preferences-save-attributes")) {
+        api.registerValueTransformer(
+          "preferences-save-attributes",
+          ({ value: attrs, context }) => {
+            if (context.page === "notifications") {
+              attrs.push("custom_fields");
             }
+            return attrs;
           }
-      );
+        );
+      } else {
+        // Backward compatibility for older Discourse versions
+        api.modifyClass(
+          "controller:preferences/notifications",
+          (Superclass) =>
+            class extends Superclass {
+              @action
+              save() {
+                if (!this.saveAttrNames.includes("custom_fields")) {
+                  this.saveAttrNames.push("custom_fields");
+                }
+                super.save();
+              }
+            }
+        );
+      }
     });
   },
 };
