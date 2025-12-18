@@ -52,7 +52,7 @@ export default {
         );
       }
 
-      api.addSaveableCustomFields({ page: "notifications" });
+      api.addSaveableCustomFields("notifications");
     });
   },
 };
