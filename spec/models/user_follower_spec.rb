@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 describe UserFollower do
   fab!(:admin)
   fab!(:follower, :user)
