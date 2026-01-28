@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 describe "Follow plugin notifications" do
   def follow_notification_assertions(notification, followed, post, topic)
     expect(notification).to be_present

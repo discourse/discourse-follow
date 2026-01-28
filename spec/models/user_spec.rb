@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 describe User do
   fab!(:followed1, :user)
   fab!(:followed2, :user)

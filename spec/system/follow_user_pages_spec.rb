@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe "Follow user pages", type: :system, js: true do
+RSpec.describe "Follow user pages" do
   fab!(:user1, :user)
   fab!(:user2, :user)
   fab!(:user3, :user)

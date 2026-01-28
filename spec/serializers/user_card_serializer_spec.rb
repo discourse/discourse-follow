@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 describe UserCardSerializer do
   fab!(:follower, :user)
   fab!(:followed, :user)

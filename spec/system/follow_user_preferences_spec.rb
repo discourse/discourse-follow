@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe "Follow user preferences", type: :system, js: true do
+RSpec.describe "Follow user preferences" do
   fab!(:user)
 
   before do
