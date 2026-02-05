@@ -12,13 +12,13 @@ export default class FollowStatisticsUserCard extends Component {
   <template>
     {{#if this.user.total_following}}
       <div class="metadata__following">
-        <span>{{i18n "user.following.label"}}</span>
+        <span class="desc">{{i18n "user.following.label"}}</span>
         <span class="value">{{this.user.total_following}}</span>
       </div>
     {{/if}}
     {{#if this.user.total_followers}}
       <div class="metadata__followers">
-        <span>{{i18n "user.followers.label"}}</span>
+        <span class="desc">{{i18n "user.followers.label"}}</span>
         <span class="value">{{this.user.total_followers}}</span>
       </div>
     {{/if}}
