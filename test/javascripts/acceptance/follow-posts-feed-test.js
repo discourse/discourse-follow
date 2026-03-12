@@ -1,11 +1,6 @@
 import { click, visit } from "@ember/test-helpers";
 import { test } from "qunit";
-import {
-  acceptance,
-  exists,
-  query,
-  queryAll,
-} from "discourse/tests/helpers/qunit-helpers";
+import { acceptance, queryAll } from "discourse/tests/helpers/qunit-helpers";
 import { i18n } from "discourse-i18n";
 
 acceptance("Discourse Follow - Follow Posts Feed", function (needs) {
@@ -158,31 +153,23 @@ acceptance("Discourse Follow - Follow Posts Feed", function (needs) {
 
   test("posts are shown", async (assert) => {
     await visit("/u/eviltrout/follow/feed");
-    const posts = queryAll(".follow-stream .follow-stream-item");
-    assert.equal(
-      posts.length,
-      3,
-      "all posts from the server response are rendered"
-    );
-    assert.equal(
-      query(".user-navigation-secondary  a.active").textContent.trim(),
-      i18n("user.feed.label"),
-      "feed tab is labelled correctly"
-    );
+    assert
+      .dom(".follow-stream .follow-stream-item")
+      .exists({ count: 3 }, "all posts from the server response are rendered");
+    assert
+      .dom(".user-navigation-secondary a.active")
+      .hasText(i18n("user.feed.label"), "feed tab is labelled correctly");
   });
 
   test("long posts excerpt", async (assert) => {
     await visit("/u/eviltrout/follow/feed");
     const posts = queryAll(".follow-stream .follow-stream-item");
-    assert.ok(
-      exists(posts[2].querySelector(".expand-item")),
-      "long posts are first rendered collapsed"
-    );
+    assert
+      .dom(".expand-item", posts[2])
+      .exists("long posts are first rendered collapsed");
+
     await click(posts[2].querySelector(".expand-item"));
-    assert.ok(
-      exists(posts[2].querySelector(".collapse-item")),
-      "long posts can be expanded"
-    );
+    assert.dom(".collapse-item", posts[2]).exists("long posts can be expanded");
   });
 });
 
@@ -201,10 +188,11 @@ acceptance("Discourse Follow - Empty Follow Posts Feed", function (needs) {
 
   test("with empty posts feed", async (assert) => {
     await visit("/u/eviltrout/follow/feed");
-    assert.equal(
-      query(".user-content.user-follows-tab").textContent.trim(),
-      i18n("user.feed.empty_feed_you"),
-      "empty posts feed notice is shown"
-    );
+    assert
+      .dom(".user-content.user-follows-tab")
+      .hasText(
+        i18n("user.feed.empty_feed_you"),
+        "empty posts feed notice is shown"
+      );
   });
 });

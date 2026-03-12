@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-classic-components, ember/no-observers, ember/require-tagless-components */
 import Component from "@ember/component";
 import { observes } from "@ember-decorators/object";
 import PreferenceCheckbox from "discourse/components/preference-checkbox";

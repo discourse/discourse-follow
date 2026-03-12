@@ -1,18 +1,19 @@
+/* eslint-disable ember/no-classic-components, ember/require-tagless-components */
 import Component from "@ember/component";
+import { computed } from "@ember/object";
 import { notEmpty } from "@ember/object/computed";
 import UserInfo from "discourse/components/user-info";
 import { propertyEqual } from "discourse/lib/computed";
-import discourseComputed from "discourse/lib/decorators";
 import { i18n } from "discourse-i18n";
 
 export default class FollowUsersList extends Component {
   @notEmpty("users") hasUsers;
   @propertyEqual("user.username", "currentUser.username") viewingSelf;
 
-  @discourseComputed("type", "viewingSelf")
-  noneMessage(type, viewingSelf) {
-    let key = viewingSelf ? "none" : "none_other";
-    return `user.${type}.${key}`;
+  @computed("type", "viewingSelf")
+  get noneMessage() {
+    let key = this.viewingSelf ? "none" : "none_other";
+    return `user.${this.type}.${key}`;
   }
 
   <template>

@@ -32,31 +32,24 @@ acceptance("Discourse Follow - notification", function (needs) {
   test("shows follow notification", async (assert) => {
     await visit("/u/eviltrout/notifications");
 
-    const notification = document.querySelector(
-      ".user-notifications-list .notification"
-    );
+    assert
+      .dom(".user-notifications-list .notification .item-label")
+      .hasText("steaky", "renders username");
 
-    assert.strictEqual(
-      notification.querySelector(".item-label").textContent.trim(),
-      "steaky",
-      "Renders username"
-    );
+    assert
+      .dom(".user-notifications-list .notification .item-description")
+      .hasText("has started following you.", "renders description");
 
-    assert.strictEqual(
-      notification.querySelector(".item-description").textContent.trim(),
-      "has started following you.",
-      "Renders description"
-    );
+    assert
+      .dom(".user-notifications-list .notification a")
+      .hasAttribute("href", /\/u\/steaky/, "leads to the user's profile");
 
-    assert.ok(
-      notification.querySelector("a").href.includes("/u/steaky"),
-      "leads to the user's profile"
-    );
-
-    assert.strictEqual(
-      notification.querySelector("a").title,
-      i18n("notifications.titles.following"),
-      "displays the right title"
-    );
+    assert
+      .dom(".user-notifications-list .notification a")
+      .hasAttribute(
+        "title",
+        i18n("notifications.titles.following"),
+        "displays the right title"
+      );
   });
 });
