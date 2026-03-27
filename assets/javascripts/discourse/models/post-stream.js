@@ -3,7 +3,7 @@ import EmberObject from "@ember/object";
 import { dependentKeyCompat } from "@ember/object/compat";
 import { ajax } from "discourse/lib/ajax";
 import { addUniqueValuesToArray } from "discourse/lib/array-tools";
-import { trackedArray } from "discourse/lib/tracked-tools";
+import { autoTrackedArray } from "discourse/lib/tracked-tools";
 import Category from "discourse/models/category";
 import RestModel from "discourse/models/rest";
 
@@ -15,7 +15,7 @@ export default class PostStream extends RestModel {
   @tracked canLoadMore = true;
   @tracked itemsLoaded = 0;
   @tracked loading = false;
-  @trackedArray content = [];
+  @autoTrackedArray content = [];
 
   @dependentKeyCompat
   get lastPostCreatedAt() {
