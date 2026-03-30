@@ -26,7 +26,10 @@ after_initialize do
   Notification.types[:following_created_topic] = 801
   Notification.types[:following_replied] = 802
 
-  reloadable_patch { |plugin| User.prepend(Follow::UserExtension) }
+  reloadable_patch do |plugin|
+    User.prepend(Follow::UserExtension)
+    Guardian.prepend(Follow::GuardianExtension)
+  end
 
   add_to_serializer(:user, :can_see_following) do
     FollowPagesVisibility.can_see_following_page?(user: scope.current_user, target_user: user)
@@ -49,7 +52,7 @@ after_initialize do
   # when serializing a single user object, the options of the serializer
   # doesn't have a `each_serializer` key.
   add_to_serializer(:user_card, :can_follow) do
-    !options.key?(:each_serializer) && scope.current_user.present? && user.allow_people_to_follow_me
+    !options.key?(:each_serializer) && scope.can_follow?(user)
   end
 
   add_to_serializer(:user_card, :is_followed) do
