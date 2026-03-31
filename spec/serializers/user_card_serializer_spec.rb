@@ -120,5 +120,25 @@ describe UserCardSerializer do
       expect(get_serializer(followed, current_user: Fabricate(:user))[:can_follow]).to eq(false)
       expect(get_serializer(followed, current_user: nil)[:can_follow]).to eq(false)
     end
+
+    it "can_follow is false for suspended users" do
+      followed.update!(suspended_till: 10.hours.from_now)
+      expect(get_serializer(followed, current_user: Fabricate(:user))[:can_follow]).to eq(false)
+    end
+
+    it "can_follow is false for staged users" do
+      followed.update!(staged: true)
+      expect(get_serializer(followed, current_user: Fabricate(:user))[:can_follow]).to eq(false)
+    end
+
+    it "can_follow is false for bot users" do
+      expect(
+        get_serializer(Discourse.system_user, current_user: Fabricate(:user))[:can_follow],
+      ).to eq(false)
+    end
+
+    it "can_follow is false for yourself" do
+      expect(get_serializer(followed, current_user: followed)[:can_follow]).to eq(false)
+    end
   end
 end

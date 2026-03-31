@@ -12,32 +12,49 @@ describe ::Follow::Updater do
   fab!(:user3, :user)
 
   it "does not allow following a bot user" do
-    expect do new_updater(user1, Discourse.system_user).watch_follow end.to raise_error do |error|
-      expect(error).to be_a(Discourse::InvalidAccess)
-      expect(error.custom_message).to eq("follow.user_cannot_follow_bot")
-    end
+    expect { new_updater(user1, Discourse.system_user).watch_follow }.to raise_error(
+      Discourse::InvalidAccess,
+    ) { |error| expect(error.custom_message).to eq("follow.user_cannot_follow_bot") }
   end
 
   it "does not allow following a staged user" do
     user2.update!(staged: true)
-    expect do new_updater(user1, user2).watch_follow end.to raise_error do |error|
-      expect(error).to be_a(Discourse::InvalidAccess)
-      expect(error.custom_message).to eq("follow.user_cannot_follow_staged")
-    end
+    expect { new_updater(user1, user2).watch_follow }.to raise_error(
+      Discourse::InvalidAccess,
+    ) { |error| expect(error.custom_message).to eq("follow.user_cannot_follow_staged") }
   end
 
   it "does not allow following a suspended user" do
     user2.update!(suspended_till: 10.hours.from_now)
-    expect do new_updater(user1, user2).watch_follow end.to raise_error do |error|
-      expect(error).to be_a(Discourse::InvalidAccess)
-      expect(error.custom_message).to eq("follow.user_cannot_follow_suspended")
-    end
+    expect { new_updater(user1, user2).watch_follow }.to raise_error(
+      Discourse::InvalidAccess,
+    ) { |error| expect(error.custom_message).to eq("follow.user_cannot_follow_suspended") }
   end
 
   it "does not allow a user to follow themself" do
-    expect do new_updater(user1, user1).watch_follow end.to raise_error do |error|
-      expect(error).to be_a(Discourse::InvalidAccess)
-      expect(error.custom_message).to eq("follow.user_cannot_follow_themself")
+    expect { new_updater(user1, user1).watch_follow }.to raise_error(
+      Discourse::InvalidAccess,
+    ) { |error| expect(error.custom_message).to eq("follow.user_cannot_follow_themself") }
+  end
+
+  it "does not allow following a user who has disabled follows" do
+    user2.custom_fields["allow_people_to_follow_me"] = false
+    user2.save!
+    expect { new_updater(user1, user2).watch_follow }.to raise_error(
+      Discourse::InvalidAccess,
+    ) do |error|
+      expect(error.custom_message).to eq("follow.user_does_not_allow_follow")
+      expect(error.custom_message_params).to eq({ username: user2.username })
+    end
+  end
+
+  it "does not allow following a user who has hidden their profile" do
+    user2.user_option.update!(hide_profile: true)
+    expect { new_updater(user1, user2).watch_follow }.to raise_error(
+      Discourse::InvalidAccess,
+    ) do |error|
+      expect(error.custom_message).to eq("follow.user_does_not_allow_follow")
+      expect(error.custom_message_params).to eq({ username: user2.username })
     end
   end
 
@@ -47,6 +64,20 @@ describe ::Follow::Updater do
     expect(user2.followers.pluck(:id)).to contain_exactly(user1.id)
     relation = user1.following_relations.find_by(user_id: user2.id)
     expect(relation.level).to eq(Follow::Notification.levels[:watching])
+  end
+
+  it "allows unfollowing a suspended user" do
+    new_updater(user1, user2).watch_follow
+    user2.update!(suspended_till: 10.hours.from_now)
+    new_updater(user1, user2).unfollow
+    expect(user1.reload.following.pluck(:id)).to eq([])
+  end
+
+  it "allows unfollowing a staged user" do
+    new_updater(user1, user2).watch_follow
+    user2.update!(staged: true)
+    new_updater(user1, user2).unfollow
+    expect(user1.reload.following.pluck(:id)).to eq([])
   end
 
   it "sends a notification to the followed user if they opt-in this type " \
@@ -154,24 +185,5 @@ describe ::Follow::Updater do
     expect(user3.followers.pluck(:id)).to contain_exactly(user1.id)
     relation = user1.following_relations.find_by(user_id: user3.id)
     expect(relation.level).to eq(Follow::Notification.levels[:watching])
-  end
-
-  it "does not allow following a user who has disabled follows" do
-    user2.custom_fields["allow_people_to_follow_me"] = false
-    user2.save!
-    expect do new_updater(user1, user2).watch_follow end.to raise_error do |error|
-      expect(error).to be_a(Discourse::InvalidAccess)
-      expect(error.custom_message).to eq("follow.user_does_not_allow_follow")
-      expect(error.custom_message_params).to eq({ username: user2.username })
-    end
-  end
-
-  it "does not allow following a user who has hidden their profile" do
-    user2.user_option.update!(hide_profile: true)
-    expect do new_updater(user1, user2).watch_follow end.to raise_error do |error|
-      expect(error).to be_a(Discourse::InvalidAccess)
-      expect(error.custom_message).to eq("follow.user_does_not_allow_follow")
-      expect(error.custom_message_params).to eq({ username: user2.username })
-    end
   end
 end

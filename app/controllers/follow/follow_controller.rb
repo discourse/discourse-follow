@@ -2,6 +2,7 @@
 
 class Follow::FollowController < ApplicationController
   requires_plugin Follow::PLUGIN_NAME
+  requires_login only: %i[follow unfollow posts]
 
   FOLLOWING = :following
   FOLLOWERS = :followers
@@ -10,8 +11,6 @@ class Follow::FollowController < ApplicationController
   end
 
   def follow
-    raise Discourse::InvalidAccess.new if !current_user
-
     user = fetch_user
     return if user.blank?
 
@@ -20,8 +19,6 @@ class Follow::FollowController < ApplicationController
   end
 
   def unfollow
-    raise Discourse::InvalidAccess.new if !current_user
-
     user = fetch_user
     return if user.blank?
 
@@ -38,8 +35,6 @@ class Follow::FollowController < ApplicationController
   end
 
   def posts
-    raise Discourse::InvalidAccess.new if !current_user
-
     user = fetch_user
     return if user.blank?
 

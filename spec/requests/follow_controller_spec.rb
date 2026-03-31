@@ -129,6 +129,35 @@ describe Follow::FollowController do
       )
       expect(user2.reload.followers.count).to eq(0)
     end
+
+    it "responds with 403 when trying to follow a suspended user" do
+      user2.update!(suspended_till: 10.hours.from_now)
+      sign_in(user1)
+
+      put "/follow/#{user2.username}.json"
+
+      expect(response.status).to eq(403)
+      expect(user2.reload.followers.count).to eq(0)
+    end
+
+    it "responds with 403 when trying to follow a staged user" do
+      user2.update!(staged: true)
+      sign_in(user1)
+
+      put "/follow/#{user2.username}.json"
+
+      expect(response.status).to eq(403)
+      expect(user2.reload.followers.count).to eq(0)
+    end
+
+    it "responds with 403 when trying to follow yourself" do
+      sign_in(user1)
+
+      put "/follow/#{user1.username}.json"
+
+      expect(response.status).to eq(403)
+      expect(user1.reload.followers.count).to eq(0)
+    end
   end
 
   describe "#unfollow" do
@@ -142,6 +171,15 @@ describe Follow::FollowController do
       delete "/follow/#{user2.username}.json"
       expect(user1.reload.following.count).to eq(0)
       expect(user2.reload.following.count).to eq(1)
+    end
+
+    it "allows unfollowing a suspended user" do
+      sign_in(user1)
+      user2.update!(suspended_till: 10.hours.from_now)
+
+      delete "/follow/#{user2.username}.json"
+      expect(response.status).to eq(200)
+      expect(user1.reload.following.count).to eq(0)
     end
 
     it "responds with 404 if user does not exist" do

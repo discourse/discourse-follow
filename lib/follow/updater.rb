@@ -17,49 +17,11 @@ class Follow::Updater
   private
 
   def follow(notification_level)
-    if @target.id == @follower.id
-      raise Discourse::InvalidAccess.new(
-              nil,
-              nil,
-              custom_message: "follow.user_cannot_follow_themself",
-            )
-    end
-
-    %i[bot staged suspended].each do |status|
-      if @target.public_send(:"#{status}?")
-        raise Discourse::InvalidAccess.new(
-                nil,
-                nil,
-                custom_message: "follow.user_cannot_follow_#{status}",
-              )
-      end
-    end
+    ensure_can_follow!
 
     if !Follow::Notification.levels.invert.key?(notification_level)
       raise Discourse::InvalidParameters.new(
               I18n.t("follow.invalid_notification_level", level: notification_level.inspect),
-            )
-    end
-
-    if !@target.allow_people_to_follow_me
-      raise Discourse::InvalidAccess.new(
-              nil,
-              nil,
-              custom_message: "follow.user_does_not_allow_follow",
-              custom_message_params: {
-                username: @target.username,
-              },
-            )
-    end
-
-    if @target.user_option&.hide_profile
-      raise Discourse::InvalidAccess.new(
-              nil,
-              nil,
-              custom_message: "follow.user_does_not_allow_follow",
-              custom_message_params: {
-                username: @target.username,
-              },
             )
     end
 
@@ -74,6 +36,30 @@ class Follow::Updater
     send_notification(payload) if should_notify?(payload)
 
     relation
+  end
+
+  def ensure_can_follow!
+    guardian = Guardian.new(@follower)
+    return if guardian.can_follow?(@target)
+
+    raise_invalid_access("follow.user_cannot_follow_themself") if @target.id == @follower.id
+
+    %i[bot staged suspended].each do |status|
+      if @target.public_send(:"#{status}?")
+        raise_invalid_access("follow.user_cannot_follow_#{status}")
+      end
+    end
+
+    raise_invalid_access("follow.user_does_not_allow_follow", username: @target.username)
+  end
+
+  def raise_invalid_access(custom_message, **params)
+    raise Discourse::InvalidAccess.new(
+            nil,
+            nil,
+            custom_message:,
+            custom_message_params: params.presence,
+          )
   end
 
   def should_notify?(payload)
