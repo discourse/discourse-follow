@@ -17,6 +17,5 @@ et:
   follow:
     user_cannot_follow_themself: "Kasutajal ei ole lubatud ennast jälgida"
     invalid_notification_level: "Kehtetu teavituse tase %{level}"
-    cannot_follow_bot: "Ei saa jälgida bot-kasutajat"
-    cannot_follow_suspended: "Peatatud kasutajat ei saa jälgida"
+    user_cannot_follow_bot: "Ei saa jälgida bot-kasutajat."
     user_does_not_allow_follow: "%{username} ei luba inimestel ennast jälgida."
