@@ -25,6 +25,7 @@ tr_TR:
     user_cannot_follow_themself: "Kullanıcının kendisini takip etmesine izin verilmez"
     invalid_notification_level: "Geçersiz bildirim seviyesi %{level}"
     user_cannot_follow_bot: "Bir bot kullanıcısı takip edilemez."
+    user_cannot_follow_suspended: "Askıya alınmış bir kullanıcıyı takip edemezsiniz."
     user_cannot_follow_staged: "Aşamalı bir kullanıcı takip edilemez."
     invalid_created_before_date: "\"created_before\" parametresi için geçersiz bir tarih alındı: %{value}"
     user_does_not_allow_follow: "%{username} kişilerin kendisini takip etmelerine izin vermiyor."
