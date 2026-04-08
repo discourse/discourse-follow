@@ -25,6 +25,7 @@ ar:
     user_cannot_follow_themself: "غير مسموح للمستخدم بمتابعة نفسه"
     invalid_notification_level: "مستوى الإشعار %{level} غير صالح"
     user_cannot_follow_bot: "لا يمكن متابعة مستخدم من برامج الروبوت."
+    user_cannot_follow_suspended: "لا يمكن متابعة مستخدم تم إيقافه مؤقتًا."
     user_cannot_follow_staged: "لا يمكن متابعة مستخدم مؤقت."
     invalid_created_before_date: "تم تلقي تاريخ غير صالح للمعلمة `created_before`: %{value}"
     user_does_not_allow_follow: "لا يسمح %{username} للأشخاص بمتابعته."
