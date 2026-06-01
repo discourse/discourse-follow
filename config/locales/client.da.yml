@@ -22,12 +22,14 @@ da:
         following: "nogen er begyndt at følge dig"
       popup:
         following: "%{username} er begyndt at følge dig."
+        following_created_topic: '%{username} oprettede "%{topic}" - %{site_title}'
         following_replied: '%{username} skrev i "%{topic}" - %{site_title}'
     user:
       follow_nav: "Følger"
       follow:
         label: "Følg"
       following:
+        feed_link: "Følg feedet"
         label: "Følger"
         none: "Du følger ikke nogen endnu."
         none_other: "%{username} følger ikke nogen endnu."
@@ -36,6 +38,7 @@ da:
         none: "Ingen følger dig endnu."
         none_other: "Ingen følger %{username} endnu."
       feed:
+        label: "Feed"
         empty_feed_you: "Ingen indlæg fra personer, du følger endnu."
         empty_feed_other: "Ingen indlæg fra personer %{username} følger endnu."
       follow_notifications_options:

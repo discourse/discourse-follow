@@ -7,6 +7,15 @@
 da:
   discourse_push_notifications:
     popup:
+      following_created_topic: '%{username} oprettede "%{topic}" - %{site_title}'
       following_replied: '%{username} skrev i "%{topic}" - %{site_title}'
   site_settings:
     discourse_follow_enabled: "Aktiver følg plugin."
+    follow_show_statistics_on_profile: "Vis følgerstatistik på brugerprofiler."
+    follow_followers_visible: "Følgeres synlighed."
+    follow_following_visible: "Følgers synlighed"
+  follow:
+    user_cannot_follow_bot: "Kan ikke følge en bot bruger."
+    user_cannot_follow_suspended: "Kan ikke følge en suspenderet bruger."
+    invalid_created_before_date: "Modtog en ugyldig dato for 'created_before' param: %{value}"
+    user_does_not_allow_follow: "%{username} tillader ikke folk at følge dem."
