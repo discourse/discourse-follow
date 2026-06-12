@@ -17,8 +17,11 @@ class UserFollower < ActiveRecord::Base
         .where(action_code: nil)
         .order(created_at: :desc)
 
+    guardian = Guardian.new(current_user)
+
     results = filter_opted_out_users(results)
-    results = Guardian.new(current_user).filter_allowed_categories(results)
+    results = guardian.filter_allowed_categories(results)
+    results = guardian.filter_hidden_posts(results)
     results = results.limit(limit) if limit
     results = results.where("posts.created_at < ?", created_before) if created_before
     results = results.where("posts.created_at > ?", created_after) if created_after
