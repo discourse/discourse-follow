@@ -17,8 +17,11 @@ class UserFollower < ActiveRecord::Base
         .where(action_code: nil)
         .order(created_at: :desc)
 
+    guardian = Guardian.new(current_user)
+
     results = filter_opted_out_users(results)
-    results = Guardian.new(current_user).filter_allowed_categories(results)
+    results = guardian.filter_allowed_categories(results)
+    results = filter_hidden_posts(results, current_user)
     results = results.limit(limit) if limit
     results = results.where("posts.created_at < ?", created_before) if created_before
     results = results.where("posts.created_at > ?", created_after) if created_after
@@ -44,6 +47,17 @@ class UserFollower < ActiveRecord::Base
     results = results.where("topics.created_at > ?", created_after) if created_after
 
     results
+  end
+
+  def self.filter_hidden_posts(relation, current_user)
+    hidden_post_visible_groups = SiteSetting.hidden_post_visible_groups_map
+
+    return relation if hidden_post_visible_groups.include?(Group::AUTO_GROUPS[:everyone])
+    return relation.where("posts.hidden = false") if current_user.blank?
+    return relation if current_user.staff?
+    return relation if current_user.in_any_groups?(hidden_post_visible_groups)
+
+    relation.where("posts.hidden = false OR posts.user_id = ?", current_user.id)
   end
 
   def self.filter_opted_out_users(relation)
