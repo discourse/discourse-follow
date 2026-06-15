@@ -240,6 +240,24 @@ describe Follow::FollowController do
       expect(response_topic_ids(response)).to eq([post_1, post_2, post_3, post_4, post_5].map(&:id))
     end
 
+    it "omits hidden posts from followed users", :aggregate_failures do
+      hidden_post =
+        Fabricate(
+          :post,
+          user: user2,
+          raw: "private hidden follow post",
+          hidden: true,
+          created_at: 1.hour.ago,
+        )
+
+      sign_in(user1)
+      get "/follow/posts/#{user1.username}.json"
+
+      expect(response.status).to eq(200)
+      expect(response_topic_ids(response)).to eq([post_1, post_2, post_3, post_4, post_5].map(&:id))
+      expect(response.body).not_to include(hidden_post.raw)
+    end
+
     it "indicates in the response whether or not there are more posts" do
       sign_in(user1)
       get "/follow/posts/#{user1.username}.json", params: { limit: 2 }

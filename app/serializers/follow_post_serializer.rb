@@ -8,6 +8,10 @@ class FollowPostSerializer < ApplicationSerializer
   has_one :user, serializer: BasicUserSerializer, embed: :object
   has_one :topic, serializer: BasicTopicSerializer, embed: :object
 
+  def post_item_excerpt_post
+    object
+  end
+
   def category_id
     object.topic.category_id
   end
