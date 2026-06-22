@@ -3,6 +3,7 @@
 describe Follow::FollowController do
   fab!(:user1, :user)
   fab!(:user2, :user)
+  fab!(:admin)
   fab!(:tl4) { Fabricate(:user, trust_level: TrustLevel[4]) }
   fab!(:tl3) { Fabricate(:user, trust_level: TrustLevel[3]) }
   fab!(:tl2) { Fabricate(:user, trust_level: TrustLevel[2]) }
@@ -12,6 +13,7 @@ describe Follow::FollowController do
   def expect_not_allowed(user, type)
     get "/u/#{user.username}/follow/#{type}.json"
     expect(response.status).to eq(403)
+    expect(response.parsed_body["errors"]).to be_present
   end
 
   def expect_allowed(user, type)
@@ -55,11 +57,39 @@ describe Follow::FollowController do
 
       context "when follow_#{type}_visible setting is set to everyone" do
         before do
+          SiteSetting.hide_new_user_profiles = false
           SiteSetting.public_send("follow_#{type}_visible=", FollowPagesVisibility::EVERYONE)
         end
 
         it "anon users can see pages of normal users" do
           expect_allowed(user1, type)
+        end
+
+        it "blocks anon users when core hides profiles from the public" do
+          SiteSetting.hide_user_profiles_from_public = true
+          expect_not_allowed(user1, type)
+        end
+
+        context "when the target user has hidden their profile" do
+          before do
+            SiteSetting.allow_users_to_hide_profile = true
+            user1.user_option.update!(hide_profile: true)
+          end
+
+          it "blocks other logged-in users" do
+            sign_in(user2)
+            expect_not_allowed(user1, type)
+          end
+
+          it "still allows the user to see their own page" do
+            sign_in(user1)
+            expect_allowed(user1, type)
+          end
+
+          it "still allows staff" do
+            sign_in(admin)
+            expect_allowed(user1, type)
+          end
         end
       end
 

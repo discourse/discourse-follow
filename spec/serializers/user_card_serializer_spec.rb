@@ -17,6 +17,7 @@ describe UserCardSerializer do
     before do
       SiteSetting.discourse_follow_enabled = true
       SiteSetting.follow_show_statistics_on_profile = true
+      SiteSetting.hide_new_user_profiles = false
       SiteSetting.follow_followers_visible = FollowPagesVisibility::EVERYONE
       SiteSetting.follow_following_visible = FollowPagesVisibility::EVERYONE
     end
