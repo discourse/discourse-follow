@@ -41,6 +41,9 @@ class FollowPagesVisibility < EnumSiteSetting
     def can_see_page?(user, target_user, page_setting_value)
       return false if !SiteSetting.discourse_follow_enabled
       return false if target_user.blank?
+      guardian = user&.guardian || Guardian.new
+      return false if !guardian.public_can_see_profiles?
+      return false if !guardian.can_see_profile?(target_user)
       return true if page_setting_value == EVERYONE
       return false if page_setting_value == NO_ONE
       return false if user.blank?

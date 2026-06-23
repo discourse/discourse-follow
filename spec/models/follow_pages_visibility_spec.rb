@@ -45,7 +45,10 @@ describe FollowPagesVisibility do
   ].each do |(method, setting)|
     describe ".#{method}" do
       context "when the follow_following_visible site setting allows everyone" do
-        before { SiteSetting.public_send("#{setting}=", FollowPagesVisibility::EVERYONE) }
+        before do
+          SiteSetting.hide_new_user_profiles = false
+          SiteSetting.public_send("#{setting}=", FollowPagesVisibility::EVERYONE)
+        end
 
         it "trust level 0 user is allowed to see the page" do
           expect(described_class.public_send(method, user: tl0, target_user: user)).to eq(true)
