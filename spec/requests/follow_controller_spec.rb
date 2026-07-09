@@ -258,6 +258,38 @@ describe Follow::FollowController do
       expect(response.body).not_to include(hidden_post.raw)
     end
 
+    it "omits shared draft posts when the viewer cannot see shared drafts", :aggregate_failures do
+      shared_drafts_category = Fabricate(:category)
+      destination_category = Fabricate(:category)
+      shared_draft_topic =
+        Fabricate(
+          :topic,
+          user: user2,
+          category: shared_drafts_category,
+          title: "Private shared draft follow topic",
+        )
+      Fabricate(:shared_draft, topic: shared_draft_topic, category: destination_category)
+      shared_draft_post =
+        Fabricate(
+          :post,
+          user: user2,
+          topic: shared_draft_topic,
+          raw: "private shared draft follow post",
+          created_at: 1.hour.ago,
+        )
+
+      SiteSetting.shared_drafts_category = shared_drafts_category.id
+      SiteSetting.shared_drafts_allowed_groups = Group::AUTO_GROUPS[:admins]
+
+      sign_in(user1)
+      get "/follow/posts/#{user1.username}.json"
+
+      expect(response.status).to eq(200)
+      expect(response_topic_ids(response)).to eq([post_1, post_2, post_3, post_4, post_5].map(&:id))
+      expect(response.body).not_to include(shared_draft_topic.title)
+      expect(response.body).not_to include(shared_draft_post.raw)
+    end
+
     it "indicates in the response whether or not there are more posts" do
       sign_in(user1)
       get "/follow/posts/#{user1.username}.json", params: { limit: 2 }
