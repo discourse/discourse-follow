@@ -20,12 +20,7 @@ class UserFollower < ActiveRecord::Base
     guardian = Guardian.new(current_user)
 
     results = filter_opted_out_users(results)
-    if !guardian.can_see_shared_draft?
-      results =
-        results.joins("LEFT OUTER JOIN shared_drafts ON shared_drafts.topic_id = topics.id").where(
-          "shared_drafts.id IS NULL",
-        )
-    end
+    results = filter_shared_drafts(results, guardian)
     results = guardian.filter_allowed_categories(results)
     results = guardian.filter_hidden_posts(results)
     results = results.limit(limit) if limit
@@ -53,6 +48,12 @@ class UserFollower < ActiveRecord::Base
     results = results.where("topics.created_at > ?", created_after) if created_after
 
     results
+  end
+
+  def self.filter_shared_drafts(relation, guardian)
+    return relation if guardian.can_see_shared_draft?
+
+    relation.where.not(topic_id: SharedDraft.select(:topic_id))
   end
 
   def self.filter_opted_out_users(relation)
