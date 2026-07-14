@@ -14,3 +14,8 @@
   margin-bottom: 1em;
   display: block;
 }
+
+.user-main
+  li.user-profile-controls-outlet.follow-button-container:has(div:empty) {
+  margin: 0;
+}
