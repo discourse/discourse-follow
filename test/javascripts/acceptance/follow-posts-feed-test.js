@@ -1,6 +1,6 @@
-import { click, visit } from "@ember/test-helpers";
+import { click, findAll, visit } from "@ember/test-helpers";
 import { test } from "qunit";
-import { acceptance, queryAll } from "discourse/tests/helpers/qunit-helpers";
+import { acceptance } from "discourse/tests/helpers/qunit-helpers";
 import { i18n } from "discourse-i18n";
 
 acceptance("Discourse Follow - Follow Posts Feed", function (needs) {
@@ -163,7 +163,7 @@ acceptance("Discourse Follow - Follow Posts Feed", function (needs) {
 
   test("long posts excerpt", async (assert) => {
     await visit("/u/eviltrout/follow/feed");
-    const posts = queryAll(".follow-stream .follow-stream-item");
+    const posts = findAll(".follow-stream .follow-stream-item");
     assert
       .dom(".expand-item", posts[2])
       .exists("long posts are first rendered collapsed");
