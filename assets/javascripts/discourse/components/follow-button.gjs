@@ -1,10 +1,12 @@
-/* eslint-disable ember/no-classic-components, ember/require-tagless-components */
+/* eslint-disable ember/no-classic-components */
 import Component from "@ember/component";
 import { action, computed } from "@ember/object";
+import { tagName } from "@ember-decorators/component";
 import DButton from "discourse/components/d-button";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 
+@tagName("")
 export default class FollowButton extends Component {
   loading = false;
 
