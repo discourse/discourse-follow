@@ -9,7 +9,7 @@ fr:
     admin:
       site_settings:
         categories:
-          discourse_follow: "Suivi de Discourse"
+          discourse_follow: "Discourse Follow"
   js:
     notifications:
       following: "<span>%{username}</span> %{description}"
@@ -18,18 +18,18 @@ fr:
       following_replied: "<span>%{username}</span> %{description}"
       titles:
         following_created_topic: "nouveau sujet d'une personne que vous suivez"
-        following_replied: "nouveau message d'une personne que vous suivez"
+        following_replied: "nouvelle publication d'une personne que vous suivez"
         following: "quelqu'un a commencé à vous suivre"
       popup:
         following: "%{username} a commencé à vous suivre."
         following_created_topic: '%{username} a créé « %{topic} » - %{site_title}'
-        following_replied: '%{username} a publié un message dans « %{topic} » - %{site_title}'
+        following_replied: '%{username} a publié dans « %{topic} » - %{site_title}'
     user:
-      follow_nav: "Suivis"
+      follow_nav: "Suivi"
       follow:
-        label: "Suivre"
+        label: "Suivi"
       following:
-        feed_link: "Fil de suivi"
+        feed_link: "Flux de suivi"
         label: "Personnes suivies"
         none: "Vous ne suivez encore personne."
         none_other: "%{username} ne suit encore personne."
@@ -39,8 +39,8 @@ fr:
         none_other: "Personne ne suit %{username} pour le moment."
       feed:
         label: "Flux"
-        empty_feed_you: "Aucun message de personnes que vous suivez pour le moment."
-        empty_feed_other: "Aucun message de personnes que %{username} suit pour le moment."
+        empty_feed_you: "Aucune publication des personnes que vous suivez pour le moment."
+        empty_feed_other: "Aucune publication des personnes que %{username} suit pour le moment."
       follow_notifications_options:
         notify_followed_user_when_followed: "Avertir les utilisateurs lorsque je les suis"
         notify_me_when_followed: "M'avertir lorsque des utilisateurs me suivent"
@@ -50,7 +50,7 @@ fr:
     follow:
       follow_pages_visibility:
         no-one: "Personne"
-        self: "Vous"
+        self: "Propriétaire du profil uniquement"
         trust_level_4: "Niveau de confiance 4"
         trust_level_3: "Niveau de confiance 3"
         trust_level_2: "Niveau de confiance 2"
