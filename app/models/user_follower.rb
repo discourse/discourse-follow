@@ -88,11 +88,11 @@ end
 # Table name: user_followers
 #
 #  id          :bigint           not null, primary key
-#  user_id     :bigint           not null
-#  follower_id :bigint           not null
 #  level       :integer          not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  follower_id :bigint           not null
+#  user_id     :bigint           not null
 #
 # Indexes
 #
