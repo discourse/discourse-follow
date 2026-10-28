@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module Follow::UserExtension
+  # Preloaded for /user-cards.json, nil when not preloaded.
+  attr_accessor :followed_by_current_user
+
   def self.prepended(base)
     base.has_many :follower_relations, class_name: "UserFollower", dependent: :delete_all
     base.has_many :followers,
