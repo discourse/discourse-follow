@@ -142,4 +142,17 @@ describe UserCardSerializer do
       expect(get_serializer(followed, current_user: followed)[:can_follow]).to eq(false)
     end
   end
+
+  context "when several users are serialized at once without preloaded follow data" do
+    it "can_follow and is_followed are false" do
+      serialized =
+        ActiveModel::ArraySerializer.new(
+          [followed],
+          each_serializer: UserCardSerializer,
+          scope: follower.guardian,
+        ).as_json
+
+      expect(serialized.first).to include(can_follow: false, is_followed: false)
+    end
+  end
 end

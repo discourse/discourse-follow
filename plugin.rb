@@ -41,23 +41,33 @@ after_initialize do
     user_is_current_user || can_see_following || can_see_followers
   end
 
+  # Cores without these APIs keep the `false` fallback in the serializers below.
+  if respond_to?(:register_user_cards_preloader)
+    register_user_cards_preloaded_custom_field(:allow_people_to_follow_me)
+    register_user_cards_preloader do |users, guardian|
+      next if guardian.anonymous?
+
+      followed_ids = guardian.user.following.where(id: users.map(&:id)).pluck(:id).to_set
+      users.each { |user| user.followed_by_current_user = followed_ids.include?(user.id) }
+    end
+  end
+
   # UserSerializer in core inherits from UserCardSerializer.
   # we don't need to duplicate these attrs for UserSerializer.
   #
-  # the `!options.key?(:each_serializer)` check is a temporary hack to exclude
-  # the attributes we add here from the user card serializer when multiple user
-  # objects are being serialized (e.g. the /user-cards.json route in core). If
-  # we don't do this, we end up introducing a horrible 3N+1 on the
-  # /user-cards.json route and it's not easily fixable.
-  # when serializing a single user object, the options of the serializer
-  # doesn't have a `each_serializer` key.
+  # Computing these attrs per user adds a 3N+1 when many users are serialized
+  # at once (`each_serializer`). `can_follow` and `is_followed` use the data
+  # preloaded above for /user-cards.json, and are `false` for other bulk
+  # serializations.
   add_to_serializer(:user_card, :can_follow) do
-    !options.key?(:each_serializer) && scope.can_follow?(user)
+    next false if options.key?(:each_serializer) && user.followed_by_current_user.nil?
+    scope.can_follow?(user)
   end
 
   add_to_serializer(:user_card, :is_followed) do
-    !options.key?(:each_serializer) && scope.current_user.present? &&
-      scope.current_user.following.where(id: user.id).exists?
+    next user.followed_by_current_user if !user.followed_by_current_user.nil?
+    next false if options.key?(:each_serializer) || scope.current_user.blank?
+    scope.current_user.following.where(id: user.id).exists?
   end
 
   add_to_serializer(
@@ -88,7 +98,8 @@ after_initialize do
     allow_people_to_follow_me
   ].each do |field|
     add_to_class(:user, field) do
-      v = custom_fields[field]
+      # Preloaded custom fields can only be read with string keys.
+      v = custom_fields[field.to_s]
       if !v.nil?
         HasCustomFields::Helpers::CUSTOM_FIELD_TRUE.include?(v.to_s.downcase)
       else
